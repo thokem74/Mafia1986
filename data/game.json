@@ -1,0 +1,600 @@
+{
+  "weapons": [
+    {
+      "id": 0,
+      "name_key": "WEAPON_HANDS",
+      "price": 0,
+      "range": 2,
+      "precision": 2,
+      "damage": 2
+    },
+    {
+      "id": 1,
+      "name_key": "WEAPON_KNIFE",
+      "price": 50,
+      "range": 2,
+      "precision": 3,
+      "damage": 5
+    },
+    {
+      "id": 2,
+      "name_key": "WEAPON_CLUB",
+      "price": 100,
+      "range": 2,
+      "precision": 4,
+      "damage": 3
+    },
+    {
+      "id": 3,
+      "name_key": "WEAPON_CHAIN",
+      "price": 500,
+      "range": 2,
+      "precision": 4,
+      "damage": 4
+    },
+    {
+      "id": 4,
+      "name_key": "WEAPON_STARS",
+      "price": 3000,
+      "range": 15,
+      "precision": 2,
+      "damage": 7
+    },
+    {
+      "id": 5,
+      "name_key": "WEAPON_REVOLVER",
+      "price": 4000,
+      "range": 15,
+      "precision": 5,
+      "damage": 10
+    },
+    {
+      "id": 6,
+      "name_key": "WEAPON_RIFLE",
+      "price": 4500,
+      "range": 20,
+      "precision": 5,
+      "damage": 12
+    },
+    {
+      "id": 7,
+      "name_key": "WEAPON_SMG",
+      "price": 8000,
+      "range": 20,
+      "precision": 6,
+      "damage": 15
+    },
+    {
+      "id": 8,
+      "name_key": "WEAPON_GRENADES",
+      "price": 10000,
+      "range": 15,
+      "precision": 7,
+      "damage": 18
+    }
+  ],
+  "cars": [
+    {
+      "id": 0,
+      "name_key": "CAR_FEET",
+      "price": 0,
+      "capacity": 50,
+      "movement": 25
+    },
+    {
+      "id": 1,
+      "name_key": "CAR_TALBOT",
+      "price": 3000,
+      "capacity": 100,
+      "movement": 35
+    },
+    {
+      "id": 2,
+      "name_key": "CAR_CHEVY",
+      "price": 4000,
+      "capacity": 120,
+      "movement": 40
+    },
+    {
+      "id": 3,
+      "name_key": "CAR_BUICK",
+      "price": 5000,
+      "capacity": 200,
+      "movement": 40
+    },
+    {
+      "id": 4,
+      "name_key": "CAR_AUBURN",
+      "price": 6000,
+      "capacity": 150,
+      "movement": 60
+    },
+    {
+      "id": 5,
+      "name_key": "CAR_CITROEN",
+      "price": 7000,
+      "capacity": 100,
+      "movement": 35
+    }
+  ],
+  "locations": [
+    {
+      "id": "pub",
+      "kind": "pub",
+      "name_key": "LOC_PUB",
+      "x": 5,
+      "y": 2,
+      "variant": 0,
+      "icon": "pub"
+    },
+    {
+      "id": "arms",
+      "kind": "arms",
+      "name_key": "LOC_ARMS",
+      "x": 9,
+      "y": 2,
+      "variant": 1,
+      "icon": "arms"
+    },
+    {
+      "id": "cars",
+      "kind": "cars",
+      "name_key": "LOC_CARS",
+      "x": 13,
+      "y": 2,
+      "variant": 2,
+      "icon": "cars"
+    },
+    {
+      "id": "store",
+      "kind": "store",
+      "name_key": "LOC_STORE",
+      "x": 17,
+      "y": 2,
+      "variant": 3,
+      "icon": "store"
+    },
+    {
+      "id": "bank",
+      "kind": "bank",
+      "name_key": "LOC_BANK",
+      "x": 21,
+      "y": 2,
+      "variant": 0,
+      "icon": "bank"
+    },
+    {
+      "id": "police",
+      "kind": "police",
+      "name_key": "LOC_POLICE",
+      "x": 25,
+      "y": 2,
+      "variant": 1,
+      "icon": "police"
+    },
+    {
+      "id": "hideout",
+      "kind": "hideout",
+      "name_key": "LOC_HIDEOUT",
+      "x": 5,
+      "y": 8,
+      "variant": 2,
+      "icon": "hideout"
+    },
+    {
+      "id": "forgery",
+      "kind": "forgery",
+      "name_key": "LOC_FORGERY",
+      "x": 9,
+      "y": 8,
+      "variant": 3,
+      "icon": "forgery"
+    },
+    {
+      "id": "casino",
+      "kind": "casino",
+      "name_key": "LOC_CASINO",
+      "x": 13,
+      "y": 8,
+      "variant": 0,
+      "icon": "casino"
+    },
+    {
+      "id": "loan",
+      "kind": "loan",
+      "name_key": "LOC_LOAN",
+      "x": 17,
+      "y": 8,
+      "variant": 1,
+      "icon": "loan"
+    },
+    {
+      "id": "subway",
+      "kind": "subway",
+      "name_key": "LOC_SUBWAY",
+      "x": 21,
+      "y": 8,
+      "variant": 2,
+      "icon": "subway"
+    },
+    {
+      "id": "station",
+      "kind": "station",
+      "name_key": "LOC_STATION",
+      "x": 25,
+      "y": 8,
+      "variant": 3,
+      "icon": "station"
+    },
+    {
+      "id": "station_west",
+      "kind": "station",
+      "name_key": "LOC_STATION",
+      "x": 5,
+      "y": 14,
+      "variant": 0,
+      "icon": "station"
+    },
+    {
+      "id": "pub_south",
+      "kind": "pub",
+      "name_key": "LOC_PUB",
+      "x": 9,
+      "y": 14,
+      "variant": 1,
+      "icon": "pub"
+    },
+    {
+      "id": "arms_south",
+      "kind": "arms",
+      "name_key": "LOC_ARMS",
+      "x": 13,
+      "y": 14,
+      "variant": 2,
+      "icon": "arms"
+    },
+    {
+      "id": "store_south",
+      "kind": "store",
+      "name_key": "LOC_STORE",
+      "x": 17,
+      "y": 14,
+      "variant": 3,
+      "icon": "store"
+    },
+    {
+      "id": "bank_east",
+      "kind": "bank",
+      "name_key": "LOC_BANK",
+      "x": 21,
+      "y": 14,
+      "variant": 0,
+      "icon": "bank"
+    },
+    {
+      "id": "subway_south",
+      "kind": "subway",
+      "name_key": "LOC_SUBWAY",
+      "x": 25,
+      "y": 14,
+      "variant": 1,
+      "icon": "subway"
+    },
+    {
+      "id": "mayor",
+      "kind": "mayor",
+      "name_key": "LOC_MAYOR",
+      "x": 13,
+      "y": 20,
+      "variant": 2,
+      "icon": "mayor"
+    },
+    {
+      "id": "transport",
+      "kind": "transport",
+      "name_key": "LOC_TRANSPORT",
+      "x": 21,
+      "y": 20,
+      "variant": 3,
+      "icon": "transport"
+    }
+  ],
+  "recruits": [
+    {
+      "name": "Killer-Jack",
+      "weapon": 1,
+      "strength": 50,
+      "intelligence": 10,
+      "brutality": 70,
+      "price": 3000,
+      "sex": 0
+    },
+    {
+      "name": "Joe, 'Das Hirn'",
+      "weapon": 0,
+      "strength": 20,
+      "intelligence": 90,
+      "brutality": 30,
+      "price": 2000,
+      "sex": 0
+    },
+    {
+      "name": "Eddie, Der Spieler",
+      "weapon": 0,
+      "strength": 30,
+      "intelligence": 60,
+      "brutality": 40,
+      "price": 2500,
+      "sex": 0
+    },
+    {
+      "name": "Bloody Mary",
+      "weapon": 2,
+      "strength": 60,
+      "intelligence": 10,
+      "brutality": 75,
+      "price": 3100,
+      "sex": 1
+    },
+    {
+      "name": "Wurfstern-Freddy",
+      "weapon": 4,
+      "strength": 40,
+      "intelligence": 10,
+      "brutality": 60,
+      "price": 3700,
+      "sex": 0
+    },
+    {
+      "name": "Joseph",
+      "weapon": 2,
+      "strength": 80,
+      "intelligence": 5,
+      "brutality": 80,
+      "price": 3500,
+      "sex": 0
+    },
+    {
+      "name": "Der Blinde",
+      "weapon": 0,
+      "strength": 5,
+      "intelligence": 90,
+      "brutality": 90,
+      "price": 2500,
+      "sex": 0
+    },
+    {
+      "name": "Langfinger-Fritz",
+      "weapon": 0,
+      "strength": 10,
+      "intelligence": 60,
+      "brutality": 5,
+      "price": 2600,
+      "sex": 0
+    },
+    {
+      "name": "Dschango",
+      "weapon": 1,
+      "strength": 50,
+      "intelligence": 5,
+      "brutality": 5,
+      "price": 3400,
+      "sex": 0
+    },
+    {
+      "name": "Der Mexikaner",
+      "weapon": 2,
+      "strength": 80,
+      "intelligence": 50,
+      "brutality": 90,
+      "price": 3700,
+      "sex": 0
+    },
+    {
+      "name": "Jack, Der Trickser",
+      "weapon": 0,
+      "strength": 5,
+      "intelligence": 90,
+      "brutality": 75,
+      "price": 3300,
+      "sex": 0
+    },
+    {
+      "name": "Johnny",
+      "weapon": 1,
+      "strength": 50,
+      "intelligence": 30,
+      "brutality": 30,
+      "price": 3100,
+      "sex": 0
+    },
+    {
+      "name": "Killer-Frank",
+      "weapon": 1,
+      "strength": 40,
+      "intelligence": 10,
+      "brutality": 30,
+      "price": 2800,
+      "sex": 0
+    },
+    {
+      "name": "Josefine",
+      "weapon": 3,
+      "strength": 40,
+      "intelligence": 10,
+      "brutality": 30,
+      "price": 3200,
+      "sex": 1
+    },
+    {
+      "name": "Der Stecher",
+      "weapon": 1,
+      "strength": 30,
+      "intelligence": 5,
+      "brutality": 70,
+      "price": 3500,
+      "sex": 0
+    },
+    {
+      "name": "Billy",
+      "weapon": 0,
+      "strength": 20,
+      "intelligence": 10,
+      "brutality": 30,
+      "price": 2200,
+      "sex": 0
+    },
+    {
+      "name": "Steven Flinkfinger",
+      "weapon": 0,
+      "strength": 30,
+      "intelligence": 50,
+      "brutality": 60,
+      "price": 3000,
+      "sex": 0
+    },
+    {
+      "name": "Poker-Face",
+      "weapon": 0,
+      "strength": 40,
+      "intelligence": 60,
+      "brutality": 90,
+      "price": 3300,
+      "sex": 0
+    },
+    {
+      "name": "Holzbein-Sam",
+      "weapon": 3,
+      "strength": 60,
+      "intelligence": 5,
+      "brutality": 70,
+      "price": 3400,
+      "sex": 0
+    },
+    {
+      "name": "Gary",
+      "weapon": 0,
+      "strength": 30,
+      "intelligence": 10,
+      "brutality": 60,
+      "price": 3500,
+      "sex": 0
+    },
+    {
+      "name": "Zocker-Alf",
+      "weapon": 0,
+      "strength": 5,
+      "intelligence": 80,
+      "brutality": 65,
+      "price": 3300,
+      "sex": 0
+    },
+    {
+      "name": "Pistolen-Henry",
+      "weapon": 5,
+      "strength": 40,
+      "intelligence": 5,
+      "brutality": 60,
+      "price": 4100,
+      "sex": 0
+    },
+    {
+      "name": "Jeff Smart",
+      "weapon": 2,
+      "strength": 40,
+      "intelligence": 10,
+      "brutality": 80,
+      "price": 3300,
+      "sex": 0
+    },
+    {
+      "name": "Fred Clever",
+      "weapon": 0,
+      "strength": 10,
+      "intelligence": 85,
+      "brutality": 50,
+      "price": 3300,
+      "sex": 0
+    },
+    {
+      "name": "Jim",
+      "weapon": 0,
+      "strength": 70,
+      "intelligence": 5,
+      "brutality": 5,
+      "price": 2900,
+      "sex": 0
+    },
+    {
+      "name": "Macky Messer",
+      "weapon": 1,
+      "strength": 35,
+      "intelligence": 40,
+      "brutality": 60,
+      "price": 3500,
+      "sex": 0
+    },
+    {
+      "name": "Dorothy",
+      "weapon": 1,
+      "strength": 30,
+      "intelligence": 60,
+      "brutality": 30,
+      "price": 3100,
+      "sex": 1
+    },
+    {
+      "name": "Prediger Samuel",
+      "weapon": 0,
+      "strength": 55,
+      "intelligence": 60,
+      "brutality": 10,
+      "price": 3300,
+      "sex": 0
+    },
+    {
+      "name": "Mister X",
+      "weapon": 5,
+      "strength": 30,
+      "intelligence": 45,
+      "brutality": 60,
+      "price": 4000,
+      "sex": 0
+    },
+    {
+      "name": "Ma Baker",
+      "weapon": 7,
+      "strength": 20,
+      "intelligence": 80,
+      "brutality": 95,
+      "price": 5500,
+      "sex": 1
+    }
+  ],
+  "jobs": [
+    {
+      "id": "burial",
+      "months": 3,
+      "wage": 1500,
+      "points": 3
+    },
+    {
+      "id": "cards",
+      "months": 2,
+      "wage": 1000,
+      "points": 6
+    },
+    {
+      "id": "eviction",
+      "months": 2,
+      "wage": 2000,
+      "points": 3
+    },
+    {
+      "id": "street",
+      "months": 1,
+      "wage": 1500,
+      "points": 3
+    }
+  ]
+}

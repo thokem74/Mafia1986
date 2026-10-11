@@ -1,0 +1,21 @@
+[gd_scene load_steps=2 format=3]
+[ext_resource type="Texture2D" path="res://assets/sprites/player.png" id="1"]
+
+[node name="Unit" type="Node2D"]
+texture_filter = 1
+
+[node name="Active" type="Polygon2D" parent="."]
+polygon = PackedVector2Array(-2, -2, 22, -2, 22, 22, -2, 22)
+color = Color(0.78, 0.65, 0.35, 1)
+
+[node name="Sprite" type="Sprite2D" parent="."]
+texture = ExtResource("1")
+centered = false
+scale = Vector2(1.25, 1.25)
+
+[node name="Energy" type="Label" parent="."]
+offset_top = 19.0
+offset_right = 24.0
+offset_bottom = 29.0
+theme_override_font_sizes/font_size = 8
+text = "30"

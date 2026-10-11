@@ -1,0 +1,73 @@
+[gd_scene load_steps=2 format=3]
+[ext_resource type="Script" path="res://scripts/ui/location_panel.gd" id="1"]
+
+[node name="LocationPanel" type="VBoxContainer"]
+script = ExtResource("1")
+theme_override_constants/separation = 8
+
+[node name="Title" type="Label" parent="."]
+layout_mode = 2
+text = "LOC_PUB"
+theme_override_font_sizes/font_size = 24
+
+[node name="Illustration" type="TextureRect" parent="."]
+layout_mode = 2
+custom_minimum_size = Vector2(0, 90)
+expand_mode = 1
+stretch_mode = 5
+
+[node name="ActionScroll" type="ScrollContainer" parent="."]
+layout_mode = 2
+size_flags_vertical = 3
+horizontal_scroll_mode = 0
+
+[node name="Actions" type="VBoxContainer" parent="ActionScroll"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Parameters" type="VBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="Help" type="Label" parent="Parameters"]
+layout_mode = 2
+text = "LOCATION_HELP"
+autowrap_mode = 2
+
+[node name="Member" type="OptionButton" parent="Parameters"]
+layout_mode = 2
+custom_minimum_size = Vector2(0, 48)
+
+[node name="Item" type="OptionButton" parent="Parameters"]
+layout_mode = 2
+custom_minimum_size = Vector2(0, 48)
+
+[node name="Quantity" type="HBoxContainer" parent="Parameters"]
+layout_mode = 2
+
+[node name="Minus" type="Button" parent="Parameters/Quantity"]
+layout_mode = 2
+custom_minimum_size = Vector2(60, 48)
+text = "−"
+
+[node name="Amount" type="SpinBox" parent="Parameters/Quantity"]
+layout_mode = 2
+size_flags_horizontal = 3
+min_value = 1.0
+max_value = 10000.0
+value = 1.0
+custom_minimum_size = Vector2(0, 48)
+
+[node name="Plus" type="Button" parent="Parameters/Quantity"]
+layout_mode = 2
+custom_minimum_size = Vector2(60, 48)
+text = "+"
+
+[node name="Details" type="Label" parent="Parameters"]
+layout_mode = 2
+text = ""
+autowrap_mode = 2
+
+[node name="Execute" type="Button" parent="Parameters"]
+layout_mode = 2
+custom_minimum_size = Vector2(0, 54)
+text = "ACTION"

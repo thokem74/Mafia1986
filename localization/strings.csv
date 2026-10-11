@@ -1,0 +1,309 @@
+keys,de,en
+TITLE,MAFIA 1986,MAFIA 1986
+TAGLINE,CHICAGO · PROHIBITION · UNTERWELT,CHICAGO · PROHIBITION · UNDERWORLD
+NEW_GAME,Neues Spiel,New game
+CONTINUE,Fortsetzen,Continue
+LOAD_GAME,Spiel laden,Load game
+SAVE_GAME,Spiel speichern,Save game
+SETTINGS,Einstellungen,Settings
+CREDITS,Mitwirkende,Credits
+QUIT,Beenden,Quit
+BACK,Zurück,Back
+START,Los geht’s,Start
+LEADER_NAME,Dein Name,Your name
+GANG_NAME,Name deiner Gang,Gang name
+LONG_GAME,Lange Kampagne: 50 Jahre / 200 Punkte,Long campaign: 50 years / 200 points
+SHORT_GAME,25 Jahre / 100 Punkte,25 years / 100 points
+SEX,Spielfigur,Character
+MALE,Mann,Man
+FEMALE,Frau,Woman
+LANGUAGE,Sprache,Language
+MUSIC,Musik,Music
+SOUND,Geräusche,Sound
+HINTS,Tutorialhinweise,Tutorial hints
+APPLY,Übernehmen,Apply
+STATUS,Gang & Status,Gang & status
+MENU,Menü,Menu
+ENTER,Eintreten,Enter
+WAIT,Monat beenden,End month
+MOVE,Bewegen,Move
+ATTACK,Angreifen,Attack
+SKIP,Aussetzen,Skip
+FLEE,Kampf aufgeben,Surrender fight
+ACTION,Ausführen,Perform
+YES,Ja,Yes
+NO,Nein,No
+MONEY,Geld,Money
+ENERGY,Energie,Energy
+STRENGTH,Kraft,Strength
+INTELLIGENCE,Intelligenz,Intelligence
+BRUTALITY,Brutalität,Brutality
+WEAPON,Waffe,Weapon
+CAR,Fahrzeug,Vehicle
+CARGO,Alkohol,Alcohol
+STEPS,Schritte,Steps
+POINTS,Gefährlichkeit,Danger points
+RANK,Rang,Rank
+DEBT,Schulden,Debt
+RENT,Miete (Monate),Rent (months)
+PROTECTED,Bestechung (Monate),Protection (months)
+PAPERS,Falscher Pass,Forged ID
+OBJECTIVES,Ziele,Objectives
+MAYOR,Bürgermeister,Mayor
+TRANSPORT,Geldtransporter,Money transporter
+DONE,Erledigt,Completed
+PENDING,Offen,Pending
+MEMBER,Gangster,Gangster
+ITEM,Auswahl,Selection
+AMOUNT,Menge / Monate / Einsatz,Quantity / months / stake
+LOG,Chronik,Journal
+SLOT,Spielstand %d,Save slot %d
+EMPTY_SLOT,Leer,Empty
+AUTOSAVE,Automatisch,Autosave
+SAVE_OK,Spiel gespeichert.,Game saved.
+SAVE_FAILED,Speichern fehlgeschlagen. Bitte erneut versuchen.,Saving failed. Please try again.
+SAVE_INVALID,"Spielstand fehlt, ist beschädigt oder hat ein unbekanntes Format.","Save missing, damaged or has an unsupported format."
+SAVE_RECOVERED,Sicherungskopie des Spielstands wiederhergestellt.,Recovered the last good backup.
+WELCOME,Du bist frei. Suche in einer Kneipe Arbeit und trainiere im Waffenladen. Jeder Monat zählt.,You are free. Find work in a pub and train at the gun shop. Every month counts.
+NO_MONEY,Nicht genug Geld.,Not enough money.
+BOUGHT,%s gekauft.,Bought %s.
+PROMOTED,Neuer Rang: %s!,Promoted to %s!
+WEAPON_REQUIREMENTS,Keule/Kette: 20 Kraft. Gewehr/MP/Granaten: 40 Intelligenz. Kette/MP/Granaten: 40 Brutalität.,Club/chain: 20 strength. Rifle/SMG/grenades: 40 intelligence. Chain/SMG/grenades: 40 brutality.
+TRAINED_ALREADY,Du hast diesen Monat bereits trainiert.,You already trained this month.
+NEED_RANK,Mindestens Rang %d erforderlich. Der Rang steigt zum Monatswechsel.,Requires rank %d. Promotions happen at the month change.
+TRAINED,%s hat trainiert.,%s completed training.
+NO_CAPACITY,Nicht genug freie Transportkapazität.,Not enough free cargo capacity.
+NO_CARGO,Du hast diese Menge Alkohol nicht.,You do not have that much alcohol.
+NO_BUYER,Heute möchte der Wirt keinen Alkohol kaufen.,The bartender does not want alcohol today.
+CARGO_BOUGHT,%d Flaschen zu je $%d gekauft.,Bought %d bottles at $%d each.
+CARGO_SOLD,%d Flaschen zu je $%d verkauft.,Sold %d bottles at $%d each.
+RECRUIT_REQUIREMENTS,Du brauchst Rang 5 und eine gemietete Unterkunft.,You need rank 5 and a rented hideout.
+GANG_FULL,Deine Gang hat bereits acht Mitglieder.,Your gang already has eight members.
+RECRUIT_ALREADY,Dieser Gangster gehört bereits zu deiner Gang.,This gangster already belongs to your gang.
+RECRUITED,%s ist deiner Gang beigetreten.,%s joined your gang.
+RENTED,Miete für %d Monate bezahlt.,Paid rent for %d months.
+RENT_OVERDUE,Miete überfällig: $%d eingezogen.,Overdue rent: collected $%d.
+EVICTED,"Kein Geld für Miete! Unterkunft verloren, Gang aufgelöst.",No money for rent! Evicted and gang disbanded.
+BUSINESS_INCOME,Kreditgeschäft zahlt $%d.,Credit business paid $%d.
+GUNRUN_LOST,Die Waffenschmuggler wurden gefasst. Einsatz verloren.,Gun runners were caught. Investment lost.
+GUNRUN_PROFIT,Waffenschmuggel brachte $%d.,Gun running returned $%d.
+ID_EXPIRED,Dein falscher Pass ist nicht mehr brauchbar.,Your forged ID is no longer usable.
+FAKE_EXPIRED,Dein Falschgeld ist aus dem Verkehr.,Your counterfeit money is out of circulation.
+PRISON_WAIT,Gefängnis: noch %d Monate.,Prison: %d months remaining.
+JOBS_LOW_RANK,Für deinen Rang gibt es keine kleinen Aufträge mehr.,Your rank is too high for odd jobs.
+NO_JOB,Heute gibt es keinen Auftrag.,No job available today.
+JOB_ACCEPTED,"%s angenommen: %d Monate, $%d. Mit „Monat beenden“ arbeiten.","Accepted %s: %d months, $%d. Use End month to work."
+JOB_PAID,Auftrag erledigt: $%d erhalten.,Job completed: received $%d.
+JOB_PROGRESS,Auftrag: noch %d Monate.,Job: %d months remaining.
+JOB_BURIAL,Beerdigung,Burial work
+JOB_CARDS,Kartentrick,Card trick
+JOB_EVICTION,Räumung,Eviction
+JOB_STREET,Straßenauftrag,Street job
+COMBAT_START,Kampf! Jeder Gangster bewegt sich ODER greift an. Schüsse passieren Verbündete.,Combat! Each gangster moves OR attacks. Shots pass through allies.
+COMBAT_MOVE,%s bewegt sich.,%s moves.
+COMBAT_MISS,%s verfehlt.,%s misses.
+COMBAT_HIT,"%s trifft %s: %d Schaden, %d Energie übrig.","%s hits %s: %d damage, %d energy left."
+COMBAT_SKIP,%s setzt aus.,%s skips.
+COMBAT_WON,Kampf gewonnen. Deine Gangster erholen sich monatlich.,Combat won. Your gangsters recover each month.
+COMBAT_LOST,Kampf verloren. Deine Gangster sind verletzt.,Combat lost. Your gangsters are injured.
+TURN,Runde %d · %s,Round %d · %s
+ENEMY_TURN,Gegner am Zug,Enemy turn
+YOUR_TURN,Deine Gang am Zug,Your gang’s turn
+MAYOR_DONE,Bürgermeister besiegt. $7000 und ein neuer Pass.,Mayor defeated. $7000 and new papers.
+TRANSPORT_DONE,Geldtransporter erbeutet!,Money transporter captured!
+LOOT,Beute: $%d.,Loot: $%d.
+NEED_GANG,Mindestens %d Gangmitglieder nötig.,Requires at least %d gang members.
+SAFE_REQUIREMENTS,"Tresor: Rang 2, Intelligenz 40, Kraft 25, Brutalität 25 nötig.","Safe: requires rank 2, intelligence 40, strength 25, brutality 25."
+SAFE_HELP,Links/rechts wählt das Rad. Oben/unten dreht es. Ein helles Klicken verrät die richtige Ziffer.,Left/right selects a wheel. Up/down turns it. A clear click indicates the correct digit.
+SAFE_CLICK,KLICK!,CLICK!
+SAFE_DULL,Klack.,Clunk.
+SAFE_ALARM,Alarm! Die Polizei kommt.,Alarm! Police incoming.
+SAFE_TURNS,Tresor · noch %d Drehungen,Safe · %d turns remaining
+PICK_CAUGHT,Beim Taschendiebstahl erwischt!,Caught pickpocketing!
+CAR_STOLEN,Auto gestohlen.,Stole a car.
+STORE_REQUIREMENTS,Überfall braucht eine Waffe und Brutalität 30; Betrug braucht Intelligenz 30.,Robbery needs a weapon and brutality 30; fraud needs intelligence 30.
+NO_TIP,Der Wirt hat keinen Tipp.,The bartender has no tip.
+NEED_TIP,Du brauchst zuerst den passenden Tipp aus einer Kneipe.,First obtain the matching tip from a pub.
+TIP_0,Tipp für $%d: Postzug im Bahnhof.,Tip for $%d: mail train at the station.
+TIP_1,Tipp für $%d: Gold in der Bank.,Tip for $%d: gold in the bank.
+TIP_2,Tipp für $%d: Geldtransporter an der Südstraße.,Tip for $%d: cash transport on the southern avenue.
+TIP_3,Tipp für $%d: $5000 in Waffenschmuggel investiert.,Tip for $%d: invested $5000 in gun running.
+TIP_4,Tipp für $%d: Bürgermeister an der Südstraße.,Tip for $%d: mayor on the southern avenue.
+POLICE_STOP,Polizeikontrolle. Was finden die Beamten?,Police checkpoint. What will the officers find?
+POLICE_CLEAR,Die Polizei lässt dich weitergehen.,Police let you pass.
+POLICE_PROTECTED,Deine Bestechung schützt dich diesmal.,Your protection worked this time.
+SEARCH,Polizeikontrolle,Police search
+CONTRABAND,Alkohol beschlagnahmt. Du wirst festgenommen.,Alcohol confiscated. You are under arrest.
+COUNTERFEIT,Die Polizei entdeckt dein Falschgeld.,Police discover your counterfeit money.
+WANTED,Die Polizei erkennt dich ohne gültigen Pass.,Police identify you without valid papers.
+COURT,Vor Gericht,In court
+COURT_HELP,Anwalt ab Rang 5: bis $10000; kann die Strafe verkürzen. Ohne Anwalt: 1 + Rang/2 Monate.,Lawyer at rank 5+: up to $10000; may shorten sentence. Without lawyer: 1 + rank/2 months.
+BRIBE_ACCEPTED,Bestechung angenommen. Du bist frei.,Bribe accepted. You are free.
+ESCAPED,Du bist entkommen!,You escaped!
+SENTENCED,Urteil: %d Monate Gefängnis.,Sentence: %d months in prison.
+PROTECTION,Polizeichef für %d Monate bestochen.,Commissioner bribed for %d months.
+FORGE_ALREADY,Du hast bereits gültige Fälschungen oder eine ungültige Menge gewählt.,You already have usable forgeries or selected an invalid quantity.
+FORGED,Fälschung erhalten. Kann monatlich auffliegen.,Forgery received. May expire each month.
+DISMISSED,Gangster entlassen.,Gangster dismissed.
+SUBWAY_RIDE,U-Bahn gefahren: $50.,Subway ride: $50.
+GAMBLE_WIN,Gewonnen! Auszahlung $%d.,Won! Payout $%d.
+GAMBLE_LOSE,Einsatz verloren.,Stake lost.
+LOAN_REFUSED,"Kredit nur ohne laufende Schulden oder eigenes Kreditgeschäft, bis $5000.",Loan requires no outstanding debt or owned credit business; maximum $5000.
+BORROWED,"Schulden $%d, fällig in %d Monaten.","Debt $%d, due in %d months."
+REPAID,$%d zurückgezahlt.,Repaid $%d.
+BUSINESS_BOUGHT,Kreditgeschäft gekauft. Investiere bis $5000.,Bought credit business. Invest up to $5000.
+INVEST_REFUSED,Eigenes Kreditgeschäft nötig. Investition insgesamt höchstens $5000.,Requires owned credit business. Total investment cannot exceed $5000.
+CONFIRM,Diese Aktion ausführen?,Perform this action?
+CONFIRM_NEW,Eine neue Kampagne ersetzt den automatischen Spielstand. Fortfahren?,A new campaign replaces the autosave. Continue?
+CONFIRM_LOAD,Aktuellen Fortschritt durch diesen Spielstand ersetzen?,Replace current progress with this save?
+CONFIRM_SAVE,Diesen manuellen Spielstand überschreiben?,Overwrite this manual save?
+CONFIRM_WAIT,Den Monat beenden? Übrige Schritte verfallen.,End the month? Remaining steps are lost.
+CONFIRM_FLEE,Kampf aufgeben? Dies zählt als Niederlage.,Surrender the fight? This counts as a defeat.
+VICTORY,DER PATE VON CHICAGO,THE DON OF CHICAGO
+TIME_UP,DIE ZEIT IST UM,TIME HAS RUN OUT
+VICTORY_TEXT,"Rang, Bürgermeister und Geldtransporter: Du beherrschst die Unterwelt.","Rank, mayor and money transporter: you rule the underworld."
+TIME_UP_TEXT,Die Kampagne ist vorbei. Für den Sieg fehlten noch Ziele.,The campaign is over. Victory requirements were not fulfilled.
+GOAL_HELP,"Sieg: %d Punkte UND Bürgermeister UND Geldtransporter. Tipps ab Rang 4, Gang ab Rang 5.","Victory: %d points AND mayor AND money transporter. Tips at rank 4, gang at rank 5."
+MAP_HELP,Straßen folgen. Neben einem Gebäude „Eintreten“ drücken. Fahrzeuge geben nächsten Monat mehr Schritte.,Follow streets. Press Enter next to a building. Vehicles give more steps next month.
+COMBAT_HELP,"Rot: deine Gang. Blau: Gegner. Richtung wählen, um einen Schritt zu gehen oder zu schießen. Gold markiert die aktive Figur.",Red: your gang. Blue: enemies. Choose direction to move one step or fire. Gold marks the active gangster.
+LOCATION_HELP,Aktion wählen. Menge und Gangster bei Bedarf einstellen. Kosten und Voraussetzungen stehen darunter.,Choose an action. Set quantity and gangster when needed. Costs and requirements appear below.
+CITY,CHICAGO · STADTPLAN,CHICAGO · CITY MAP
+NO_LOCATION,Kein Eingang in Reichweite,No entrance nearby
+CREDITS_TEXT,"Igelsofts Mafia (1986) als Vorbild. Verhaltensreferenz: drunkeneye/MAFIA.A8. Neue Grafik und Klänge für dieses Remake. Keine Referenz-Assets übernommen.
+Entwicklungsfassung: C64-Regelvergleich und Android-Abnahme noch offen.","Inspired by Igelsoft’s Mafia (1986). Behavioral reference: drunkeneye/MAFIA.A8. New graphics and sounds for this remake. No reference assets copied.
+Development build: C64 rule comparison and Android acceptance pending."
+PARAM_HELP,Auswahl,Selection
+DETAIL_WEAPON,$%d · Reichweite %d · Präzision %d · Wirkung %d, $%d · Range %d · Precision %d · Effect %d
+DETAIL_CAR,$%d · Kapazität %d · Schritte %d,$%d · Capacity %d · Steps %d
+LOC_PUB,Kneipe,Pub
+LOC_ARMS,Waffenladen,Gun shop
+LOC_CARS,Autohändler,Car dealer
+LOC_STORE,Geschäft,Store
+LOC_BANK,Bank,Bank
+LOC_POLICE,Polizeiwache,Police headquarters
+LOC_HIDEOUT,Unterkunft,Hideout
+LOC_FORGERY,Fälscher,Forger
+LOC_CASINO,Casino,Casino
+LOC_LOAN,Kredithai,Loan shark
+LOC_SUBWAY,U-Bahn,Subway
+LOC_STATION,Bahnhofskneipe,Station pub
+LOC_MAYOR,Bürgermeister,Mayor
+LOC_TRANSPORT,Geldtransporter,Money transporter
+WEAPON_HANDS,Hände,Hands
+WEAPON_COLT,Colt M1911,Colt M1911
+WEAPON_SAVAGE,Savage 1907,Savage 1907
+WEAPON_REMINGTON,Remington 11,Remington 11
+WEAPON_WINCHESTER,Winchester 97,Winchester 97
+WEAPON_SMITH,Smith & Wesson 10,Smith & Wesson 10
+WEAPON_THOMPSON,Thompson SMG,Thompson SMG
+WEAPON_BROWNING,Browning BAR,Browning BAR
+WEAPON_GRENADES,Handgranaten,Grenades
+CAR_FEET,Zu Fuß,On foot
+CAR_TALBOT,Talbot 90,Talbot 90
+CAR_CHEVY,Chevy Roadster,Chevy Roadster
+CAR_BUICK,Buick Century,Buick Century
+CAR_AUBURN,Auburn 120,Auburn 120
+CAR_CITROEN,Citroën t.a.,Citroën t.a.
+RANK_0,Anfänger,Rookie
+RANK_1,Schläger,Rowdy
+RANK_2,Kleiner Fisch,Small fry
+RANK_3,Langfinger,Snatch
+RANK_4,Ganove,Crook
+RANK_5,Mafiosi,Mafioso
+RANK_6,Bullenschreck,Cop fright
+RANK_7,Meuchelmörder,Assassin
+RANK_8,Gangsterboss,Gangster boss
+RANK_9,Rechte Hand,Right hand
+RANK_10,Der Pate,The Don
+ACT_JOB,Auftrag annehmen,Accept odd job
+HELP_JOB,"Rang 0–3. 1–3 Monate, $1000–3000. Kann Kämpfe auslösen.","Rank 0–3. 1–3 months, $1000–3000. May involve combat."
+ACT_WEAPON,Waffe kaufen / tauschen,Buy / trade weapon
+HELP_WEAPON,Gewählte Waffe für den gewählten Gangster kaufen. Alte Waffe wird in Zahlung genommen.,Buy selected weapon for selected gangster. Old weapon is traded in.
+ACT_CAR,Auto kaufen / tauschen,Buy / trade car
+HELP_CAR,Gewähltes Auto kaufen; alte Karre in Zahlung. Schritte steigen nächsten Monat.,Buy selected car; trade in old car. Movement increases next month.
+ACT_STEAL,Auto stehlen,Steal car
+HELP_STEAL,Kraft und Intelligenz helfen. Bei Fehlschlag bewaffneter Gegner.,Strength and intelligence help. Armed opponent on failure.
+ACT_BUY_ALCOHOL,Alkohol kaufen,Buy alcohol
+HELP_BUY_ALCOHOL,"Menge einstellen. $5–14 pro Flasche, nur freie Kapazität.","Set quantity. $5–14 per bottle, limited by free capacity."
+ACT_SELL_ALCOHOL,Alkohol verkaufen,Sell alcohol
+HELP_SELL_ALCOHOL,"Menge einstellen. $10–29 pro Flasche, Käufer nur manchmal interessiert.","Set quantity. $10–29 per bottle, buyers only sometimes interested."
+ACT_RECRUIT,Gangster anwerben,Recruit gangster
+HELP_RECRUIT,"Rang 5, Unterkunft, maximal acht Mitglieder. Angebot auswählen.","Rank 5, hideout, maximum eight members. Select offer."
+ACT_RENT,Unterkunft mieten,Rent hideout
+HELP_RENT,"Menge = Monate. $100 pro Monat, höchstens 36 im Voraus.","Quantity = months. $100 per month, up to 36 in advance."
+ACT_DISMISS,Gangster entlassen,Dismiss gangster
+HELP_DISMISS,Gewählten Gangster ohne Rückzahlung entlassen. Chef kann nicht entlassen werden.,Dismiss selected gangster without refund. Leader cannot be dismissed.
+ACT_RIVAL,Rivalen herausfordern,Challenge rivals
+HELP_RIVAL,Drei bewaffnete Rivalen. Taktischer Kampf.,Three armed rivals. Tactical combat.
+ACT_ROB_BANK,Bank überfallen,Rob bank
+HELP_ROB_BANK,"Rang 1, zwei Mitglieder. Möglicher Kampf gegen Wachen.","Rank 1, two members. Possible fight against guards."
+ACT_SAFE,Tresor knacken,Crack safe
+HELP_SAFE,"Rang 2. Chef braucht Kraft 25, Intelligenz 40, Brutalität 25. Kombination abhören.","Rank 2. Leader needs strength 25, intelligence 40, brutality 25. Listen to combination."
+ACT_ROB,Überfallen,Rob
+HELP_ROB,"Rang 2, Waffe, Brutalität 30. Wiederholung lockt Polizei.","Rank 2, weapon, brutality 30. Repeating attracts police."
+ACT_DECEIVE,Täuschen,Deceive
+HELP_DECEIVE,"Rang 2. Größere Beute, Wiederholung lockt Polizei.","Rank 2. More loot, repeating attracts police."
+ACT_BURGLE,Einbrechen,Burgle
+HELP_BURGLE,Rang 2. Bewaffnete Gegner möglich.,Rank 2. Armed opponents possible.
+ACT_FRAUD,Betrügen,Commit fraud
+HELP_FRAUD,"Rang 2, Intelligenz 30. Wiederholung lockt Polizei.","Rank 2, intelligence 30. Repeating attracts police."
+ACT_PICKPOCKET,Taschendiebstahl,Pickpocket
+HELP_PICKPOCKET,Gewählten Gangster einsetzen. Intelligenz hilft; Festnahme möglich.,Use selected gangster. Intelligence helps; arrest possible.
+ACT_RIDE,U-Bahn fahren,Ride subway
+HELP_RIDE,"$50, Wechsel zur anderen Haltestelle.","$50, travel to the other stop."
+ACT_PROTECTION,Polizeichef bestechen,Bribe commissioner
+HELP_PROTECTION,Menge = 1–12 Monate zu je $1000. Schutz nicht garantiert.,Quantity = 1–12 months at $1000 each. Protection not guaranteed.
+ACT_SURRENDER,Vor Gericht gehen,Go to court
+HELP_SURRENDER,Strafe und Verlust von Tipps/Aufträgen möglich.,Sentence and loss of tips/jobs possible.
+ACT_ID,Pässe fälschen lassen,Forge IDs
+HELP_ID,$1000 je Gangmitglied. Monatliche Gefahr: Pässe unbrauchbar.,$1000 per member. Monthly risk of papers expiring.
+ACT_FAKE,Falschgeld kaufen,Buy counterfeit money
+HELP_FAKE,"Einsatz bis $5000. Tauscht Geld gegen Falschgeld, Polizei kann es erkennen.",Stake up to $5000. Exchanges cash for counterfeits; police may detect it.
+ACT_BORROW,Kredit aufnehmen,Borrow
+HELP_BORROW,"Menge = bis $5000. 6,25% Aufschlag; nach 6–9 Monaten kommen Eintreiber.",Quantity = up to $5000. 6.25% surcharge; collectors arrive after 6–9 months.
+ACT_REPAY,Kredit zurückzahlen,Repay loan
+HELP_REPAY,Menge = Rückzahlung in Dollar.,Quantity = repayment in dollars.
+ACT_BUSINESS,Kreditgeschäft kaufen / verkaufen,Buy / sell credit business
+HELP_BUSINESS,"$5000–6000 Kauf, $4500–5500 Verkauf. Verkauf verliert Investition.","$5000–6000 to buy, $4500–5500 to sell. Selling loses investment."
+ACT_INVEST,Investieren,Invest
+HELP_INVEST,"Menge = Dollar. Eigenes Geschäft nötig, Gesamtgrenze $5000.","Quantity = dollars. Owned business required, total limit $5000."
+ACT_WITHDRAW,Investition abheben,Withdraw investment
+HELP_WITHDRAW,Menge = abzuhebende Dollar.,Quantity = dollars to withdraw.
+ACT_COLLECT,Schulden eintreiben,Collect debts
+HELP_COLLECT,Eigenes Kreditgeschäft und Investition nötig. Bewaffneter Schuldner.,Requires owned business and investment. Armed debtor.
+ACT_MAYOR,Bürgermeister angreifen,Attack mayor
+HELP_MAYOR,"Tipp nötig. Erst fünf Leibwachen, dann der Bürgermeister.","Tip required. Five bodyguards, then the mayor."
+ACT_TRANSPORT,Geldtransporter überfallen,Rob money transporter
+HELP_TRANSPORT,Tipp und drei Gangster nötig. Zehn schwer bewaffnete Wachen.,Tip and three gangsters required. Ten heavily armed guards.
+ACT_TIP,Information kaufen,Buy information
+HELP_TIP,Rang 4. $1000–2500. Zufälliger Tipp; Waffenschmuggel kostet zusätzlich $5000.,Rank 4. $1000–2500. Random tip; gun running costs another $5000.
+ACT_TRAIN_ROB,Postzug überfallen,Rob mail train
+HELP_TRAIN_ROB,Passender Tipp und drei Gangster nötig. Drei bewaffnete Wachen.,Matching tip and three gangsters required. Three armed guards.
+ACT_TRAIN,Schießstand,Shooting range
+HELP_TRAIN,"$800 + $200 × Rang. +5 Kraft, +3 Intelligenz, +2 Brutalität. Ein Training pro Monat.","$800 + $200 × rank. +5 strength, +3 intelligence, +2 brutality. One training per month."
+ACT_CAMP,Trainingslager,Training camp
+HELP_CAMP,Rang 5. $2500 + $500 × Rang. +8–15 in jedem Attribut.,Rank 5. $2500 + $500 × rank. +8–15 to each attribute.
+ACT_GAMBLE1,Glücksspiel 1,Gambling 1
+HELP_GAMBLE1,Einsatz bis $10000. Gewinnchance 1/2; Auszahlung 1.5 × Einsatz.,Stake up to $10000. Win chance 1/2; payout 1.5 × stake.
+ACT_GAMBLE2,Glücksspiel 2,Gambling 2
+HELP_GAMBLE2,Einsatz bis $10000. Gewinnchance 1/3; Auszahlung 2.5 × Einsatz.,Stake up to $10000. Win chance 1/3; payout 2.5 × stake.
+ACT_GAMBLE3,Glücksspiel 3,Gambling 3
+HELP_GAMBLE3,Einsatz bis $10000. Gewinnchance 1/4; Auszahlung 3.5 × Einsatz.,Stake up to $10000. Win chance 1/4; payout 3.5 × stake.
+ENEMY_JOB,Gegner,Opponent
+ENEMY_DEBT,Gegner,Opponent
+ENEMY_MAYOR_GUARDS,Gegner,Opponent
+ENEMY_MAYOR,Gegner,Opponent
+ENEMY_TRANSPORT,Gegner,Opponent
+ENEMY_BANK,Gegner,Opponent
+ENEMY_TRAIN,Gegner,Opponent
+ENEMY_STORE,Gegner,Opponent
+ENEMY_COLLECT,Gegner,Opponent
+ENEMY_POLICE,Gegner,Opponent
+ENEMY_THEFT,Gegner,Opponent
+WEAPON_KNIFE,Messer,Knife
+WEAPON_CLUB,Knüppel,Club
+WEAPON_CHAIN,Schlagkette,Chain
+WEAPON_STARS,Wurfsterne,Throwing stars
+WEAPON_REVOLVER,Revolver,Revolver
+WEAPON_RIFLE,Gewehr,Rifle
+WEAPON_SMG,Maschinenpistole,Submachine gun
