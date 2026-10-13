@@ -6,6 +6,7 @@ var shell: Variant
 var state: Node
 var viewport: SubViewport
 var layout_failures: int = 0
+var capture_directory: String = SCREEN_DIRECTORY
 
 
 func _initialize() -> void:
@@ -26,7 +27,9 @@ func _run() -> void:
 	root.get_node("Settings").hints = true
 	viewport.add_child(shell)
 	shell.set_process_unhandled_key_input(false)
-	DirAccess.make_dir_recursive_absolute(SCREEN_DIRECTORY)
+	if "--city" in OS.get_cmdline_user_args():
+		capture_directory = "res://builds/screens/city_readability"
+	DirAccess.make_dir_recursive_absolute(capture_directory)
 	var locales: Array[String] = ["de", "en"]
 	var widths: Array[int] = [1152, 1296, 1404, 1440]
 	if "--quick" in OS.get_cmdline_user_args():
@@ -50,6 +53,9 @@ func _run() -> void:
 			shell._game()
 			await capture(prefix + "city_no_hints")
 			root.get_node("Settings").hints = true
+			if "--city" in OS.get_cmdline_user_args():
+				await _city_cases(prefix)
+				continue
 			for location: Dictionary in Catalog.locations():
 				state.campaign.location = location["id"]
 				shell._game()
@@ -117,6 +123,25 @@ func _run() -> void:
 	quit(0 if layout_failures == 0 else 1)
 
 
+func _city_cases(prefix: String) -> void:
+	for hints: bool in [true, false]:
+		root.get_node("Settings").hints = hints
+		state.campaign.objectives.tips = 20
+		for location: Dictionary in Catalog.locations():
+			state.campaign.position = Vector2i(location["x"], location["y"] + 1)
+			shell._game()
+			await capture(prefix + "entrance_%s_%s" % [location["id"], "hints" if hints else "no_hints"])
+		for cell: Vector2i in [Vector2i(1, 3), Vector2i(30, 3), Vector2i(3, 1), Vector2i(3, 22), Vector2i(1, 21), Vector2i(30, 21), Vector2i(3, 5), Vector2i(7, 5)]:
+			state.campaign.position = cell
+			shell._game()
+			await capture(prefix + "boundary_%d_%d_%s" % [cell.x, cell.y, "hints" if hints else "no_hints"])
+	state.campaign.objectives.mayor_completed = true
+	state.campaign.objectives.transporter_completed = true
+	shell._game()
+	await capture(prefix + "objectives_completed")
+	root.get_node("Settings").hints = true
+
+
 func capture(identifier: String) -> void:
 	if identifier.ends_with("_menu"):
 		print("CAPTURING ", identifier)
@@ -133,8 +158,17 @@ func capture(identifier: String) -> void:
 			if map_rect.intersects(shell.get_node("%" + overlay).get_global_rect()):
 				layout_failures += 1
 				push_error(identifier + ": map overlaps " + overlay)
+		if state.campaign.combat.is_empty():
+			var board: Variant = shell.get_node("%CityBoard")
+			if not clear_area.grow(1).encloses(board.player_rect()):
+				layout_failures += 1
+				push_error(identifier + ": player indicator leaves clear area")
+			for marker: Node2D in board.get_node("Locations").get_children():
+				if marker.visible and not clear_area.grow(1).encloses(marker.annotation_rect()):
+					layout_failures += 1
+					push_error(identifier + ": " + str(marker.name) + " annotation leaves clear area")
 	await RenderingServer.frame_post_draw
-	viewport.get_texture().get_image().save_png("%s/%s.png" % [SCREEN_DIRECTORY, identifier])
+	viewport.get_texture().get_image().save_png("%s/%s.png" % [capture_directory, identifier])
 
 
 func _check_layout(node: Node, identifier: String, inside_scroll: bool = false) -> void:

@@ -77,7 +77,9 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("action", choices=["backup", "restore", "verify", "capture", "state"])
     parser.add_argument("path", nargs="?")
+    parser.add_argument("--backup-directory", default=str(BACKUP))
     args = parser.parse_args()
+    BACKUP = Path(args.backup_directory)
     if args.action == "capture":
         capture(args.path)
     else:

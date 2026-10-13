@@ -51,7 +51,16 @@ Generated character sprites, location markers and terrain use nearest filtering.
 `assets/maps/prompts.json` records the built-in ImageGen prompts and original
 source paths; `tools/prepare_map_art.gd` trims transparent padding and downsamples
 those originals into small game assets. Scene-authored objects retain logical
-cell positions. UI controls scale independently, preserving text and touch targets.
+cell positions. Street annotations counter-scale to remain readable: a cropped
+26-pixel player character sits inside a cyan ring, and reusable location badges
+show short translated labels and exact entrance connectors. Labels move below a
+raised badge if their normal rooftop position would overlap the player. Terrain
+is dimmed separately from annotations, and a top margin reserves label space.
+UI controls scale independently, preserving text and touch targets.
+
+Android platform Back requests are coalesced within 50 ms because a single press
+can deliver a duplicate request. The first request navigates immediately; on-screen
+buttons bypass this duplicate filter.
 The scene responds to viewport changes and applies Android safe-area margins.
 Only the hold-movement and enemy-action timers run repeated gameplay callbacks.
 No server, account, advertising or Internet permission is involved.

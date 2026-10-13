@@ -63,7 +63,9 @@ The visual runner captures all screens and location types in German and English
 at 16:9, 18:9, 19.5:9 and 20:9 under `builds/screens/maps/`. Its 424 captures include
 all six battle settings, full parties, move/attack modes, and hints on/off. It
 checks fixed controls for overflow and keeps the entire playable grid clear of UI.
-Use `-- --quick` for just the German 16:9 group. Rendering needs a
+Use `-- --quick` for just the German 16:9 group. Run with `-- --city` to capture
+488 city readability cases under `builds/screens/city_readability/`, including
+every entrance, boundaries, player/label clearance and objective visibility. Rendering needs a
 graphical environment. The deterministic suite checks rules, scene flows,
 localization, saves and targeted endgame fights; see STATUS for ordinary
 progression and device coverage.

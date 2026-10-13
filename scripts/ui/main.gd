@@ -1,6 +1,8 @@
 extends Control
 
 const SCREENS := ["Menu", "NewGame", "SettingsScreen", "Game", "Location", "StatusScreen", "SaveScreen", "PoliceScreen", "SafeScreen", "EndingScreen", "CreditsScreen", "DebugScreen"]
+const BACK_REQUEST_DUPLICATE_MS := 50
+var last_platform_back_ms: int = -BACK_REQUEST_DUPLICATE_MS
 var route: String = "Menu"
 var return_route: String = "Menu"
 var saving: bool = false
@@ -363,9 +365,19 @@ func _quit() -> void:
 		SaveManager.save_campaign(GameState.campaign)
 	get_tree().quit()
 
+func _platform_back(now_msec: int, coalesce: bool) -> void:
+	# Android can deliver two platform requests for one Back press. The first
+	# navigates immediately; this short window only ignores its duplicate.
+	# On-screen buttons call _back directly and are never delayed or suppressed.
+	if coalesce and now_msec - last_platform_back_ms < BACK_REQUEST_DUPLICATE_MS:
+		return
+	last_platform_back_ms = now_msec
+	_back()
+
+
 func _notification(what: int) -> void:
 	if what == NOTIFICATION_WM_GO_BACK_REQUEST:
-		_back()
+		_platform_back(Time.get_ticks_msec(), OS.get_name() == "Android")
 	elif what == NOTIFICATION_WM_CLOSE_REQUEST:
 		_quit()
 

@@ -302,3 +302,17 @@ WEAPON_REVOLVER,Revolver,Revolver
 WEAPON_RIFLE,Gewehr,Rifle
 WEAPON_SMG,Maschinenpistole,Submachine gun
 SURRENDER,Aufgeben,Surrender
+MAP_LOC_PUB,Kneipe,Pub
+MAP_LOC_ARMS,Waffen,Arms
+MAP_LOC_CARS,Autos,Cars
+MAP_LOC_STORE,Laden,Store
+MAP_LOC_BANK,Bank,Bank
+MAP_LOC_POLICE,Polizei,Police
+MAP_LOC_HIDEOUT,Versteck,Hideout
+MAP_LOC_FORGERY,Fälscher,Forgery
+MAP_LOC_CASINO,Casino,Casino
+MAP_LOC_LOAN,Kredit,Loans
+MAP_LOC_SUBWAY,U-Bahn,Subway
+MAP_LOC_STATION,Bahnhof,Station
+MAP_LOC_MAYOR,Rathaus,Mayor
+MAP_LOC_TRANSPORT,Fracht,Cargo

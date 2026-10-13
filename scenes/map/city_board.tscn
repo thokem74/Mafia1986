@@ -17,6 +17,8 @@
 [ext_resource type="Texture2D" path="res://assets/maps/markers/hideout.png" id="hideout"]
 [ext_resource type="Texture2D" path="res://assets/maps/markers/mayor.png" id="mayor"]
 
+[ext_resource type="PackedScene" path="res://scenes/map/city_marker.tscn" id="marker"]
+
 [ext_resource type="Shader" path="res://assets/maps/city_edges.gdshader" id="edges"]
 [sub_resource type="ShaderMaterial" id="edge_material"]
 shader = ExtResource("edges")
@@ -27,92 +29,175 @@ texture_filter = 1
 
 [node name="Background" type="Sprite2D" parent="."]
 material = SubResource("edge_material")
+modulate = Color(0.55, 0.55, 0.55, 1)
 texture = ExtResource("2")
 centered = false
 
 [node name="Locations" type="Node2D" parent="."]
 
-[node name="pub" type="Sprite2D" parent="Locations"]
-texture = ExtResource("pub")
+[node name="pub" parent="Locations" instance=ExtResource("marker")]
 position = Vector2(55, 25)
 
-[node name="arms" type="Sprite2D" parent="Locations"]
-texture = ExtResource("arms")
+[node name="Icon" parent="Locations/pub/Annotation" index="3"]
+texture = ExtResource("pub")
+
+[node name="arms" parent="Locations" instance=ExtResource("marker")]
 position = Vector2(95, 25)
 
-[node name="cars" type="Sprite2D" parent="Locations"]
-texture = ExtResource("cars")
+[node name="Icon" parent="Locations/arms/Annotation" index="3"]
+texture = ExtResource("arms")
+
+[node name="cars" parent="Locations" instance=ExtResource("marker")]
 position = Vector2(135, 25)
 
-[node name="store" type="Sprite2D" parent="Locations"]
-texture = ExtResource("store")
+[node name="Icon" parent="Locations/cars/Annotation" index="3"]
+texture = ExtResource("cars")
+
+[node name="store" parent="Locations" instance=ExtResource("marker")]
 position = Vector2(175, 25)
 
-[node name="bank" type="Sprite2D" parent="Locations"]
-texture = ExtResource("bank")
+[node name="Icon" parent="Locations/store/Annotation" index="3"]
+texture = ExtResource("store")
+
+[node name="bank" parent="Locations" instance=ExtResource("marker")]
 position = Vector2(215, 25)
 
-[node name="police" type="Sprite2D" parent="Locations"]
-texture = ExtResource("police")
+[node name="Icon" parent="Locations/bank/Annotation" index="3"]
+texture = ExtResource("bank")
+
+[node name="police" parent="Locations" instance=ExtResource("marker")]
 position = Vector2(255, 25)
 
-[node name="hideout" type="Sprite2D" parent="Locations"]
-texture = ExtResource("hideout")
+[node name="Icon" parent="Locations/police/Annotation" index="3"]
+texture = ExtResource("police")
+
+[node name="hideout" parent="Locations" instance=ExtResource("marker")]
 position = Vector2(55, 85)
 
-[node name="forgery" type="Sprite2D" parent="Locations"]
-texture = ExtResource("forgery")
+[node name="Icon" parent="Locations/hideout/Annotation" index="3"]
+texture = ExtResource("hideout")
+
+[node name="forgery" parent="Locations" instance=ExtResource("marker")]
 position = Vector2(95, 85)
 
-[node name="casino" type="Sprite2D" parent="Locations"]
-texture = ExtResource("casino")
+[node name="Icon" parent="Locations/forgery/Annotation" index="3"]
+texture = ExtResource("forgery")
+
+[node name="casino" parent="Locations" instance=ExtResource("marker")]
 position = Vector2(135, 85)
 
-[node name="loan" type="Sprite2D" parent="Locations"]
-texture = ExtResource("loan")
+[node name="Icon" parent="Locations/casino/Annotation" index="3"]
+texture = ExtResource("casino")
+
+[node name="loan" parent="Locations" instance=ExtResource("marker")]
 position = Vector2(175, 85)
 
-[node name="subway" type="Sprite2D" parent="Locations"]
-texture = ExtResource("subway")
+[node name="Icon" parent="Locations/loan/Annotation" index="3"]
+texture = ExtResource("loan")
+
+[node name="subway" parent="Locations" instance=ExtResource("marker")]
 position = Vector2(215, 85)
 
-[node name="station" type="Sprite2D" parent="Locations"]
-texture = ExtResource("station")
+[node name="Icon" parent="Locations/subway/Annotation" index="3"]
+texture = ExtResource("subway")
+
+[node name="station" parent="Locations" instance=ExtResource("marker")]
 position = Vector2(255, 85)
 
-[node name="station_west" type="Sprite2D" parent="Locations"]
+[node name="Icon" parent="Locations/station/Annotation" index="3"]
 texture = ExtResource("station")
+
+[node name="station_west" parent="Locations" instance=ExtResource("marker")]
 position = Vector2(55, 145)
 
-[node name="pub_south" type="Sprite2D" parent="Locations"]
-texture = ExtResource("pub")
+[node name="Icon" parent="Locations/station_west/Annotation" index="3"]
+texture = ExtResource("station")
+
+[node name="pub_south" parent="Locations" instance=ExtResource("marker")]
 position = Vector2(95, 145)
 
-[node name="arms_south" type="Sprite2D" parent="Locations"]
-texture = ExtResource("arms")
+[node name="Icon" parent="Locations/pub_south/Annotation" index="3"]
+texture = ExtResource("pub")
+
+[node name="arms_south" parent="Locations" instance=ExtResource("marker")]
 position = Vector2(135, 145)
 
-[node name="store_south" type="Sprite2D" parent="Locations"]
-texture = ExtResource("store")
+[node name="Icon" parent="Locations/arms_south/Annotation" index="3"]
+texture = ExtResource("arms")
+
+[node name="store_south" parent="Locations" instance=ExtResource("marker")]
 position = Vector2(175, 145)
 
-[node name="bank_east" type="Sprite2D" parent="Locations"]
-texture = ExtResource("bank")
+[node name="Icon" parent="Locations/store_south/Annotation" index="3"]
+texture = ExtResource("store")
+
+[node name="bank_east" parent="Locations" instance=ExtResource("marker")]
 position = Vector2(215, 145)
 
-[node name="subway_south" type="Sprite2D" parent="Locations"]
-texture = ExtResource("subway")
+[node name="Icon" parent="Locations/bank_east/Annotation" index="3"]
+texture = ExtResource("bank")
+
+[node name="subway_south" parent="Locations" instance=ExtResource("marker")]
 position = Vector2(255, 145)
 
-[node name="mayor" type="Sprite2D" parent="Locations"]
-texture = ExtResource("mayor")
+[node name="Icon" parent="Locations/subway_south/Annotation" index="3"]
+texture = ExtResource("subway")
+
+[node name="mayor" parent="Locations" instance=ExtResource("marker")]
 position = Vector2(135, 205)
 
-[node name="transport" type="Sprite2D" parent="Locations"]
-texture = ExtResource("transport")
+[node name="Icon" parent="Locations/mayor/Annotation" index="3"]
+texture = ExtResource("mayor")
+
+[node name="transport" parent="Locations" instance=ExtResource("marker")]
 position = Vector2(215, 205)
 
-[node name="Player" type="Sprite2D" parent="."]
-texture = ExtResource("3")
+[node name="Icon" parent="Locations/transport/Annotation" index="3"]
+texture = ExtResource("transport")
+
+[node name="Player" type="Node2D" parent="."]
 position = Vector2(35, 35)
-scale = Vector2(0.7, 0.7)
+z_index = 2
+
+[node name="Backing" type="Polygon2D" parent="Player"]
+polygon = PackedVector2Array(18.000, 0.000, 17.654, 3.512, 16.630, 6.888, 14.966, 10.000, 12.728, 12.728, 10.000, 14.966, 6.888, 16.630, 3.512, 17.654, 0.000, 18.000, -3.512, 17.654, -6.888, 16.630, -10.000, 14.966, -12.728, 12.728, -14.966, 10.000, -16.630, 6.888, -17.654, 3.512, -18.000, 0.000, -17.654, -3.512, -16.630, -6.888, -14.966, -10.000, -12.728, -12.728, -10.000, -14.966, -6.888, -16.630, -3.512, -17.654, -0.000, -18.000, 3.512, -17.654, 6.888, -16.630, 10.000, -14.966, 12.728, -12.728, 14.966, -10.000, 16.630, -6.888, 17.654, -3.512)
+color = Color(0.015, 0.025, 0.045, 0.8)
+
+[node name="Outline" type="Line2D" parent="Player"]
+points = PackedVector2Array(18.000, 0.000, 17.654, 3.512, 16.630, 6.888, 14.966, 10.000, 12.728, 12.728, 10.000, 14.966, 6.888, 16.630, 3.512, 17.654, 0.000, 18.000, -3.512, 17.654, -6.888, 16.630, -10.000, 14.966, -12.728, 12.728, -14.966, 10.000, -16.630, 6.888, -17.654, 3.512, -18.000, 0.000, -17.654, -3.512, -16.630, -6.888, -14.966, -10.000, -12.728, -12.728, -10.000, -14.966, -6.888, -16.630, -3.512, -17.654, -0.000, -18.000, 3.512, -17.654, 6.888, -16.630, 10.000, -14.966, 12.728, -12.728, 14.966, -10.000, 16.630, -6.888, 17.654, -3.512)
+closed = true
+width = 4.0
+default_color = Color(0.015, 0.025, 0.045, 1)
+
+[node name="Ring" type="Line2D" parent="Player"]
+points = PackedVector2Array(18.000, 0.000, 17.654, 3.512, 16.630, 6.888, 14.966, 10.000, 12.728, 12.728, 10.000, 14.966, 6.888, 16.630, 3.512, 17.654, 0.000, 18.000, -3.512, 17.654, -6.888, 16.630, -10.000, 14.966, -12.728, 12.728, -14.966, 10.000, -16.630, 6.888, -17.654, 3.512, -18.000, 0.000, -17.654, -3.512, -16.630, -6.888, -14.966, -10.000, -12.728, -12.728, -10.000, -14.966, -6.888, -16.630, -3.512, -17.654, -0.000, -18.000, 3.512, -17.654, 6.888, -16.630, 10.000, -14.966, 12.728, -12.728, 14.966, -10.000, 16.630, -6.888, 17.654, -3.512)
+closed = true
+width = 2.0
+default_color = Color(0.65, 0.95, 1, 1)
+
+[node name="Character" type="Sprite2D" parent="Player"]
+texture = ExtResource("3")
+region_enabled = true
+region_rect = Rect2(5, 3, 10, 13)
+scale = Vector2(2, 2)
+
+[editable path="Locations/pub"]
+[editable path="Locations/arms"]
+[editable path="Locations/cars"]
+[editable path="Locations/store"]
+[editable path="Locations/bank"]
+[editable path="Locations/police"]
+[editable path="Locations/hideout"]
+[editable path="Locations/forgery"]
+[editable path="Locations/casino"]
+[editable path="Locations/loan"]
+[editable path="Locations/subway"]
+[editable path="Locations/station"]
+[editable path="Locations/station_west"]
+[editable path="Locations/pub_south"]
+[editable path="Locations/arms_south"]
+[editable path="Locations/store_south"]
+[editable path="Locations/bank_east"]
+[editable path="Locations/subway_south"]
+[editable path="Locations/mayor"]
+[editable path="Locations/transport"]

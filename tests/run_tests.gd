@@ -302,6 +302,15 @@ func _test_scenes() -> void:
 	await process_frame
 	check(shell.route == "Location", "Scene-based location opens")
 	check(shell.get_node("%LocationPanel/LocationHint").visible, "Location hints are inline")
+	shell._platform_back(1000, true)
+	check(shell.route == "Game", "Android Back leaves a location in one step")
+	shell._platform_back(1014, true)
+	check(shell.route == "Game", "Paired Android Back request does not skip the map")
+	shell._platform_back(1051, true)
+	check(shell.route == "Menu", "Next distinct Android Back press navigates immediately")
+	shell._game()
+	shell.get_node("%Enter").pressed.emit()
+	await process_frame
 	var recruit_button: Button = shell.get_node("%LocationPanel/ActionScroll/Actions").get_child(2)
 	recruit_button.pressed.emit()
 	check(recruit_button.button_pressed and not shell.get_node("%LocationPanel/ActionScroll/Actions").get_child(0).button_pressed, "Location action selection has a single highlight")
@@ -380,6 +389,7 @@ func _test_scenes() -> void:
 			check(clear_area.grow(1).encloses(presentation.map_rect), "Whole grid fits clear area: %s/%d" % [combat, width])
 			var expected_ratio := 2.0 if combat else 4.0 / 3.0
 			check(is_equal_approx(presentation.map_rect.size.x / presentation.map_rect.size.y, expected_ratio), "Map scaling preserves aspect ratio")
+	await _test_city_annotations(shell)
 	state.campaign.combat = {}
 	for location: Dictionary in Catalog.locations():
 		state.campaign.location = location["id"]
@@ -394,3 +404,62 @@ func _test_scenes() -> void:
 	await create_timer(0.1).timeout
 	shell.queue_free()
 	await process_frame
+
+
+func _test_city_annotations(shell: Control) -> void:
+	var board: Variant = shell.get_node("%CityBoard")
+	var presentation: Variant = shell.get_node("%MapWorld")
+	state.campaign.combat = {}
+	state.campaign.location = ""
+	state.campaign.objectives.tips = 20
+	presentation.refresh(state.campaign)
+	for location: Dictionary in Catalog.locations():
+		state.campaign.position = Vector2i(location["x"], location["y"] + 1)
+		board.refresh(state.campaign)
+		var target := CityRules.nearby(state.campaign)
+		for marker: Node2D in board.get_node("Locations").get_children():
+			var item := Catalog.location(str(marker.name))
+			check(marker.position == (Vector2(item["x"], item["y"]) + Vector2(0.5, 0.5)) * 10, "Marker connector anchors to catalog entrance")
+			check(marker.highlighted == (not target.is_empty() and marker.name == target[0]["id"]), "Marker highlight matches Enter destination")
+			check(marker.get_node("Annotation/Icon").texture.resource_path == "res://assets/maps/markers/%s.png" % item["kind"], "Location has its own icon")
+	for locale: String in ["de", "en"]:
+		TranslationServer.set_locale(locale)
+		for width: int in [1152, 1296, 1404, 1440]:
+			presentation.combat_visible = false
+			presentation.fit_to(Rect2(24, 130, width - 348, 410))
+			board.refresh(state.campaign)
+			await process_frame
+			await process_frame
+			# The shell also queues a fit to its real viewport; apply the simulated
+			# phone rectangle after that queued layout has settled.
+			presentation.fit_to(Rect2(24, 130, width - 348, 410))
+			var figure: Sprite2D = board.get_node("Player/Character")
+			check(is_equal_approx(figure.region_rect.size.y * figure.global_scale.y, 26.0), "Visible character stays 26 pixels tall")
+			for marker: Node2D in board.get_node("Locations").get_children():
+				var label: Label = marker.get_node("Annotation/Name/Text")
+				check(not label.text.begins_with("MAP_LOC_"), "Every location has a translated short label")
+				var font := label.get_theme_font("font")
+				check(font.get_string_size(label.text, HORIZONTAL_ALIGNMENT_LEFT, -1, 14).x <= label.size.x + 1, "Short label fits without clipping: %s/%s" % [locale, marker.name])
+			var overlap := ""
+			for y: int in CityRules.SIZE.y:
+				for x: int in CityRules.SIZE.x:
+					if not CityRules.walkable(Vector2i(x, y)):
+						continue
+					state.campaign.position = Vector2i(x, y)
+					board.refresh(state.campaign)
+					for marker: Node2D in board.get_node("Locations").get_children():
+						for part: String in ["Name", "Badge"]:
+							var visual: Control = marker.get_node("Annotation/" + part)
+							if marker.visible and visual.get_global_rect().intersects(board.character_rect()):
+								overlap = "%s/%s at %d,%d: %s / %s" % [marker.name, part, x, y, visual.get_global_rect(), board.character_rect()]
+			check(overlap.is_empty(), "Annotations clear the character on every street: %s/%d %s" % [locale, width, overlap])
+	for tips: int in [0, 20]:
+		for completed: bool in [false, true]:
+			state.campaign.objectives.tips = tips
+			state.campaign.objectives.mayor_completed = completed
+			state.campaign.objectives.transporter_completed = completed
+			board.refresh(state.campaign)
+			check(board.get_node("Locations/mayor").visible == (tips == 20 and not completed), "Mayor marker follows unlock/completion rules")
+			check(board.get_node("Locations/transport").visible == (tips == 20 and not completed), "Cargo marker follows unlock/completion rules")
+	state.campaign.objectives.mayor_completed = false
+	state.campaign.objectives.transporter_completed = false

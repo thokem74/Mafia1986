@@ -1,0 +1,78 @@
+[gd_scene format=3]
+[ext_resource type="Script" path="res://scripts/map/city_marker.gd" id="script"]
+[ext_resource type="Texture2D" path="res://assets/maps/markers/pub.png" id="icon"]
+[ext_resource type="FontFile" path="res://assets/fonts/AdwaitaSans-Regular.ttf" id="font"]
+
+[sub_resource type="StyleBoxFlat" id="badge_style"]
+bg_color = Color(0.025, 0.045, 0.07, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.95, 0.76, 0.43, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_left = 5
+corner_radius_bottom_right = 5
+
+[sub_resource type="StyleBoxFlat" id="label_style"]
+bg_color = Color(0.015, 0.025, 0.045, 0.96)
+content_margin_left = 3.0
+content_margin_right = 3.0
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_left = 3
+corner_radius_bottom_right = 3
+
+[node name="CityMarker" type="Node2D"]
+script = ExtResource("script")
+texture_filter = 1
+
+[node name="Annotation" type="Node2D" parent="."]
+
+[node name="Connector" type="Line2D" parent="Annotation"]
+points = PackedVector2Array(0, 0, 0, -6)
+width = 1.0
+default_color = Color(0.95, 0.76, 0.43, 1)
+
+[node name="Entrance" type="Polygon2D" parent="Annotation"]
+polygon = PackedVector2Array(0, -2, 2, 0, 0, 2, -2, 0)
+color = Color(0.95, 0.76, 0.43, 1)
+
+[node name="Badge" type="Panel" parent="Annotation"]
+offset_left = -12.0
+offset_top = -30.0
+offset_right = 12.0
+offset_bottom = -6.0
+mouse_filter = 2
+theme_override_styles/panel = SubResource("badge_style")
+
+[node name="Icon" type="Sprite2D" parent="Annotation"]
+position = Vector2(0, -18)
+texture = ExtResource("icon")
+scale = Vector2(1.285714, 1.285714)
+
+[node name="Selected" type="Line2D" parent="Annotation"]
+visible = false
+points = PackedVector2Array(-13, -31, 13, -31, 13, -5, -13, -5)
+closed = true
+width = 2.0
+default_color = Color(0.65, 0.95, 1, 1)
+
+[node name="Name" type="PanelContainer" parent="Annotation"]
+offset_left = -32.0
+offset_top = -58.0
+offset_right = 32.0
+offset_bottom = -38.0
+mouse_filter = 2
+theme_override_styles/panel = SubResource("label_style")
+
+[node name="Text" type="Label" parent="Annotation/Name"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_fonts/font = ExtResource("font")
+theme_override_font_sizes/font_size = 14
+theme_override_colors/font_color = Color(1, 0.93, 0.76, 1)
+horizontal_alignment = 1
+vertical_alignment = 1
+text = "MAP_LOC_PUB"
