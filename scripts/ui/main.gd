@@ -14,6 +14,7 @@ func _ready() -> void:
 	GameState.changed.connect(_campaign_changed)
 	Settings.changed.connect(_settings_changed)
 	get_viewport().size_changed.connect(_safe_area)
+	%MapArea.resized.connect(_fit_map)
 	%New.pressed.connect(func(): _show("NewGame"))
 	%Continue.pressed.connect(func(): _load("autosave"))
 	%Load.pressed.connect(func(): _saves(false))
@@ -68,16 +69,17 @@ func _show(screen: String) -> void:
 		%SafeDPad.stop()
 	%AiTimer.stop()
 	route = screen
-	%Background.show_screen(screen, GameState.campaign)
+	%MapWorld.visible = screen == "Game"
+	%Background.visible = screen != "Game"
+	%Shade.visible = screen != "Game"
+	if screen != "Game":
+		%Background.show_screen(screen, GameState.campaign)
 	for identifier: String in SCREENS:
 		get_node("%" + identifier).visible = identifier == screen
 	%Back.visible = screen != "Menu"
 	%MenuButton.visible = screen != "Menu"
 	%Continue.disabled = not SaveManager.exists("autosave")
 	%Quit.visible = OS.get_name() != "Android"
-	if screen == "Menu":
-		%CityBoard.get_parent().render_target_update_mode = SubViewport.UPDATE_DISABLED
-		%CombatBoard.get_parent().render_target_update_mode = SubViewport.UPDATE_DISABLED
 
 func _game() -> void:
 	var campaign: Campaign = GameState.campaign
@@ -110,15 +112,11 @@ func _game() -> void:
 		%SafeFeedback.text = tr(campaign.safe["feedback"])
 	elif not campaign.combat.is_empty():
 		_show("Game")
-		%CityImage.hide()
-		%CombatImage.show()
-		%CityBoard.get_parent().render_target_update_mode = SubViewport.UPDATE_DISABLED
-		%CombatBoard.get_parent().render_target_update_mode = SubViewport.UPDATE_ONCE
-		%CombatBoard.refresh(campaign)
+		%MapWorld.refresh(campaign)
 		var unit := CombatRules.active(campaign)
 		var player_turn: bool = unit["side"] == 0
 		%BoardTitle.text = tr("TURN") % [campaign.combat["round"], _translated(str(unit["name"]))]
-		%ActiveInfo.text = "%s\n%s %d · %s\n%s" % [tr("YOUR_TURN" if player_turn else "ENEMY_TURN"), tr("ENERGY"), unit["energy"], tr(Catalog.weapon(int(unit["weapon"]))["name_key"]), tr("ATTACK" if campaign.combat["mode"] == "attack" else "MOVE")]
+		%ActiveInfo.text = "%s · %s\n%s %d · %s" % [tr("YOUR_TURN" if player_turn else "ENEMY_TURN"), tr("ATTACK" if campaign.combat["mode"] == "attack" else "MOVE"), tr("ENERGY"), unit["energy"], tr(Catalog.weapon(int(unit["weapon"]))["name_key"])]
 		%Modes.show()
 		%Enter.hide()
 		%Wait.hide()
@@ -144,11 +142,7 @@ func _game() -> void:
 		%LocationEvent.text = _last_message()
 	else:
 		_show("Game")
-		%CityImage.show()
-		%CombatImage.hide()
-		%CombatBoard.get_parent().render_target_update_mode = SubViewport.UPDATE_DISABLED
-		%CityBoard.refresh(campaign)
-		%CityBoard.get_parent().render_target_update_mode = SubViewport.UPDATE_ONCE
+		%MapWorld.refresh(campaign)
 		%BoardTitle.text = tr("CITY")
 		%Modes.hide()
 		%Enter.show()
@@ -169,6 +163,17 @@ func _game() -> void:
 		%Event.text = _last_message()
 	%Hud.text = "%s · $%d   |   %s %d   |   %s %d/%d   |   %02d/%d" % [campaign.gang_name, campaign.economy.money, tr("STEPS"), campaign.steps, tr("POINTS"), campaign.points, campaign.goal, campaign.month % 12 + 1, 1925 + campaign.month / 12]
 	%CombatHint.visible = Settings.hints and not campaign.combat.is_empty()
+	_fit_map()
+
+
+func _fit_map() -> void:
+	# Containers settle after a route, hint or language change.
+	call_deferred("_update_map_layout")
+
+
+func _update_map_layout() -> void:
+	if route == "Game":
+		%MapWorld.fit_to(%MapArea.get_global_rect())
 
 
 func _new_game() -> void:

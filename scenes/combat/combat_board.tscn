@@ -1,14 +1,27 @@
-[gd_scene load_steps=3 format=3]
+[gd_scene format=3]
 [ext_resource type="Script" path="res://scripts/combat/combat_board.gd" id="1"]
-[ext_resource type="Texture2D" path="res://assets/sprites/arena.png" id="2"]
+[ext_resource type="Texture2D" path="res://assets/maps/cover.png" id="cover"]
 
 [node name="CombatBoard" type="Node2D"]
 script = ExtResource("1")
 texture_filter = 1
 
-[node name="Background" type="Sprite2D" parent="."]
-texture = ExtResource("2")
+[node name="Cover" type="Node2D" parent="."]
+
+[node name="North" type="Sprite2D" parent="Cover"]
+texture = ExtResource("cover")
 centered = false
+position = Vector2(180, 30)
+
+[node name="Middle" type="Sprite2D" parent="Cover"]
+texture = ExtResource("cover")
+centered = false
+position = Vector2(180, 90)
+
+[node name="South" type="Sprite2D" parent="Cover"]
+texture = ExtResource("cover")
+centered = false
+position = Vector2(200, 150)
 
 [node name="Highlights" type="Node2D" parent="."]
 

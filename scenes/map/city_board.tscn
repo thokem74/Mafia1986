@@ -1,27 +1,32 @@
 [gd_scene format=3]
 [ext_resource type="Script" path="res://scripts/map/city_board.gd" id="1"]
-[ext_resource type="Texture2D" path="res://assets/sprites/city.png" id="2"]
-[ext_resource type="Texture2D" path="res://assets/sprites/player.png" id="3"]
-[ext_resource type="Texture2D" path="res://assets/sprites/store.png" id="store"]
-[ext_resource type="Texture2D" path="res://assets/sprites/transport.png" id="transport"]
-[ext_resource type="Texture2D" path="res://assets/sprites/arms.png" id="arms"]
-[ext_resource type="Texture2D" path="res://assets/sprites/cars.png" id="cars"]
-[ext_resource type="Texture2D" path="res://assets/sprites/casino.png" id="casino"]
-[ext_resource type="Texture2D" path="res://assets/sprites/forgery.png" id="forgery"]
-[ext_resource type="Texture2D" path="res://assets/sprites/pub.png" id="pub"]
-[ext_resource type="Texture2D" path="res://assets/sprites/bank.png" id="bank"]
-[ext_resource type="Texture2D" path="res://assets/sprites/police.png" id="police"]
-[ext_resource type="Texture2D" path="res://assets/sprites/subway.png" id="subway"]
-[ext_resource type="Texture2D" path="res://assets/sprites/station.png" id="station"]
-[ext_resource type="Texture2D" path="res://assets/sprites/loan.png" id="loan"]
-[ext_resource type="Texture2D" path="res://assets/sprites/hideout.png" id="hideout"]
-[ext_resource type="Texture2D" path="res://assets/sprites/mayor.png" id="mayor"]
+[ext_resource type="Texture2D" path="res://assets/maps/city.png" id="2"]
+[ext_resource type="Texture2D" path="res://assets/maps/player.png" id="3"]
+[ext_resource type="Texture2D" path="res://assets/maps/markers/store.png" id="store"]
+[ext_resource type="Texture2D" path="res://assets/maps/markers/transport.png" id="transport"]
+[ext_resource type="Texture2D" path="res://assets/maps/markers/arms.png" id="arms"]
+[ext_resource type="Texture2D" path="res://assets/maps/markers/cars.png" id="cars"]
+[ext_resource type="Texture2D" path="res://assets/maps/markers/casino.png" id="casino"]
+[ext_resource type="Texture2D" path="res://assets/maps/markers/forgery.png" id="forgery"]
+[ext_resource type="Texture2D" path="res://assets/maps/markers/pub.png" id="pub"]
+[ext_resource type="Texture2D" path="res://assets/maps/markers/bank.png" id="bank"]
+[ext_resource type="Texture2D" path="res://assets/maps/markers/police.png" id="police"]
+[ext_resource type="Texture2D" path="res://assets/maps/markers/subway.png" id="subway"]
+[ext_resource type="Texture2D" path="res://assets/maps/markers/station.png" id="station"]
+[ext_resource type="Texture2D" path="res://assets/maps/markers/loan.png" id="loan"]
+[ext_resource type="Texture2D" path="res://assets/maps/markers/hideout.png" id="hideout"]
+[ext_resource type="Texture2D" path="res://assets/maps/markers/mayor.png" id="mayor"]
+
+[ext_resource type="Shader" path="res://assets/maps/city_edges.gdshader" id="edges"]
+[sub_resource type="ShaderMaterial" id="edge_material"]
+shader = ExtResource("edges")
 
 [node name="CityBoard" type="Node2D"]
 script = ExtResource("1")
 texture_filter = 1
 
 [node name="Background" type="Sprite2D" parent="."]
+material = SubResource("edge_material")
 texture = ExtResource("2")
 centered = false
 
@@ -110,4 +115,4 @@ position = Vector2(215, 205)
 [node name="Player" type="Sprite2D" parent="."]
 texture = ExtResource("3")
 position = Vector2(35, 35)
-scale = Vector2(0.75, 0.75)
+scale = Vector2(0.7, 0.7)

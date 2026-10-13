@@ -9,10 +9,19 @@
 [ext_resource type="AudioStream" path="res://assets/audio/music.wav" id="music"]
 [ext_resource type="AudioStream" path="res://assets/audio/click.wav" id="click"]
 [ext_resource type="Texture2D" path="res://assets/backgrounds/menu.png" id="backdrop"]
-[sub_resource type="ViewportTexture" id="city_tex"]
-viewport_path = NodePath("Safe/Root/Content/Game/Body/BoardCard/Board/CityViewport")
-[sub_resource type="ViewportTexture" id="combat_tex"]
-viewport_path = NodePath("Safe/Root/Content/Game/Body/BoardCard/Board/CombatViewport")
+[ext_resource type="Script" path="res://scripts/ui/map_presentation.gd" id="map_script"]
+[ext_resource type="Texture2D" path="res://assets/maps/surroundings.png" id="map_terrain"]
+[sub_resource type="StyleBoxEmpty" id="clear_panel"]
+[sub_resource type="StyleBoxFlat" id="map_info_panel"]
+bg_color = Color(0.025, 0.04, 0.065, 0.82)
+content_margin_left = 10.0
+content_margin_right = 10.0
+content_margin_top = 8.0
+content_margin_bottom = 8.0
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_left = 10
+corner_radius_bottom_right = 10
 
 [node name="Main" type="Control"]
 layout_mode = 1
@@ -40,6 +49,7 @@ unique_name_in_owner = true
 mouse_filter = 2
 
 [node name="Shade" type="ColorRect" parent="."]
+unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -48,6 +58,37 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0.015, 0.025, 0.04, 0.25)
 mouse_filter = 2
+
+[node name="MapWorld" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+unique_name_in_owner = true
+script = ExtResource("map_script")
+visible = false
+
+[node name="Terrain" type="TextureRect" parent="MapWorld"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("map_terrain")
+expand_mode = 1
+stretch_mode = 6
+
+[node name="CityBoard" parent="MapWorld" instance=ExtResource("city")]
+unique_name_in_owner = true
+
+[node name="CombatBoard" parent="MapWorld" instance=ExtResource("combat")]
+unique_name_in_owner = true
+visible = false
 
 [node name="Safe" type="MarginContainer" parent="."]
 layout_mode = 1
@@ -338,7 +379,22 @@ grow_horizontal = 2
 grow_vertical = 2
 unique_name_in_owner = true
 
-[node name="Hud" type="Label" parent="Safe/Root/Content/Game"]
+[node name="GameHeading" type="PanelContainer" parent="Safe/Root/Content/Game"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_styles/panel = SubResource("map_info_panel")
+
+[node name="Heading" type="VBoxContainer" parent="Safe/Root/Content/Game/GameHeading"]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="BoardTitle" type="Label" parent="Safe/Root/Content/Game/GameHeading/Heading"]
+layout_mode = 2
+unique_name_in_owner = true
+text = "CITY"
+theme_override_font_sizes/font_size = 18
+
+[node name="Hud" type="Label" parent="Safe/Root/Content/Game/GameHeading/Heading"]
 layout_mode = 2
 text = ""
 unique_name_in_owner = true
@@ -351,63 +407,16 @@ layout_mode = 2
 size_flags_vertical = 3
 theme_override_constants/separation = 16
 
-[node name="BoardCard" type="PanelContainer" parent="Safe/Root/Content/Game/Body"]
+[node name="MapArea" type="Control" parent="Safe/Root/Content/Game/Body"]
 layout_mode = 2
 size_flags_horizontal = 3
-
-[node name="Board" type="VBoxContainer" parent="Safe/Root/Content/Game/Body/BoardCard"]
-layout_mode = 2
-size_flags_horizontal = 3
-
-[node name="BoardTitle" type="Label" parent="Safe/Root/Content/Game/Body/BoardCard/Board"]
-layout_mode = 2
-text = "CITY"
-unique_name_in_owner = true
-
-[node name="CityImage" type="TextureRect" parent="Safe/Root/Content/Game/Body/BoardCard/Board"]
-layout_mode = 2
-unique_name_in_owner = true
-texture = SubResource("city_tex")
-expand_mode = 1
-stretch_mode = 5
 size_flags_vertical = 3
-
-[node name="CombatImage" type="TextureRect" parent="Safe/Root/Content/Game/Body/BoardCard/Board"]
-layout_mode = 2
-unique_name_in_owner = true
-texture = SubResource("combat_tex")
-expand_mode = 1
-stretch_mode = 5
-size_flags_vertical = 3
-
-[node name="CombatHint" type="Label" parent="Safe/Root/Content/Game/Body/BoardCard/Board"]
-layout_mode = 2
-text = "COMBAT_HELP"
-theme_override_font_sizes/font_size = 16
-unique_name_in_owner = true
-autowrap_mode = 2
 mouse_filter = 2
-visible = false
-
-theme_override_font_sizes/font_size = 16
-
-[node name="CityViewport" type="SubViewport" parent="Safe/Root/Content/Game/Body/BoardCard/Board"]
-size = Vector2i(320, 240)
-disable_3d = true
-render_target_update_mode = 4
-
-[node name="CityBoard" parent="Safe/Root/Content/Game/Body/BoardCard/Board/CityViewport" instance=ExtResource("city")]
-unique_name_in_owner = true
-
-[node name="CombatViewport" type="SubViewport" parent="Safe/Root/Content/Game/Body/BoardCard/Board"]
-size = Vector2i(400, 200)
-disable_3d = true
-render_target_update_mode = 4
-
-[node name="CombatBoard" parent="Safe/Root/Content/Game/Body/BoardCard/Board/CombatViewport" instance=ExtResource("combat")]
 unique_name_in_owner = true
 
 [node name="ControlCard" type="PanelContainer" parent="Safe/Root/Content/Game/Body"]
+unique_name_in_owner = true
+theme_override_styles/panel = SubResource("clear_panel")
 layout_mode = 2
 custom_minimum_size = Vector2(284, 0)
 
@@ -416,12 +425,18 @@ layout_mode = 2
 custom_minimum_size = Vector2(248, 0)
 theme_override_constants/separation = 6
 
-[node name="ActiveInfo" type="Label" parent="Safe/Root/Content/Game/Body/ControlCard/Controls"]
+[node name="InfoCard" type="PanelContainer" parent="Safe/Root/Content/Game/Body/ControlCard/Controls"]
+layout_mode = 2
+size_flags_vertical = 3
+mouse_filter = 2
+theme_override_styles/panel = SubResource("map_info_panel")
+
+[node name="ActiveInfo" type="Label" parent="Safe/Root/Content/Game/Body/ControlCard/Controls/InfoCard"]
 layout_mode = 2
 text = "MAP_HELP"
 unique_name_in_owner = true
 autowrap_mode = 2
-size_flags_vertical = 3
+size_flags_vertical = 4
 
 theme_override_font_sizes/font_size = 16
 
@@ -490,6 +505,7 @@ size_flags_horizontal = 3
 theme_override_font_sizes/font_size = 16
 
 [node name="EventCard" type="PanelContainer" parent="Safe/Root/Content/Game"]
+unique_name_in_owner = true
 layout_mode = 2
 theme_type_variation = &"CompactPanel"
 
@@ -502,7 +518,13 @@ custom_minimum_size = Vector2(0, 54)
 text = "STATUS"
 unique_name_in_owner = true
 
-[node name="Event" type="Label" parent="Safe/Root/Content/Game/EventCard/GameFooter"]
+[node name="Messages" type="VBoxContainer" parent="Safe/Root/Content/Game/EventCard/GameFooter"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+mouse_filter = 2
+
+[node name="Event" type="Label" parent="Safe/Root/Content/Game/EventCard/GameFooter/Messages"]
 layout_mode = 2
 text = ""
 unique_name_in_owner = true
@@ -510,6 +532,15 @@ size_flags_horizontal = 3
 autowrap_mode = 2
 
 theme_override_font_sizes/font_size = 16
+
+[node name="CombatHint" type="Label" parent="Safe/Root/Content/Game/EventCard/GameFooter/Messages"]
+layout_mode = 2
+text = "COMBAT_HELP"
+theme_override_font_sizes/font_size = 14
+unique_name_in_owner = true
+autowrap_mode = 2
+mouse_filter = 2
+visible = false
 
 [node name="Location" type="HBoxContainer" parent="Safe/Root/Content"]
 layout_mode = 1

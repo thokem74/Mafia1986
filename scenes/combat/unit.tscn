@@ -1,21 +1,33 @@
 [gd_scene load_steps=2 format=3]
-[ext_resource type="Texture2D" path="res://assets/sprites/player.png" id="1"]
+[ext_resource type="Texture2D" path="res://assets/maps/player.png" id="1"]
 
 [node name="Unit" type="Node2D"]
 texture_filter = 1
 
-[node name="Active" type="Polygon2D" parent="."]
+[node name="Active" type="Node2D" parent="."]
+
+[node name="Fill" type="Polygon2D" parent="Active"]
 polygon = PackedVector2Array(-2, -2, 22, -2, 22, 22, -2, 22)
-color = Color(0.78, 0.65, 0.35, 1)
+color = Color(0.95, 0.76, 0.43, 0.18)
+
+[node name="Outline" type="Line2D" parent="Active"]
+points = PackedVector2Array(-2, -2, 22, -2, 22, 22, -2, 22)
+closed = true
+width = 1.0
+default_color = Color(0.95, 0.76, 0.43, 1)
 
 [node name="Sprite" type="Sprite2D" parent="."]
 texture = ExtResource("1")
 centered = false
-scale = Vector2(1.25, 1.25)
+scale = Vector2(1, 1)
 
 [node name="Energy" type="Label" parent="."]
-offset_top = 19.0
-offset_right = 24.0
-offset_bottom = 29.0
+offset_top = 20.0
+offset_right = 20.0
+offset_bottom = 30.0
 theme_override_font_sizes/font_size = 8
 text = "30"
+horizontal_alignment = 1
+theme_override_colors/font_color = Color(1, 0.95, 0.8, 1)
+theme_override_colors/font_outline_color = Color(0.01, 0.02, 0.04, 1)
+theme_override_constants/outline_size = 3

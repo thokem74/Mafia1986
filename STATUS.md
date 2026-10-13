@@ -32,9 +32,9 @@ Overall build status: **In progress**. A playable campaign, ending and ARM64 deb
 ## Validation results
 
 - Godot **4.7.2**, Mobile rendering retained. Headless import, script parsing, main boot and all authored scenes pass. Headless main boot exits cleanly.
-- **885 deterministic assertions pass**: definition consistency, every translation entry, reachable locations, transactions, recruitment, rank/deadline/victory rules, combat/AI, encounter saves, corrupt backup recovery, invalid versions/data and scene flows.
+- **920 deterministic assertions pass**: definition consistency, every translation entry, reachable locations, transactions, recruitment, rank/deadline/victory rules, combat/AI, encounter saves, corrupt backup recovery, invalid versions/data and scene flows.
 - `tests/progression_runner.gd`: fresh long campaign, seed 2026, normal movement/entry/transactions and combat rules only. **Victory in month 341**, 1,281 location actions, ten members, 210/200 points, both mayor and transporter completed. No injected money, stats, ranks, tips or objective flags. Automated player uses the combat AI; this is not a human playthrough and does not establish balance across seeds.
-- 232 current German/English layout captures cover all screens, every location kind, and equipment/recruit forms at **16:9, 18:9, 19.5:9 and 20:9**, in `builds/screens/redesign/`. Eight contact sheets and representative full-size screenshots inspected; automated bounds checks report zero layout failures.
+- 424 current German/English layout captures cover all screens, every location kind, equipment/recruit forms, six crowded battle settings, both action modes and hints on/off at **16:9, 18:9, 19.5:9 and 20:9**, in `builds/screens/maps/`. Eight contact sheets and representative full-size screenshots inspected; automated bounds checks report zero layout failures.
 - ARM64 **debug APK export succeeds**, signs/verifies with debug key. Package `org.thokem.mafia1986`; QA scripts/docs/build artifacts excluded from export. Output: `builds/mafia1986-debug.apk`.
 - Samsung **SM-A176B**, 2340×1080 landscape, Mali-G68 Vulkan Mobile: installed/launched, new campaign, German/English switching, readable notch-safe layout, autosave continuation and suspend/resume verified.
 - Held city touch advanced three tiles and persisted three moves. Held combat touch consumed exactly one action: actor 0 moved x4→x5, active actor became 1. Both stages of the mayor fight completed using real touch actions and explicit debug helpers: 117 actions in 54 seconds. The ten-guard transporter also completed: 109 touch actions in 64 seconds. Game-specific log showed no script/runtime errors during that sample.
@@ -55,6 +55,15 @@ Overall build status: **In progress**. A playable campaign, ending and ARM64 deb
 - Backgrounds preserve aspect ratio while covering the screen, ignore touch input, and load only when the displayed setting changes. Live city/combat boards, immediate actions and save compatibility remain intact.
 - Godot import and 885 assertions pass. The complete visual run produces 232 captures with zero fixed-control overflows. ARM64 debug APK exports and installs on the Samsung.
 - Android checks verify readable notch-safe menu/forms/city/location/settings, one-tap and held movement, immediate location entry/Execute, English selection/Apply, single-action combat holds, mode selection, one-tap surrender and Android Back. Original phone saves/settings are backed up before verification and restored afterward.
+
+## Full-screen playable map update (2026-10-13)
+
+- Built-in ImageGen produced top-down city terrain, matching rooftop surroundings, six combat environments, red/blue gangsters, cover and a location-icon atlas. Final pixel assets and exact prompts are in `assets/maps/`; original generated images remain in Codex's generated-images directory. A saved layout reference fixes city roads to the existing grid.
+- Removed inset board frames and SubViewports. Full-screen terrain sits below live, scene-authored game objects and UI. The entire grid fits without distortion into the clear area left of the controls; hints appear inline in the event strip. Generated cover sprites match all three existing collision positions.
+- Combat reasons select street/shop/bank/train/warehouse/mayor artwork. Gameplay, immediate actions, legacy tutorial history and save format remain unchanged; `project.godot` was not modified by this update.
+- Godot import and **920 assertions pass**. **424 German/English screenshots** cover all screens plus six crowded battle settings, both action modes, hints on/off and four supported aspect ratios. Automated bounds/grid-overlap checks report zero failures; eight map contact sheets and representative full-size images were inspected.
+- Android debug APK exports, signs and installs on the Samsung SM-A176B. Real touches verified one-tap Start, one-cell street movement, a hold adding three cells, immediate Wait, Android Back, a 20-fighter battle, a combat hold consuming exactly one action, Attack selection, enemy AI advancement with hints shown and immediate surrender. Game-specific logs showed no script/rendering errors during these checks.
+- Five original device save/settings files were backed up to `/tmp/mafia1986-map-device-backup`, restored, and byte-verified after reopening the menu. Combat checks used an isolated fixture rather than the user's campaign.
 
 ## Known limitations and blockers
 

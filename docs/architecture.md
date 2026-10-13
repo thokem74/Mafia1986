@@ -8,7 +8,7 @@ screen; it does not create a UI tree. Location actions instantiate the reusable
 
 The full-screen `Background` TextureRect uses aspect-preserving cover scaling
 and ignores touch input. Its small `screen_background.gd` script chooses a
-background only when the screen changes: location kind, city, combat, safe,
+background only when the screen changes: location kind, safe,
 police, ending or the shared hideout for utility screens. It does not keep an
 array of all decoded backgrounds or update artwork per frame. The source art
 and exact built-in ImageGen prompts are under `assets/backgrounds/`.
@@ -38,8 +38,20 @@ human-readable source mirror. When changing definitions, update both files; JSON
 object syntax is also valid for the Resource's `tables` dictionary. Research
 citations and unresolved differences belong in the two research documents.
 
-City and combat art render at 320×240 and 400×200 inside SubViewports. The main
-Control scene scales independently, preserving readable text and touch targets.
+Gameplay uses a full-screen scene-authored `MapWorld` behind the controls, with
+live city/combat Node2D scenes rather than inset SubViewports. Its terrain covers
+the display; the complete 320×240 city or 400×200 battle grid scales uniformly
+into the clear `MapArea` beside the controls. Fitting runs after container layout
+changes, not per frame. The city image follows the exact street grid, and only
+its non-playable outer border blends into decorative rooftop surroundings.
+Combat terrain has no interior obstacles baked in: three authored cover sprites
+match the existing two-cell collision positions. Existing campaign reasons select
+street, shop, bank, train, warehouse or mayor terrain without adding save fields.
+Generated character sprites, location markers and terrain use nearest filtering.
+`assets/maps/prompts.json` records the built-in ImageGen prompts and original
+source paths; `tools/prepare_map_art.gd` trims transparent padding and downsamples
+those originals into small game assets. Scene-authored objects retain logical
+cell positions. UI controls scale independently, preserving text and touch targets.
 The scene responds to viewport changes and applies Android safe-area margins.
 Only the hold-movement and enemy-action timers run repeated gameplay callbacks.
 No server, account, advertising or Internet permission is involved.

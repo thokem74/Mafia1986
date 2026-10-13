@@ -45,7 +45,9 @@ adb shell am start -n org.thokem.mafia1986/com.godot.game.GodotAppLauncher
 The debug APK is for testing. Release signing is not configured. Generated builds
 are ignored by Git and excluded from Godot imports. Reference disk assets are not
 included. Backgrounds were generated for this project with the built-in ImageGen
-tool; sprites and synthesized audio were created for the game. Adwaita Sans is
+tool. Playable city terrain, six combat environments, characters, location icons
+and cover also use ImageGen art; exact prompts are in `assets/maps/prompts.json`.
+Synthesized audio was created for the game. Adwaita Sans is
 bundled under its SIL Open Font License in `assets/fonts/LICENSE.txt`.
 
 ## Verify and learn
@@ -58,8 +60,10 @@ XDG_DATA_HOME=/tmp/mafia1986-visual godot --path . --script tests/visual_runner.
 ```
 
 The visual runner captures all screens and location types in German and English
-at 16:9, 18:9, 19.5:9 and 20:9 under `builds/screens/redesign/`, and checks fixed
-controls for viewport overflow. Rendering needs a
+at 16:9, 18:9, 19.5:9 and 20:9 under `builds/screens/maps/`. Its 424 captures include
+all six battle settings, full parties, move/attack modes, and hints on/off. It
+checks fixed controls for overflow and keeps the entire playable grid clear of UI.
+Use `-- --quick` for just the German 16:9 group. Rendering needs a
 graphical environment. The deterministic suite checks rules, scene flows,
 localization, saves and targeted endgame fights; see STATUS for ordinary
 progression and device coverage.

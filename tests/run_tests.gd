@@ -338,7 +338,7 @@ func _test_scenes() -> void:
 	CombatRules.start(state.campaign, "job", 1, 0, 20)
 	shell._game()
 	await process_frame
-	check(shell.get_node("%CombatImage").visible and not shell.get_node("%CityImage").visible, "Combat viewport displayed")
+	check(shell.get_node("%CombatBoard").visible and not shell.get_node("%CityBoard").visible, "Full-screen combat objects displayed")
 	check(shell.get_node("%CombatHint").visible, "Combat hints are inline")
 	shell.get_node("%AttackMode").pressed.emit()
 	check(shell.get_node("%AttackMode").button_pressed and not shell.get_node("%MoveMode").button_pressed, "Combat mode selection is highlighted")
@@ -361,6 +361,25 @@ func _test_scenes() -> void:
 	state.campaign.location = ""
 	shell._game()
 	check(shell.get_node("%ActiveInfo").text.is_empty(), "City hint follows setting")
+	var presentation: Variant = shell.get_node("%MapWorld")
+	check(presentation.mouse_filter == Control.MOUSE_FILTER_IGNORE, "Map scenery leaves touch input to controls")
+	check(not shell.get_node("%Background").visible and presentation.visible, "Gameplay uses top-down scenery")
+	var terrains := {"job": "street", "debt": "street", "collect": "street", "police": "street", "theft": "street", "store": "shop", "bank": "bank", "train": "train", "transport": "warehouse", "mayor": "mayor", "mayor_guards": "mayor"}
+	for reason: String in terrains:
+		CombatRules.start(state.campaign, reason, 10, 5, 30)
+		shell._game()
+		check(presentation.current_art == terrains[reason] and presentation.get_node("Terrain").texture != null, "Combat terrain: " + reason)
+	for obstacle: Sprite2D in shell.get_node("%CombatBoard/Cover").get_children():
+		check(Vector2i(obstacle.position / 10) in CombatRules.WALLS, "Cover matches collision at " + str(obstacle.position))
+		check(obstacle.texture.get_size() == Vector2(20, 20), "Cover matches two-cell footprint")
+	for combat: bool in [false, true]:
+		presentation.combat_visible = combat
+		for width: int in [1152, 1296, 1404, 1440]:
+			var clear_area := Rect2(24, 130, width - 348, 410)
+			presentation.fit_to(clear_area)
+			check(clear_area.grow(1).encloses(presentation.map_rect), "Whole grid fits clear area: %s/%d" % [combat, width])
+			var expected_ratio := 2.0 if combat else 4.0 / 3.0
+			check(is_equal_approx(presentation.map_rect.size.x / presentation.map_rect.size.y, expected_ratio), "Map scaling preserves aspect ratio")
 	state.campaign.combat = {}
 	for location: Dictionary in Catalog.locations():
 		state.campaign.location = location["id"]

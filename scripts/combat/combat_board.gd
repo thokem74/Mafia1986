@@ -13,7 +13,7 @@ func refresh(campaign: Campaign) -> void:
 		$Units.add_child(unit)
 		unit.position = Vector2(CombatRules.position(data)) * 10
 		if data["side"] == 1:
-			unit.get_node("Sprite").texture = preload("res://assets/sprites/enemy.png")
+			unit.get_node("Sprite").texture = preload("res://assets/maps/enemy.png")
 		unit.get_node("Active").visible = index == campaign.combat["active"]
 		unit.get_node("Energy").text = str(data["energy"])
 	for child in $Highlights.get_children():

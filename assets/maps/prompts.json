@@ -1,0 +1,114 @@
+{
+  "generator": "Built-in image_gen tool",
+  "preparation": "Godot nearest-neighbor downsampling; transparent sprites trimmed before sizing; markers extracted from the 4x4 atlas.",
+  "assets": [
+    {
+      "name": "city",
+      "prompt": "Use case: stylized-concept. Asset type: top-down playable terrain for a 1925 Chicago Android game. Chunky charming 16-bit pixel art, strict overhead orthographic view, midnight navy, warm amber lights, muted gold. Bold readable pixels, no perspective, no typography, no characters, no HUD, no grid lines. Use the supplied image as an EXACT layout reference, not a style reference. Preserve all gray street cells exactly; streets are ONE cell wide. Replace gray with wet asphalt, narrow amber gutter lights inside the existing street boundaries. Replace dark squares with contiguous city building roofs, brick courtyards and rooftop details ONLY in the dark regions. Keep all seven vertical streets and all four horizontal streets at their exact coordinates. No cars or obstructions on streets. Keep the outer dark border. Output 4:3 complete map, no frame.",
+      "source": "/home/thokem/.codex/generated_images/01a13671-764c-7d22-a64e-f667c2673e1b/exec-d78178b7-82b6-44d5-a1c4-e8856fb21e26.png",
+      "size": [
+        320,
+        240
+      ]
+    },
+    {
+      "name": "street",
+      "prompt": "Use case: stylized-concept. Asset type: top-down playable terrain for a 1925 Chicago Android game. Chunky charming 16-bit pixel art, strict overhead orthographic view, midnight navy, warm amber lights, muted gold. Bold readable pixels, no perspective, no typography, no characters, no HUD, no grid lines. Wide 2:1 overhead street battlefield. Entire central interior is flat walkable wet asphalt with subtle cobblestone pattern. Peripheral sidewalks and brick building edges ONLY along the outermost 5% rim. Amber street lights around rim. NO cover, crates, parked cars, furniture, obstacles or raised objects anywhere inside. Large clear area for live fighters and three separate cover objects.",
+      "source": "/home/thokem/.codex/generated_images/01a13671-764c-7d22-a64e-f667c2673e1b/exec-e9690648-59fd-40b6-999f-c42367ec4ad8.png",
+      "size": [
+        400,
+        200
+      ]
+    },
+    {
+      "name": "shop",
+      "prompt": "Use case: stylized-concept. Asset type: top-down playable terrain for a 1925 Chicago Android game. Chunky charming 16-bit pixel art, strict overhead orthographic view, midnight navy, warm amber lights, muted gold. Bold readable pixels, no perspective, no typography, no characters, no HUD, no grid lines. Wide 2:1 overhead shop-floor battlefield. Entire central interior is flat walkable dark wooden planks with subtle wear. Counters, shelves and amber lamps ONLY along outermost 5% rim. No furniture, obstacles, raised objects or cover anywhere inside. Large clear floor for live fighters and three separate cover objects.",
+      "source": "/home/thokem/.codex/generated_images/01a13671-764c-7d22-a64e-f667c2673e1b/exec-f6b83d9a-c616-46d7-affa-54858d0ab394.png",
+      "size": [
+        400,
+        200
+      ]
+    },
+    {
+      "name": "bank",
+      "prompt": "Use case: stylized-concept. Asset type: top-down playable terrain for a 1925 Chicago Android game. Chunky charming 16-bit pixel art, strict overhead orthographic view, midnight navy, warm amber lights, muted gold. Bold readable pixels, no perspective, no typography, no characters, no HUD, no grid lines. Wide 2:1 overhead bank-hall battlefield. Entire central interior is flat walkable midnight blue marble tiles with subdued gold inlay. Brass teller desks and stone wall edges ONLY along outermost 5% rim. No furniture, obstacles, raised objects or cover anywhere inside. Large clear floor for live fighters and three separate cover objects.",
+      "source": "/home/thokem/.codex/generated_images/01a13671-764c-7d22-a64e-f667c2673e1b/exec-06fb5065-37f7-4c8f-906d-5534d53a3a30.png",
+      "size": [
+        400,
+        200
+      ]
+    },
+    {
+      "name": "train",
+      "prompt": "Use case: stylized-concept. Asset type: top-down playable terrain for a 1925 Chicago Android game. Chunky charming 16-bit pixel art, strict overhead orthographic view, midnight navy, warm amber lights, muted gold. Bold readable pixels, no perspective, no typography, no characters, no HUD, no grid lines. Wide 2:1 overhead railway-platform battlefield. Entire central interior is flat walkable worn platform paving. Railway rails and sleepers, station trim and amber lamps ONLY along outermost 5% rim. No tracks crossing the interior, no train cars, no furniture, obstacles, raised objects or cover anywhere inside. Large clear floor for live fighters and three separate cover objects.",
+      "source": "/home/thokem/.codex/generated_images/01a13671-764c-7d22-a64e-f667c2673e1b/exec-d5acd5ba-221a-41cb-8793-2864b881daf0.png",
+      "size": [
+        400,
+        200
+      ]
+    },
+    {
+      "name": "warehouse",
+      "prompt": "Use case: stylized-concept. Asset type: top-down playable terrain for a 1925 Chicago Android game. Chunky charming 16-bit pixel art, strict overhead orthographic view, midnight navy, warm amber lights, muted gold. Bold readable pixels, no perspective, no typography, no characters, no HUD, no grid lines. Wide 2:1 overhead warehouse-loading-floor battlefield. Entire central interior is flat walkable dark concrete with subtle floor wear and faint yellow loading markings. Industrial brick edges, stacked cargo and amber lamps ONLY along outermost 5% rim. No crates, furniture, obstacles, raised objects or cover anywhere inside. Large clear floor for live fighters and three separate cover objects.",
+      "source": "/home/thokem/.codex/generated_images/01a13671-764c-7d22-a64e-f667c2673e1b/exec-59f5b25a-9770-46c3-87fd-9390f1c49a63.png",
+      "size": [
+        400,
+        200
+      ]
+    },
+    {
+      "name": "mayor",
+      "prompt": "Use case: stylized-concept. Asset type: top-down playable terrain for a 1925 Chicago Android game. Chunky charming 16-bit pixel art, strict overhead orthographic view, midnight navy, warm amber lights, muted gold. Bold readable pixels, no perspective, no typography, no characters, no HUD, no grid lines. Wide 2:1 overhead mayor mansion-hall battlefield. Entire central interior is flat walkable midnight blue parquet with a broad flat red and gold carpet flush with floor. Ornate wall trim and amber sconces ONLY along outermost 5% rim. No desks, furniture, obstacles, raised objects or cover anywhere inside. Large clear floor for live fighters and three separate cover objects.",
+      "source": "/home/thokem/.codex/generated_images/01a13671-764c-7d22-a64e-f667c2673e1b/exec-647ce6ed-54f8-401f-90a3-003daa8a97a8.png",
+      "size": [
+        400,
+        200
+      ]
+    },
+    {
+      "name": "player",
+      "prompt": "Use case: stylized-concept. Asset type: transparent game character sprite. One single chunky 16-bit pixel art 1920s Chicago gangster in a RED burgundy coat and red fedora, seen strictly from above with just enough shoulders and hat to read clearly. Compact square silhouette, facing down. Midnight blue shadows, amber highlights. Bold large pixels, no fine illustration detail. Centered, generous transparent padding, no floor, no shadow outside sprite, no text, no frame, no UI, only ONE character. Must read at 20x20 game pixels.",
+      "source": "/home/thokem/.codex/generated_images/01a13671-764c-7d22-a64e-f667c2673e1b/exec-44a92c5f-6bee-4ba8-a83b-070c5160061e.png",
+      "size": [
+        20,
+        20
+      ]
+    },
+    {
+      "name": "enemy",
+      "prompt": "Use case: stylized-concept. Asset type: transparent game character sprite. One single chunky 16-bit pixel art 1920s Chicago rival gangster in a BLUE cobalt coat and blue fedora, seen strictly from above with just enough shoulders and hat to read clearly. Compact square silhouette, facing down. Midnight blue shadows, amber highlights. Bold large pixels, no fine illustration detail. Centered, generous transparent padding, no floor, no shadow outside sprite, no text, no frame, no UI, only ONE character. Must read at 20x20 game pixels.",
+      "source": "/home/thokem/.codex/generated_images/01a13671-764c-7d22-a64e-f667c2673e1b/exec-4c8809d9-8e0e-4ff3-a0fd-b7bc7047bd09.png",
+      "size": [
+        20,
+        20
+      ]
+    },
+    {
+      "name": "cover",
+      "prompt": "Use case: stylized-concept. Asset type: transparent top-down game obstacle sprite. ONE square stack of three wooden shipping crates bound in dark brass corners, strictly overhead view, chunky 16-bit pixel art, midnight blue shadow and warm amber wood. Fills a square footprint with a clean silhouette. No ground, no extra props, no characters, no words, transparent background, generous transparent padding. Readable at 20x20 pixels. No perspective or tall protrusions.",
+      "source": "/home/thokem/.codex/generated_images/01a13671-764c-7d22-a64e-f667c2673e1b/exec-a04e3484-b4e2-4c26-a1cd-263e5429222e.png",
+      "size": [
+        20,
+        20
+      ]
+    },
+    {
+      "name": "locations",
+      "prompt": "Use case: stylized-concept. Asset type: transparent pixel-art game map marker atlas. A perfectly regular FOUR COLUMN by FOUR ROW grid of SIXTEEN centered separate icons, each within its own equal square cell, generous transparent padding, no cell borders. Chunky charming 16-bit noir pixel art, gold amber and pale ivory with midnight-blue outlines, bold silhouette readable at 14x14 pixels. ROW ONE left to right: beer mug for pub, revolver for arms shop, vintage car for car dealer, shopping bag for store. ROW TWO: bank column facade, police badge, house for hideout, fountain pen for forgery. ROW THREE: dice for casino, stack of coins for loan office, subway tunnel entrance, steam locomotive for station. ROW FOUR: civic building for mayor, delivery truck for transport, duplicate beer mug, duplicate steam locomotive. EXACTLY 4 by 4 spacing, no words, no characters, no background, true transparency.",
+      "source": "/home/thokem/.codex/generated_images/01a13671-764c-7d22-a64e-f667c2673e1b/exec-3c17e76e-f02d-49d8-95a7-57492b4627f7.png",
+      "size": [
+        64,
+        64
+      ]
+    },
+    {
+      "name": "surroundings",
+      "prompt": "Use case: stylized-concept. Asset type: full-screen decorative terrain surrounding a playable city map. Strict overhead top-down 1925 Chicago rooftops and enclosed courtyards, chunky charming 16-bit pixel art, midnight navy roofs with amber skylights, brick parapets, water tanks and small autumn trees. Wide 20:9 composition. Continuous tightly packed rooftops extending to all edges; NO streets, no roads, no characters, no markers, no typography, no UI or borders. Match the supplied city map's rooftop materials, palette and lighting; the reference is style only. This is non-walkable surrounding scenery.",
+      "source": "/home/thokem/.codex/generated_images/01a13671-764c-7d22-a64e-f667c2673e1b/exec-bf833929-e305-433e-b492-8faacef65eb9.png",
+      "size": [
+        640,
+        288
+      ]
+    }
+  ]
+}
