@@ -13,14 +13,9 @@ theme_override_font_sizes/font_size = 24
 [node name="LocationHint" type="Label" parent="."]
 layout_mode = 2
 text = "LOCATION_HELP"
+theme_override_font_sizes/font_size = 16
 autowrap_mode = 2
 mouse_filter = 2
-
-[node name="Illustration" type="TextureRect" parent="."]
-layout_mode = 2
-custom_minimum_size = Vector2(0, 90)
-expand_mode = 1
-stretch_mode = 5
 
 [node name="ActionScroll" type="ScrollContainer" parent="."]
 layout_mode = 2
@@ -37,6 +32,7 @@ layout_mode = 2
 [node name="Help" type="Label" parent="Parameters"]
 layout_mode = 2
 text = "LOCATION_HELP"
+theme_override_font_sizes/font_size = 16
 autowrap_mode = 2
 
 [node name="Member" type="OptionButton" parent="Parameters"]
@@ -71,9 +67,11 @@ text = "+"
 [node name="Details" type="Label" parent="Parameters"]
 layout_mode = 2
 text = ""
+theme_override_font_sizes/font_size = 16
 autowrap_mode = 2
 
 [node name="Execute" type="Button" parent="Parameters"]
 layout_mode = 2
 custom_minimum_size = Vector2(0, 54)
 text = "ACTION"
+theme_type_variation = &"PrimaryButton"

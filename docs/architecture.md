@@ -1,10 +1,23 @@
 # Architecture
 
-`scenes/main/main.tscn` contains the menus, settings, status, save slots, dialogs,
+`scenes/main/main.tscn` contains the menus, settings, status, save slots, forms,
 location view, police/court view, safe puzzle and ending. Controls are visible in
 the editor. `scripts/ui/main.gd` connects their signals and selects the current
 screen; it does not create a UI tree. Location actions instantiate the reusable
 `scenes/ui/action_row.tscn`. Units and map markers also use authored scenes.
+
+The full-screen `Background` TextureRect uses aspect-preserving cover scaling
+and ignores touch input. Its small `screen_background.gd` script chooses a
+background only when the screen changes: location kind, city, combat, safe,
+police, ending or the shared hideout for utility screens. It does not keep an
+array of all decoded backgrounds or update artwork per frame. The source art
+and exact built-in ImageGen prompts are under `assets/backgrounds/`.
+
+`assets/android_theme.tres` provides rounded navy panels, amber primary actions,
+clear selected/disabled states, slider handles and toggles, plus bundled Adwaita
+Sans with its font license. Cards, scroll containers and large D-pad buttons are
+scene-authored. Location actions and combat modes show one active selection.
+Gameplay actions execute immediately; inline hints require no dismissal.
 
 The three autoloads have separate responsibilities:
 

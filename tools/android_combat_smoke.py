@@ -10,7 +10,7 @@ import time
 
 ADB = '/home/thokem/Android/Sdk/platform-tools/adb'
 DIRECTIONS = [(-1, 0), (1, 0), (0, -1), (0, 1)]
-TOUCHES = [ (1963, 525), (2194, 525), (2079, 428), (2079, 626)]
+TOUCHES = [(1940, 552), (2205, 552), (2073, 445), (2073, 660)]
 WALLS = [(18, 3), (20, 15), (18, 9)]
 RANGES = [2, 2, 2, 2, 15, 15, 20, 20, 15]
 
@@ -83,9 +83,9 @@ if __name__ == '__main__':
             continue
         mode, direction = choose(combat)
         if mode == 'skip':
-            adb('shell', 'input', 'tap', '2079', '823')
+            adb('shell', 'input', 'tap', '1967', '861')
         else:
-            adb('shell', 'input', 'tap', '2199' if mode == 'attack' else '1963', '726')
+            adb('shell', 'input', 'tap', '2180' if mode == 'attack' else '1967', '762')
             time.sleep(.05)
             x, y = TOUCHES[DIRECTIONS.index(direction)]
             adb('shell', 'input', 'tap', str(x), str(y))

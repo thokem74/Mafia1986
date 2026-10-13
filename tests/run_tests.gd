@@ -278,6 +278,9 @@ func _test_scenes() -> void:
 	await process_frame
 	check(shell.route == "Menu", "Main menu boots")
 	check(not quit_on_go_back, "Android Back handled by the game")
+	check(shell.get_node("%Background").mouse_filter == Control.MOUSE_FILTER_IGNORE, "Full-screen background does not consume touches")
+	check(shell.get_node("%Background").stretch_mode == TextureRect.STRETCH_KEEP_ASPECT_COVERED, "Artwork covers the whole screen without distortion")
+	check(shell.theme.has_stylebox("normal", "PrimaryButton"), "Modern theme distinguishes primary actions")
 	root.get_node("Settings").hints = true
 	shell.get_node("%New").pressed.emit()
 	shell.get_node("%Start").pressed.emit()
@@ -299,7 +302,9 @@ func _test_scenes() -> void:
 	await process_frame
 	check(shell.route == "Location", "Scene-based location opens")
 	check(shell.get_node("%LocationPanel/LocationHint").visible, "Location hints are inline")
-	shell.get_node("%LocationPanel")._select("recruit")
+	var recruit_button: Button = shell.get_node("%LocationPanel/ActionScroll/Actions").get_child(2)
+	recruit_button.pressed.emit()
+	check(recruit_button.button_pressed and not shell.get_node("%LocationPanel/ActionScroll/Actions").get_child(0).button_pressed, "Location action selection has a single highlight")
 	check(shell.get_node("%LocationPanel/Parameters/Item").item_count == 30, "Recruit offers shown")
 	state.campaign.rank = 5
 	state.campaign.economy.has_hideout = true
@@ -335,6 +340,8 @@ func _test_scenes() -> void:
 	await process_frame
 	check(shell.get_node("%CombatImage").visible and not shell.get_node("%CityImage").visible, "Combat viewport displayed")
 	check(shell.get_node("%CombatHint").visible, "Combat hints are inline")
+	shell.get_node("%AttackMode").pressed.emit()
+	check(shell.get_node("%AttackMode").button_pressed and not shell.get_node("%MoveMode").button_pressed, "Combat mode selection is highlighted")
 	state.campaign.combat["active"] = state.campaign.combat["units"].size() - 1
 	shell._game()
 	check(not shell.get_node("%AiTimer").is_stopped(), "Hints do not pause enemy turns")
@@ -355,6 +362,11 @@ func _test_scenes() -> void:
 	shell._game()
 	check(shell.get_node("%ActiveInfo").text.is_empty(), "City hint follows setting")
 	state.campaign.combat = {}
+	for location: Dictionary in Catalog.locations():
+		state.campaign.location = location["id"]
+		shell._game()
+		check(shell.get_node("%Background").current_art == location["kind"] and shell.get_node("%Background").texture != null, "Location backdrop loads: " + str(location["kind"]))
+	state.campaign.location = ""
 	state.campaign.objectives.ending = "VICTORY"
 	shell._game()
 	check(shell.route == "EndingScreen", "Completed campaign shows ending scene")

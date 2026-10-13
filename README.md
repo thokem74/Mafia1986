@@ -9,6 +9,8 @@ set in 1920s Chicago. This is an in-development playable campaign; see
 
 Open `project.godot` with Godot 4.7 and run the main scene. German is the default;
 Settings offers English, inline hints and independent music/effect volumes.
+The landscape Android UI uses large rounded controls, readable Adwaita Sans text
+and full-screen noir pixel art: midnight blue, warm amber and restrained gold.
 
 - Touch the four direction buttons to move; hold for repeated city movement.
 - Stand beside a marked building and press **Enter**. Choose an action, person,
@@ -42,7 +44,9 @@ adb shell am start -n org.thokem.mafia1986/com.godot.game.GodotAppLauncher
 
 The debug APK is for testing. Release signing is not configured. Generated builds
 are ignored by Git and excluded from Godot imports. Reference disk assets are not
-included; pixel graphics and synthesized audio were created for this project.
+included. Backgrounds were generated for this project with the built-in ImageGen
+tool; sprites and synthesized audio were created for the game. Adwaita Sans is
+bundled under its SIL Open Font License in `assets/fonts/LICENSE.txt`.
 
 ## Verify and learn
 
@@ -53,8 +57,9 @@ XDG_DATA_HOME=/tmp/mafia1986-progression godot --headless --path . --script test
 XDG_DATA_HOME=/tmp/mafia1986-visual godot --path . --script tests/visual_runner.gd
 ```
 
-The visual runner captures German and English menus, city, shop, combat and
-settings at 16:9, 18:9, 19.5:9 and 20:9 under `builds/screens/`. Rendering needs a
+The visual runner captures all screens and location types in German and English
+at 16:9, 18:9, 19.5:9 and 20:9 under `builds/screens/redesign/`, and checks fixed
+controls for viewport overflow. Rendering needs a
 graphical environment. The deterministic suite checks rules, scene flows,
 localization, saves and targeted endgame fights; see STATUS for ordinary
 progression and device coverage.
@@ -62,7 +67,11 @@ progression and device coverage.
 Read [docs/architecture.md](docs/architecture.md) for the code structure,
 [docs/original_game_research.md](docs/original_game_research.md) for sources, and
 [docs/gameplay_differences.md](docs/gameplay_differences.md) for adaptations.
-`tools/generate_assets.py` regenerates original assets using Pillow.
+`tools/generate_assets.py` regenerates the original sprites/audio using Pillow.
+The 19 full-screen backgrounds live in `assets/backgrounds/`; their exact
+ImageGen prompt set is recorded in `assets/backgrounds/prompts.json`. Related
+utility screens share the hideout artwork. The modern theme is
+`assets/android_theme.tres`; scene layouts remain editable in Godot.
 
 For targeted device combat checks, preserve your campaign in a manual slot, open
 F9 in a debug build, equip the test gang and start a mission. At 2340×1080 with

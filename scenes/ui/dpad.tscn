@@ -4,52 +4,52 @@
 [node name="TouchDPad" type="GridContainer"]
 columns = 3
 script = ExtResource("1")
-theme_override_constants/h_separation = 6
-theme_override_constants/v_separation = 6
+theme_override_constants/h_separation = 8
+theme_override_constants/v_separation = 8
 
 [node name="Blank1" type="Control" parent="."]
 layout_mode = 2
-custom_minimum_size = Vector2(64, 54)
+custom_minimum_size = Vector2(72, 56)
 
 [node name="Up" type="Button" parent="."]
 layout_mode = 2
-custom_minimum_size = Vector2(64, 54)
+custom_minimum_size = Vector2(72, 56)
 text = "▲"
 focus_mode = 0
 
 [node name="Blank2" type="Control" parent="."]
 layout_mode = 2
-custom_minimum_size = Vector2(64, 54)
+custom_minimum_size = Vector2(72, 56)
 
 [node name="Left" type="Button" parent="."]
 layout_mode = 2
-custom_minimum_size = Vector2(64, 54)
+custom_minimum_size = Vector2(72, 56)
 text = "◀"
 focus_mode = 0
 
 [node name="Blank3" type="Control" parent="."]
 layout_mode = 2
-custom_minimum_size = Vector2(64, 54)
+custom_minimum_size = Vector2(72, 56)
 
 [node name="Right" type="Button" parent="."]
 layout_mode = 2
-custom_minimum_size = Vector2(64, 54)
+custom_minimum_size = Vector2(72, 56)
 text = "▶"
 focus_mode = 0
 
 [node name="Blank4" type="Control" parent="."]
 layout_mode = 2
-custom_minimum_size = Vector2(64, 54)
+custom_minimum_size = Vector2(72, 56)
 
 [node name="Down" type="Button" parent="."]
 layout_mode = 2
-custom_minimum_size = Vector2(64, 54)
+custom_minimum_size = Vector2(72, 56)
 text = "▼"
 focus_mode = 0
 
 [node name="Blank5" type="Control" parent="."]
 layout_mode = 2
-custom_minimum_size = Vector2(64, 54)
+custom_minimum_size = Vector2(72, 56)
 
 [node name="Repeat" type="Timer" parent="."]
 wait_time = 0.35

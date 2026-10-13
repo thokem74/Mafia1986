@@ -1,11 +1,16 @@
 extends SceneTree
 
+const SCREEN_DIRECTORY := "res://builds/screens/redesign"
+
 var shell: Variant
 var state: Node
 var viewport: SubViewport
+var layout_failures: int = 0
+
 
 func _initialize() -> void:
 	call_deferred("_run")
+
 
 func _run() -> void:
 	state = root.get_node("GameState")
@@ -16,44 +21,91 @@ func _run() -> void:
 	root.add_child(viewport)
 	root.get_node("Settings").hints = true
 	viewport.add_child(shell)
-	state.new_game("Charlie", "South Side", false, 0, 400)
-	DirAccess.make_dir_recursive_absolute("res://builds/screens")
+	DirAccess.make_dir_recursive_absolute(SCREEN_DIRECTORY)
 	for locale: String in ["de", "en"]:
 		root.get_node("Settings").language = locale
 		root.get_node("Settings").apply()
-		for width in [1152, 1296, 1404, 1440]:
+		for width: int in [1152, 1296, 1404, 1440]:
 			viewport.size = Vector2i(width, 648)
+			state.new_game("Charlie", "South Side", false, 0, 400)
 			await process_frame
-			await process_frame
+			var prefix := "%s_%d_" % [locale, width]
 			shell._show("Menu")
-			await capture("%s_%d_menu" % [locale, width])
+			await capture(prefix + "menu")
+			shell._show("NewGame")
+			await capture(prefix + "new_game")
 			shell._game()
-			await capture("%s_%d_city" % [locale, width])
-			state.campaign.location = "arms"
-			shell._game()
-			shell.get_node("%LocationPanel")._select("weapon")
-			await capture("%s_%d_shop" % [locale, width])
+			await capture(prefix + "city")
+			for location: Dictionary in Catalog.locations():
+				state.campaign.location = location["id"]
+				shell._game()
+				var panel: Variant = shell.get_node("%LocationPanel")
+				var available := LocationRules.actions(location["kind"])
+				panel._select(str(available[0]))
+				await capture(prefix + "location_" + str(location["kind"]))
+				# Also cover the longest equipment/recruit selection forms.
+				if location["kind"] in ["arms", "pub"]:
+					panel._select("weapon" if location["kind"] == "arms" else "recruit")
+					await capture(prefix + "parameters_" + str(location["kind"]))
 			state.campaign.location = ""
 			CombatRules.start(state.campaign, "police", 5, 5, 30)
 			shell._game()
-			await capture("%s_%d_combat" % [locale, width])
-			if locale == "de" and width == 1152:
-				for path: String in ["Safe", "Safe/Root", "Safe/Root/Header", "Safe/Root/Content", "Safe/Root/Content/Game", "Safe/Root/Content/Game/Body", "Safe/Root/Content/Game/Body/Controls", "Safe/Root/Content/Game/Body/Controls/ActiveInfo"]:
-					var node: Control = shell.get_node(path)
-					print(path, " rect ", node.get_global_rect(), " min ", node.get_combined_minimum_size())
+			await capture(prefix + "combat")
 			state.campaign.combat = {}
-			shell._open_settings()
-			await capture("%s_%d_settings" % [locale, width])
+			state.campaign.police.encounter = "SEARCH"
 			shell._game()
+			await capture(prefix + "police")
+			state.campaign.police.encounter = "COURT"
+			state.campaign.rank = 5
+			shell._game()
+			await capture(prefix + "court")
+			state.campaign.police.encounter = ""
+			state.campaign.safe = {"attempts": 6, "selected": 0, "wheels": [0, 0, 0], "feedback": "SAFE_HELP"}
+			shell._game()
+			await capture(prefix + "safe")
+			state.campaign.safe = {}
+			shell._show("StatusScreen")
+			shell._status()
+			await capture(prefix + "status")
+			shell._saves(true)
+			await capture(prefix + "saves")
+			shell._open_settings()
+			await capture(prefix + "settings")
+			shell._show("CreditsScreen")
+			await capture(prefix + "credits")
+			shell._show("DebugScreen")
+			await capture(prefix + "debug")
+			state.campaign.objectives.ending = "VICTORY"
+			shell._game()
+			await capture(prefix + "ending")
 	shell.get_node("%MusicPlayer").stop()
 	shell.get_node("%SoundPlayer").stop()
 	await create_timer(0.1).timeout
 	shell.queue_free()
 	await process_frame
-	print("VISUAL CAPTURES COMPLETE")
-	quit()
+	print("VISUAL CAPTURES COMPLETE: %d layout failures" % layout_failures)
+	quit(0 if layout_failures == 0 else 1)
+
 
 func capture(identifier: String) -> void:
+	if identifier.ends_with("_menu"):
+		print("CAPTURING ", identifier)
 	await process_frame
+	await process_frame
+	_check_layout(shell, identifier)
 	await RenderingServer.frame_post_draw
-	viewport.get_texture().get_image().save_png("res://builds/screens/%s.png" % identifier)
+	viewport.get_texture().get_image().save_png("%s/%s.png" % [SCREEN_DIRECTORY, identifier])
+
+
+func _check_layout(node: Node, identifier: String, inside_scroll: bool = false) -> void:
+	# Scroll content can intentionally extend beyond the viewport; fixed controls cannot.
+	inside_scroll = inside_scroll or node is ScrollContainer
+	if node is Control and node.is_visible_in_tree() and not inside_scroll:
+		var rect: Rect2 = node.get_global_rect()
+		if rect.size.x > 0 and rect.size.y > 0 and (rect.end.x > viewport.size.x + 1 or rect.end.y > viewport.size.y + 1):
+			layout_failures += 1
+			push_error("%s: %s exceeds viewport: %s" % [identifier, node.name, rect])
+	for child: Node in node.get_children():
+		# The city/combat SubViewports have their own pixel coordinate systems.
+		if not child is SubViewport:
+			_check_layout(child, identifier, inside_scroll)

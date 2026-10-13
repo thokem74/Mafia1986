@@ -20,7 +20,6 @@ func refresh(value: Campaign) -> void:
 	$LocationHint.visible = Settings.hints
 	var location := Catalog.location(campaign.location)
 	$Title.text = tr(location["name_key"])
-	$Illustration.texture = load("res://assets/sprites/panel_%s.png" % location["kind"])
 	member.clear()
 	for person in campaign.gang:
 		member.add_item("%s · %s %d" % [person.gangster_name, tr("ENERGY"), person.energy])
@@ -31,6 +30,7 @@ func refresh(value: Campaign) -> void:
 		var button: Button = ACTION_SCENE.instantiate()
 		actions.add_child(button)
 		button.text = tr("ACT_" + action.to_upper())
+		button.set_meta("action", action)
 		button.pressed.connect(_select.bind(action))
 		button.button_pressed = action == current_action
 	if current_action not in available:
@@ -41,6 +41,8 @@ func refresh(value: Campaign) -> void:
 
 func _select(action: String) -> void:
 	current_action = action
+	for button: Button in actions.get_children():
+		button.set_pressed_no_signal(button.get_meta("action") == action)
 	$Parameters.show()
 	$Parameters/Help.text = tr("HELP_" + action.to_upper())
 	member.visible = action in ["weapon", "train", "camp", "pickpocket", "steal", "dismiss"]

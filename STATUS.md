@@ -32,9 +32,9 @@ Overall build status: **In progress**. A playable campaign, ending and ARM64 deb
 ## Validation results
 
 - Godot **4.7.2**, Mobile rendering retained. Headless import, script parsing, main boot and all authored scenes pass. Headless main boot exits cleanly.
-- **858 deterministic assertions pass**: definition consistency, every translation entry, reachable locations, transactions, recruitment, rank/deadline/victory rules, combat/AI, encounter saves, corrupt backup recovery, invalid versions/data and scene flows.
+- **885 deterministic assertions pass**: definition consistency, every translation entry, reachable locations, transactions, recruitment, rank/deadline/victory rules, combat/AI, encounter saves, corrupt backup recovery, invalid versions/data and scene flows.
 - `tests/progression_runner.gd`: fresh long campaign, seed 2026, normal movement/entry/transactions and combat rules only. **Victory in month 341**, 1,281 location actions, ten members, 210/200 points, both mayor and transporter completed. No injected money, stats, ranks, tips or objective flags. Automated player uses the combat AI; this is not a human playthrough and does not establish balance across seeds.
-- Forty current German/English layout captures: menu, city, shop, combat and settings at **16:9, 18:9, 19.5:9 and 20:9**, in `builds/screens/`. All forty inspected as a contact sheet, plus representative full-size narrow/wide screenshots; combat/control layout fits the logical viewport.
+- 232 current German/English layout captures cover all screens, every location kind, and equipment/recruit forms at **16:9, 18:9, 19.5:9 and 20:9**, in `builds/screens/redesign/`. Eight contact sheets and representative full-size screenshots inspected; automated bounds checks report zero layout failures.
 - ARM64 **debug APK export succeeds**, signs/verifies with debug key. Package `org.thokem.mafia1986`; QA scripts/docs/build artifacts excluded from export. Output: `builds/mafia1986-debug.apk`.
 - Samsung **SM-A176B**, 2340×1080 landscape, Mali-G68 Vulkan Mobile: installed/launched, new campaign, German/English switching, readable notch-safe layout, autosave continuation and suspend/resume verified.
 - Held city touch advanced three tiles and persisted three moves. Held combat touch consumed exactly one action: actor 0 moved x4→x5, active actor became 1. Both stages of the mayor fight completed using real touch actions and explicit debug helpers: 117 actions in 54 seconds. The ten-guard transporter also completed: 109 touch actions in 64 seconds. Game-specific log showed no script/runtime errors during that sample.
@@ -47,6 +47,14 @@ Overall build status: **In progress**. A playable campaign, ending and ARM64 deb
 - Existing save format and legacy tutorial history remain compatible. Save/load results and error messages remain visible.
 - Godot editor import and 858 assertions pass. Forty German/English captures with hints enabled at the four supported aspect ratios inspected; ARM64 debug APK exported and installed.
 - Samsung touch checks verified one-tap Start, movement, Wait, Execute (job acceptance), Back and Continue. Original device saves/settings backed up before testing and restored afterward.
+
+## Noir pixel-art and Android UI redesign (2026-10-13)
+
+- Built-in ImageGen created 19 full-screen backgrounds: 14 location kinds plus menu, city, combat, safe and ending. Utility screens share the hideout scene. Exact prompts are in `assets/backgrounds/prompts.json`; originals are preserved in Codex's generated-images directory.
+- Rounded midnight-blue cards, amber primary actions, readable bundled Adwaita Sans, larger D-pad targets, clear selected states, styled sliders/toggles, and scrollable forms replace the old flat UI and location thumbnails. All visible composition remains in Godot scenes.
+- Backgrounds preserve aspect ratio while covering the screen, ignore touch input, and load only when the displayed setting changes. Live city/combat boards, immediate actions and save compatibility remain intact.
+- Godot import and 885 assertions pass. The complete visual run produces 232 captures with zero fixed-control overflows. ARM64 debug APK exports and installs on the Samsung.
+- Android checks verify readable notch-safe menu/forms/city/location/settings, one-tap and held movement, immediate location entry/Execute, English selection/Apply, single-action combat holds, mode selection, one-tap surrender and Android Back. Original phone saves/settings are backed up before verification and restored afterward.
 
 ## Known limitations and blockers
 

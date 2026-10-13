@@ -1,17 +1,18 @@
 [gd_scene format=3]
 [ext_resource type="Script" path="res://scripts/ui/main.gd" id="script"]
-[ext_resource type="Theme" path="res://assets/retro_theme.tres" id="theme"]
+[ext_resource type="Script" path="res://scripts/ui/screen_background.gd" id="background_script"]
+[ext_resource type="Theme" path="res://assets/android_theme.tres" id="theme"]
 [ext_resource type="PackedScene" path="res://scenes/ui/dpad.tscn" id="dpad"]
 [ext_resource type="PackedScene" path="res://scenes/map/city_board.tscn" id="city"]
 [ext_resource type="PackedScene" path="res://scenes/combat/combat_board.tscn" id="combat"]
 [ext_resource type="PackedScene" path="res://scenes/locations/location_panel.tscn" id="location"]
-[ext_resource type="Texture2D" path="res://assets/sprites/panel_title.png" id="title"]
 [ext_resource type="AudioStream" path="res://assets/audio/music.wav" id="music"]
 [ext_resource type="AudioStream" path="res://assets/audio/click.wav" id="click"]
+[ext_resource type="Texture2D" path="res://assets/backgrounds/menu.png" id="backdrop"]
 [sub_resource type="ViewportTexture" id="city_tex"]
-viewport_path = NodePath("Safe/Root/Content/Game/Body/Board/CityViewport")
+viewport_path = NodePath("Safe/Root/Content/Game/Body/BoardCard/Board/CityViewport")
 [sub_resource type="ViewportTexture" id="combat_tex"]
-viewport_path = NodePath("Safe/Root/Content/Game/Body/Board/CombatViewport")
+viewport_path = NodePath("Safe/Root/Content/Game/Body/BoardCard/Board/CombatViewport")
 
 [node name="Main" type="Control"]
 layout_mode = 1
@@ -24,14 +25,28 @@ script = ExtResource("script")
 theme = ExtResource("theme")
 texture_filter = 1
 
-[node name="Background" type="ColorRect" parent="."]
+[node name="Background" type="TextureRect" parent="."]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-color = Color(0.055, 0.055, 0.11, 1)
+script = ExtResource("background_script")
+texture = ExtResource("backdrop")
+expand_mode = 1
+stretch_mode = 6
+unique_name_in_owner = true
+mouse_filter = 2
+
+[node name="Shade" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.015, 0.025, 0.04, 0.25)
 mouse_filter = 2
 
 [node name="Safe" type="MarginContainer" parent="."]
@@ -43,8 +58,8 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/margin_left = 24
 theme_override_constants/margin_right = 24
-theme_override_constants/margin_top = 16
-theme_override_constants/margin_bottom = 16
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_bottom = 20
 
 [node name="Root" type="VBoxContainer" parent="Safe"]
 layout_mode = 2
@@ -61,13 +76,13 @@ theme_override_font_sizes/font_size = 24
 
 [node name="Back" type="Button" parent="Safe/Root/Header"]
 layout_mode = 2
-custom_minimum_size = Vector2(100, 48)
+custom_minimum_size = Vector2(100, 52)
 text = "BACK"
 unique_name_in_owner = true
 
 [node name="MenuButton" type="Button" parent="Safe/Root/Header"]
 layout_mode = 2
-custom_minimum_size = Vector2(100, 48)
+custom_minimum_size = Vector2(100, 52)
 text = "MENU"
 unique_name_in_owner = true
 
@@ -88,66 +103,89 @@ unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="Picture" type="TextureRect" parent="Safe/Root/Content/Menu/Art"]
+
+[node name="Space" type="Control" parent="Safe/Root/Content/Menu/Art"]
 layout_mode = 2
-texture = ExtResource("title")
-expand_mode = 1
-stretch_mode = 5
 size_flags_vertical = 3
+mouse_filter = 2
+
+[node name="Era" type="Label" parent="Safe/Root/Content/Menu/Art"]
+layout_mode = 2
+text = "CHICAGO · 1925"
+modulate = Color(0.95, 0.76, 0.43, 1)
+theme_override_font_sizes/font_size = 18
+
+[node name="Headline" type="Label" parent="Safe/Root/Content/Menu/Art"]
+layout_mode = 2
+text = "TITLE"
+theme_override_font_sizes/font_size = 64
 
 [node name="Tagline" type="Label" parent="Safe/Root/Content/Menu/Art"]
 layout_mode = 2
 text = "TAGLINE"
-horizontal_alignment = 1
+horizontal_alignment = 0
 autowrap_mode = 2
+
+theme_override_font_sizes/font_size = 20
 
 [node name="Description" type="Label" parent="Safe/Root/Content/Menu/Art"]
 layout_mode = 2
 text = "WELCOME"
 autowrap_mode = 2
 
-[node name="Buttons" type="VBoxContainer" parent="Safe/Root/Content/Menu"]
+theme_override_font_sizes/font_size = 18
+
+[node name="MenuCard" type="PanelContainer" parent="Safe/Root/Content/Menu"]
 layout_mode = 2
-custom_minimum_size = Vector2(320, 0)
+custom_minimum_size = Vector2(340, 0)
 size_flags_vertical = 4
 
-[node name="New" type="Button" parent="Safe/Root/Content/Menu/Buttons"]
+[node name="Buttons" type="VBoxContainer" parent="Safe/Root/Content/Menu/MenuCard"]
+layout_mode = 2
+custom_minimum_size = Vector2(300, 0)
+size_flags_vertical = 4
+
+[node name="New" type="Button" parent="Safe/Root/Content/Menu/MenuCard/Buttons"]
 layout_mode = 2
 custom_minimum_size = Vector2(0, 54)
 text = "NEW_GAME"
 unique_name_in_owner = true
 
-[node name="Continue" type="Button" parent="Safe/Root/Content/Menu/Buttons"]
+theme_type_variation = &"PrimaryButton"
+
+[node name="Continue" type="Button" parent="Safe/Root/Content/Menu/MenuCard/Buttons"]
 layout_mode = 2
 custom_minimum_size = Vector2(0, 54)
 text = "CONTINUE"
 unique_name_in_owner = true
 
-[node name="Load" type="Button" parent="Safe/Root/Content/Menu/Buttons"]
+[node name="Load" type="Button" parent="Safe/Root/Content/Menu/MenuCard/Buttons"]
 layout_mode = 2
 custom_minimum_size = Vector2(0, 54)
 text = "LOAD_GAME"
 unique_name_in_owner = true
 
-[node name="Settings" type="Button" parent="Safe/Root/Content/Menu/Buttons"]
+[node name="Settings" type="Button" parent="Safe/Root/Content/Menu/MenuCard/Buttons"]
 layout_mode = 2
 custom_minimum_size = Vector2(0, 54)
 text = "SETTINGS"
 unique_name_in_owner = true
 
-[node name="Credits" type="Button" parent="Safe/Root/Content/Menu/Buttons"]
+[node name="Credits" type="Button" parent="Safe/Root/Content/Menu/MenuCard/Buttons"]
 layout_mode = 2
 custom_minimum_size = Vector2(0, 54)
 text = "CREDITS"
 unique_name_in_owner = true
 
-[node name="Quit" type="Button" parent="Safe/Root/Content/Menu/Buttons"]
+[node name="Quit" type="Button" parent="Safe/Root/Content/Menu/MenuCard/Buttons"]
 layout_mode = 2
 custom_minimum_size = Vector2(0, 54)
 text = "QUIT"
 unique_name_in_owner = true
 
-[node name="NewGame" type="VBoxContainer" parent="Safe/Root/Content"]
+theme_type_variation = &"DangerButton"
+
+[node name="NewGame" type="CenterContainer" parent="Safe/Root/Content"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -156,53 +194,70 @@ grow_horizontal = 2
 grow_vertical = 2
 unique_name_in_owner = true
 
-[node name="Label" type="Label" parent="Safe/Root/Content/NewGame"]
+[node name="Card" type="PanelContainer" parent="Safe/Root/Content/NewGame"]
+layout_mode = 2
+custom_minimum_size = Vector2(600, 480)
+
+[node name="Scroll" type="ScrollContainer" parent="Safe/Root/Content/NewGame/Card"]
+layout_mode = 2
+horizontal_scroll_mode = 0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Body" type="VBoxContainer" parent="Safe/Root/Content/NewGame/Card/Scroll"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 10
+
+[node name="Label" type="Label" parent="Safe/Root/Content/NewGame/Card/Scroll/Body"]
 layout_mode = 2
 text = "NEW_GAME"
 
-[node name="NameLabel" type="Label" parent="Safe/Root/Content/NewGame"]
+[node name="NameLabel" type="Label" parent="Safe/Root/Content/NewGame/Card/Scroll/Body"]
 layout_mode = 2
 text = "LEADER_NAME"
 
-[node name="LeaderName" type="LineEdit" parent="Safe/Root/Content/NewGame"]
+[node name="LeaderName" type="LineEdit" parent="Safe/Root/Content/NewGame/Card/Scroll/Body"]
 layout_mode = 2
 unique_name_in_owner = true
 text = "Charlie"
 max_length = 20
 custom_minimum_size = Vector2(0, 52)
 
-[node name="GangLabel" type="Label" parent="Safe/Root/Content/NewGame"]
+[node name="GangLabel" type="Label" parent="Safe/Root/Content/NewGame/Card/Scroll/Body"]
 layout_mode = 2
 text = "GANG_NAME"
 
-[node name="GangName" type="LineEdit" parent="Safe/Root/Content/NewGame"]
+[node name="GangName" type="LineEdit" parent="Safe/Root/Content/NewGame/Card/Scroll/Body"]
 layout_mode = 2
 unique_name_in_owner = true
 text = "South Side"
 max_length = 20
 custom_minimum_size = Vector2(0, 52)
 
-[node name="Sex" type="OptionButton" parent="Safe/Root/Content/NewGame"]
+[node name="Sex" type="OptionButton" parent="Safe/Root/Content/NewGame/Card/Scroll/Body"]
 layout_mode = 2
 unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 52)
 
-[node name="LongGame" type="CheckButton" parent="Safe/Root/Content/NewGame"]
+[node name="LongGame" type="CheckButton" parent="Safe/Root/Content/NewGame/Card/Scroll/Body"]
 layout_mode = 2
 unique_name_in_owner = true
 text = "LONG_GAME"
 
-[node name="Short" type="Label" parent="Safe/Root/Content/NewGame"]
+[node name="Short" type="Label" parent="Safe/Root/Content/NewGame/Card/Scroll/Body"]
 layout_mode = 2
 text = "SHORT_GAME"
 
-[node name="Start" type="Button" parent="Safe/Root/Content/NewGame"]
+[node name="Start" type="Button" parent="Safe/Root/Content/NewGame/Card/Scroll/Body"]
 layout_mode = 2
 custom_minimum_size = Vector2(0, 54)
 text = "START"
 unique_name_in_owner = true
 
-[node name="SettingsScreen" type="VBoxContainer" parent="Safe/Root/Content"]
+theme_type_variation = &"PrimaryButton"
+
+[node name="SettingsScreen" type="CenterContainer" parent="Safe/Root/Content"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -211,51 +266,68 @@ grow_horizontal = 2
 grow_vertical = 2
 unique_name_in_owner = true
 
-[node name="Label" type="Label" parent="Safe/Root/Content/SettingsScreen"]
+[node name="Card" type="PanelContainer" parent="Safe/Root/Content/SettingsScreen"]
+layout_mode = 2
+custom_minimum_size = Vector2(600, 480)
+
+[node name="Scroll" type="ScrollContainer" parent="Safe/Root/Content/SettingsScreen/Card"]
+layout_mode = 2
+horizontal_scroll_mode = 0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Body" type="VBoxContainer" parent="Safe/Root/Content/SettingsScreen/Card/Scroll"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 10
+
+[node name="Label" type="Label" parent="Safe/Root/Content/SettingsScreen/Card/Scroll/Body"]
 layout_mode = 2
 text = "SETTINGS"
 
-[node name="LanguageLabel" type="Label" parent="Safe/Root/Content/SettingsScreen"]
+[node name="LanguageLabel" type="Label" parent="Safe/Root/Content/SettingsScreen/Card/Scroll/Body"]
 layout_mode = 2
 text = "LANGUAGE"
 
-[node name="Language" type="OptionButton" parent="Safe/Root/Content/SettingsScreen"]
+[node name="Language" type="OptionButton" parent="Safe/Root/Content/SettingsScreen/Card/Scroll/Body"]
 layout_mode = 2
 unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 52)
 
-[node name="MusicVolumeLabel" type="Label" parent="Safe/Root/Content/SettingsScreen"]
+[node name="MusicVolumeLabel" type="Label" parent="Safe/Root/Content/SettingsScreen/Card/Scroll/Body"]
 layout_mode = 2
 text = "MUSIC"
 
-[node name="MusicVolume" type="HSlider" parent="Safe/Root/Content/SettingsScreen"]
+[node name="MusicVolume" type="HSlider" parent="Safe/Root/Content/SettingsScreen/Card/Scroll/Body"]
 layout_mode = 2
 unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 44)
 max_value = 1.0
 step = 0.01
 
-[node name="SoundVolumeLabel" type="Label" parent="Safe/Root/Content/SettingsScreen"]
+[node name="SoundVolumeLabel" type="Label" parent="Safe/Root/Content/SettingsScreen/Card/Scroll/Body"]
 layout_mode = 2
 text = "SOUND"
 
-[node name="SoundVolume" type="HSlider" parent="Safe/Root/Content/SettingsScreen"]
+[node name="SoundVolume" type="HSlider" parent="Safe/Root/Content/SettingsScreen/Card/Scroll/Body"]
 layout_mode = 2
 unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 44)
 max_value = 1.0
 step = 0.01
 
-[node name="Hints" type="CheckButton" parent="Safe/Root/Content/SettingsScreen"]
+[node name="Hints" type="CheckButton" parent="Safe/Root/Content/SettingsScreen/Card/Scroll/Body"]
 layout_mode = 2
 unique_name_in_owner = true
 text = "HINTS"
 
-[node name="Apply" type="Button" parent="Safe/Root/Content/SettingsScreen"]
+[node name="Apply" type="Button" parent="Safe/Root/Content/SettingsScreen/Card/Scroll/Body"]
 layout_mode = 2
 custom_minimum_size = Vector2(0, 54)
 text = "APPLY"
 unique_name_in_owner = true
+
+theme_type_variation = &"PrimaryButton"
 
 [node name="Game" type="VBoxContainer" parent="Safe/Root/Content"]
 layout_mode = 1
@@ -272,21 +344,27 @@ text = ""
 unique_name_in_owner = true
 autowrap_mode = 2
 
+theme_override_font_sizes/font_size = 16
+
 [node name="Body" type="HBoxContainer" parent="Safe/Root/Content/Game"]
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_constants/separation = 16
 
-[node name="Board" type="VBoxContainer" parent="Safe/Root/Content/Game/Body"]
+[node name="BoardCard" type="PanelContainer" parent="Safe/Root/Content/Game/Body"]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="BoardTitle" type="Label" parent="Safe/Root/Content/Game/Body/Board"]
+[node name="Board" type="VBoxContainer" parent="Safe/Root/Content/Game/Body/BoardCard"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="BoardTitle" type="Label" parent="Safe/Root/Content/Game/Body/BoardCard/Board"]
 layout_mode = 2
 text = "CITY"
 unique_name_in_owner = true
 
-[node name="CityImage" type="TextureRect" parent="Safe/Root/Content/Game/Body/Board"]
+[node name="CityImage" type="TextureRect" parent="Safe/Root/Content/Game/Body/BoardCard/Board"]
 layout_mode = 2
 unique_name_in_owner = true
 texture = SubResource("city_tex")
@@ -294,7 +372,7 @@ expand_mode = 1
 stretch_mode = 5
 size_flags_vertical = 3
 
-[node name="CombatImage" type="TextureRect" parent="Safe/Root/Content/Game/Body/Board"]
+[node name="CombatImage" type="TextureRect" parent="Safe/Root/Content/Game/Body/BoardCard/Board"]
 layout_mode = 2
 unique_name_in_owner = true
 texture = SubResource("combat_tex")
@@ -302,103 +380,136 @@ expand_mode = 1
 stretch_mode = 5
 size_flags_vertical = 3
 
-[node name="CombatHint" type="Label" parent="Safe/Root/Content/Game/Body/Board"]
+[node name="CombatHint" type="Label" parent="Safe/Root/Content/Game/Body/BoardCard/Board"]
 layout_mode = 2
 text = "COMBAT_HELP"
+theme_override_font_sizes/font_size = 16
 unique_name_in_owner = true
 autowrap_mode = 2
 mouse_filter = 2
 visible = false
 
-[node name="CityViewport" type="SubViewport" parent="Safe/Root/Content/Game/Body/Board"]
+theme_override_font_sizes/font_size = 16
+
+[node name="CityViewport" type="SubViewport" parent="Safe/Root/Content/Game/Body/BoardCard/Board"]
 size = Vector2i(320, 240)
 disable_3d = true
 render_target_update_mode = 4
 
-[node name="CityBoard" parent="Safe/Root/Content/Game/Body/Board/CityViewport" instance=ExtResource("city")]
+[node name="CityBoard" parent="Safe/Root/Content/Game/Body/BoardCard/Board/CityViewport" instance=ExtResource("city")]
 unique_name_in_owner = true
 
-[node name="CombatViewport" type="SubViewport" parent="Safe/Root/Content/Game/Body/Board"]
+[node name="CombatViewport" type="SubViewport" parent="Safe/Root/Content/Game/Body/BoardCard/Board"]
 size = Vector2i(400, 200)
 disable_3d = true
 render_target_update_mode = 4
 
-[node name="CombatBoard" parent="Safe/Root/Content/Game/Body/Board/CombatViewport" instance=ExtResource("combat")]
+[node name="CombatBoard" parent="Safe/Root/Content/Game/Body/BoardCard/Board/CombatViewport" instance=ExtResource("combat")]
 unique_name_in_owner = true
 
-[node name="Controls" type="VBoxContainer" parent="Safe/Root/Content/Game/Body"]
+[node name="ControlCard" type="PanelContainer" parent="Safe/Root/Content/Game/Body"]
 layout_mode = 2
-custom_minimum_size = Vector2(280, 0)
+custom_minimum_size = Vector2(284, 0)
 
-[node name="ActiveInfo" type="Label" parent="Safe/Root/Content/Game/Body/Controls"]
+[node name="Controls" type="VBoxContainer" parent="Safe/Root/Content/Game/Body/ControlCard"]
+layout_mode = 2
+custom_minimum_size = Vector2(248, 0)
+theme_override_constants/separation = 6
+
+[node name="ActiveInfo" type="Label" parent="Safe/Root/Content/Game/Body/ControlCard/Controls"]
 layout_mode = 2
 text = "MAP_HELP"
 unique_name_in_owner = true
 autowrap_mode = 2
 size_flags_vertical = 3
 
-[node name="DPad" parent="Safe/Root/Content/Game/Body/Controls" instance=ExtResource("dpad")]
+theme_override_font_sizes/font_size = 16
+
+[node name="DPad" parent="Safe/Root/Content/Game/Body/ControlCard/Controls" instance=ExtResource("dpad")]
 layout_mode = 2
 unique_name_in_owner = true
 size_flags_horizontal = 4
 
-[node name="Modes" type="HBoxContainer" parent="Safe/Root/Content/Game/Body/Controls"]
+[node name="Modes" type="HBoxContainer" parent="Safe/Root/Content/Game/Body/ControlCard/Controls"]
 layout_mode = 2
 unique_name_in_owner = true
 
-[node name="MoveMode" type="Button" parent="Safe/Root/Content/Game/Body/Controls/Modes"]
+[node name="MoveMode" type="Button" parent="Safe/Root/Content/Game/Body/ControlCard/Controls/Modes"]
 layout_mode = 2
 custom_minimum_size = Vector2(0, 54)
 text = "MOVE"
 unique_name_in_owner = true
 size_flags_horizontal = 3
+toggle_mode = true
 
-[node name="AttackMode" type="Button" parent="Safe/Root/Content/Game/Body/Controls/Modes"]
+[node name="AttackMode" type="Button" parent="Safe/Root/Content/Game/Body/ControlCard/Controls/Modes"]
 layout_mode = 2
 custom_minimum_size = Vector2(0, 54)
 text = "ATTACK"
 unique_name_in_owner = true
 size_flags_horizontal = 3
+toggle_mode = true
 
-[node name="Enter" type="Button" parent="Safe/Root/Content/Game/Body/Controls"]
+[node name="Enter" type="Button" parent="Safe/Root/Content/Game/Body/ControlCard/Controls"]
 layout_mode = 2
 custom_minimum_size = Vector2(0, 54)
 text = "ENTER"
 unique_name_in_owner = true
 
-[node name="Skip" type="Button" parent="Safe/Root/Content/Game/Body/Controls"]
-layout_mode = 2
-custom_minimum_size = Vector2(0, 54)
-text = "SKIP"
-unique_name_in_owner = true
+theme_type_variation = &"PrimaryButton"
 
-[node name="Wait" type="Button" parent="Safe/Root/Content/Game/Body/Controls"]
+[node name="Wait" type="Button" parent="Safe/Root/Content/Game/Body/ControlCard/Controls"]
 layout_mode = 2
 custom_minimum_size = Vector2(0, 54)
 text = "WAIT"
 unique_name_in_owner = true
 
-[node name="GiveUp" type="Button" parent="Safe/Root/Content/Game/Body/Controls"]
+[node name="TurnActions" type="HBoxContainer" parent="Safe/Root/Content/Game/Body/ControlCard/Controls"]
+layout_mode = 2
+unique_name_in_owner = true
+theme_override_constants/separation = 6
+
+[node name="Skip" type="Button" parent="Safe/Root/Content/Game/Body/ControlCard/Controls/TurnActions"]
 layout_mode = 2
 custom_minimum_size = Vector2(0, 54)
-text = "FLEE"
+text = "SKIP"
 unique_name_in_owner = true
 
-[node name="GameFooter" type="HBoxContainer" parent="Safe/Root/Content/Game"]
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 16
+
+[node name="GiveUp" type="Button" parent="Safe/Root/Content/Game/Body/ControlCard/Controls/TurnActions"]
+layout_mode = 2
+custom_minimum_size = Vector2(0, 54)
+text = "SURRENDER"
+unique_name_in_owner = true
+
+theme_type_variation = &"DangerButton"
+
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 16
+
+[node name="EventCard" type="PanelContainer" parent="Safe/Root/Content/Game"]
+layout_mode = 2
+theme_type_variation = &"CompactPanel"
+
+[node name="GameFooter" type="HBoxContainer" parent="Safe/Root/Content/Game/EventCard"]
 layout_mode = 2
 
-[node name="StatusButton" type="Button" parent="Safe/Root/Content/Game/GameFooter"]
+[node name="StatusButton" type="Button" parent="Safe/Root/Content/Game/EventCard/GameFooter"]
 layout_mode = 2
 custom_minimum_size = Vector2(0, 54)
 text = "STATUS"
 unique_name_in_owner = true
 
-[node name="Event" type="Label" parent="Safe/Root/Content/Game/GameFooter"]
+[node name="Event" type="Label" parent="Safe/Root/Content/Game/EventCard/GameFooter"]
 layout_mode = 2
 text = ""
 unique_name_in_owner = true
 size_flags_horizontal = 3
 autowrap_mode = 2
+
+theme_override_font_sizes/font_size = 16
 
 [node name="Location" type="HBoxContainer" parent="Safe/Root/Content"]
 layout_mode = 1
@@ -409,36 +520,53 @@ grow_horizontal = 2
 grow_vertical = 2
 unique_name_in_owner = true
 
-[node name="LocationPanel" parent="Safe/Root/Content/Location" instance=ExtResource("location")]
+[node name="ActionCard" type="PanelContainer" parent="Safe/Root/Content/Location"]
+layout_mode = 2
+custom_minimum_size = Vector2(480, 0)
+
+[node name="LocationPanel" parent="Safe/Root/Content/Location/ActionCard" instance=ExtResource("location")]
 layout_mode = 2
 unique_name_in_owner = true
 size_flags_horizontal = 3
 
-[node name="Side" type="VBoxContainer" parent="Safe/Root/Content/Location"]
+[node name="View" type="Control" parent="Safe/Root/Content/Location"]
 layout_mode = 2
-custom_minimum_size = Vector2(300, 0)
+size_flags_horizontal = 3
+mouse_filter = 2
+
+[node name="ContextCard" type="PanelContainer" parent="Safe/Root/Content/Location"]
+layout_mode = 2
+custom_minimum_size = Vector2(270, 0)
+
+[node name="Side" type="VBoxContainer" parent="Safe/Root/Content/Location/ContextCard"]
+layout_mode = 2
+custom_minimum_size = Vector2(240, 0)
 size_flags_horizontal = 3
 
-[node name="LocationHud" type="Label" parent="Safe/Root/Content/Location/Side"]
+[node name="LocationHud" type="Label" parent="Safe/Root/Content/Location/ContextCard/Side"]
 layout_mode = 2
 text = ""
 unique_name_in_owner = true
 autowrap_mode = 2
 
-[node name="LocationEvent" type="Label" parent="Safe/Root/Content/Location/Side"]
+theme_override_font_sizes/font_size = 16
+
+[node name="LocationEvent" type="Label" parent="Safe/Root/Content/Location/ContextCard/Side"]
 layout_mode = 2
 text = ""
 unique_name_in_owner = true
 autowrap_mode = 2
 size_flags_vertical = 3
 
-[node name="Leave" type="Button" parent="Safe/Root/Content/Location/Side"]
+theme_override_font_sizes/font_size = 16
+
+[node name="Leave" type="Button" parent="Safe/Root/Content/Location/ContextCard/Side"]
 layout_mode = 2
 custom_minimum_size = Vector2(0, 54)
 text = "BACK"
 unique_name_in_owner = true
 
-[node name="StatusScreen" type="VBoxContainer" parent="Safe/Root/Content"]
+[node name="StatusScreen" type="CenterContainer" parent="Safe/Root/Content"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -447,36 +575,43 @@ grow_horizontal = 2
 grow_vertical = 2
 unique_name_in_owner = true
 
-[node name="StatusScroll" type="ScrollContainer" parent="Safe/Root/Content/StatusScreen"]
+[node name="Card" type="PanelContainer" parent="Safe/Root/Content/StatusScreen"]
+layout_mode = 2
+custom_minimum_size = Vector2(760, 480)
+
+[node name="Body" type="VBoxContainer" parent="Safe/Root/Content/StatusScreen/Card"]
+layout_mode = 2
+
+[node name="StatusScroll" type="ScrollContainer" parent="Safe/Root/Content/StatusScreen/Card/Body"]
 layout_mode = 2
 size_flags_vertical = 3
 horizontal_scroll_mode = 0
 
-[node name="StatusText" type="Label" parent="Safe/Root/Content/StatusScreen/StatusScroll"]
+[node name="StatusText" type="Label" parent="Safe/Root/Content/StatusScreen/Card/Body/StatusScroll"]
 layout_mode = 2
 text = ""
 unique_name_in_owner = true
 size_flags_horizontal = 3
 autowrap_mode = 2
 
-[node name="StatusButtons" type="HBoxContainer" parent="Safe/Root/Content/StatusScreen"]
+[node name="StatusButtons" type="HBoxContainer" parent="Safe/Root/Content/StatusScreen/Card/Body"]
 layout_mode = 2
 
-[node name="SaveButton" type="Button" parent="Safe/Root/Content/StatusScreen/StatusButtons"]
+[node name="SaveButton" type="Button" parent="Safe/Root/Content/StatusScreen/Card/Body/StatusButtons"]
 layout_mode = 2
 custom_minimum_size = Vector2(0, 54)
 text = "SAVE_GAME"
 unique_name_in_owner = true
 size_flags_horizontal = 3
 
-[node name="LoadButton" type="Button" parent="Safe/Root/Content/StatusScreen/StatusButtons"]
+[node name="LoadButton" type="Button" parent="Safe/Root/Content/StatusScreen/Card/Body/StatusButtons"]
 layout_mode = 2
 custom_minimum_size = Vector2(0, 54)
 text = "LOAD_GAME"
 unique_name_in_owner = true
 size_flags_horizontal = 3
 
-[node name="SaveScreen" type="VBoxContainer" parent="Safe/Root/Content"]
+[node name="SaveScreen" type="CenterContainer" parent="Safe/Root/Content"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -485,42 +620,57 @@ grow_horizontal = 2
 grow_vertical = 2
 unique_name_in_owner = true
 
-[node name="SaveTitle" type="Label" parent="Safe/Root/Content/SaveScreen"]
+[node name="Card" type="PanelContainer" parent="Safe/Root/Content/SaveScreen"]
+layout_mode = 2
+custom_minimum_size = Vector2(640, 430)
+
+[node name="Scroll" type="ScrollContainer" parent="Safe/Root/Content/SaveScreen/Card"]
+layout_mode = 2
+horizontal_scroll_mode = 0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Body" type="VBoxContainer" parent="Safe/Root/Content/SaveScreen/Card/Scroll"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 10
+
+[node name="SaveTitle" type="Label" parent="Safe/Root/Content/SaveScreen/Card/Scroll/Body"]
 layout_mode = 2
 text = "SAVE_GAME"
 unique_name_in_owner = true
 
-[node name="Slot0" type="Button" parent="Safe/Root/Content/SaveScreen"]
+[node name="Slot0" type="Button" parent="Safe/Root/Content/SaveScreen/Card/Scroll/Body"]
 layout_mode = 2
 custom_minimum_size = Vector2(0, 54)
 text = "AUTOSAVE"
 unique_name_in_owner = true
 
-[node name="Slot1" type="Button" parent="Safe/Root/Content/SaveScreen"]
+[node name="Slot1" type="Button" parent="Safe/Root/Content/SaveScreen/Card/Scroll/Body"]
 layout_mode = 2
 custom_minimum_size = Vector2(0, 54)
 text = "SLOT"
 unique_name_in_owner = true
 
-[node name="Slot2" type="Button" parent="Safe/Root/Content/SaveScreen"]
+[node name="Slot2" type="Button" parent="Safe/Root/Content/SaveScreen/Card/Scroll/Body"]
 layout_mode = 2
 custom_minimum_size = Vector2(0, 54)
 text = "SLOT"
 unique_name_in_owner = true
 
-[node name="Slot3" type="Button" parent="Safe/Root/Content/SaveScreen"]
+[node name="Slot3" type="Button" parent="Safe/Root/Content/SaveScreen/Card/Scroll/Body"]
 layout_mode = 2
 custom_minimum_size = Vector2(0, 54)
 text = "SLOT"
 unique_name_in_owner = true
 
-[node name="SaveMessage" type="Label" parent="Safe/Root/Content/SaveScreen"]
+[node name="SaveMessage" type="Label" parent="Safe/Root/Content/SaveScreen/Card/Scroll/Body"]
 layout_mode = 2
 text = ""
 unique_name_in_owner = true
 autowrap_mode = 2
 
-[node name="PoliceScreen" type="VBoxContainer" parent="Safe/Root/Content"]
+[node name="PoliceScreen" type="CenterContainer" parent="Safe/Root/Content"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -529,50 +679,69 @@ grow_horizontal = 2
 grow_vertical = 2
 unique_name_in_owner = true
 
-[node name="PoliceTitle" type="Label" parent="Safe/Root/Content/PoliceScreen"]
+[node name="Card" type="PanelContainer" parent="Safe/Root/Content/PoliceScreen"]
+layout_mode = 2
+custom_minimum_size = Vector2(520, 420)
+
+[node name="Scroll" type="ScrollContainer" parent="Safe/Root/Content/PoliceScreen/Card"]
+layout_mode = 2
+horizontal_scroll_mode = 0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Body" type="VBoxContainer" parent="Safe/Root/Content/PoliceScreen/Card/Scroll"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 10
+
+[node name="PoliceTitle" type="Label" parent="Safe/Root/Content/PoliceScreen/Card/Scroll/Body"]
 layout_mode = 2
 text = "SEARCH"
 unique_name_in_owner = true
 theme_override_font_sizes/font_size = 28
 
-[node name="PoliceHelp" type="Label" parent="Safe/Root/Content/PoliceScreen"]
+[node name="PoliceHelp" type="Label" parent="Safe/Root/Content/PoliceScreen/Card/Scroll/Body"]
 layout_mode = 2
 text = ""
 unique_name_in_owner = true
 autowrap_mode = 2
 
-[node name="Lawyer" type="SpinBox" parent="Safe/Root/Content/PoliceScreen"]
+[node name="Lawyer" type="SpinBox" parent="Safe/Root/Content/PoliceScreen/Card/Scroll/Body"]
 layout_mode = 2
 unique_name_in_owner = true
 max_value = 10000.0
 step = 500.0
 custom_minimum_size = Vector2(0, 56)
 
-[node name="Search" type="Button" parent="Safe/Root/Content/PoliceScreen"]
+[node name="Search" type="Button" parent="Safe/Root/Content/PoliceScreen/Card/Scroll/Body"]
 layout_mode = 2
 custom_minimum_size = Vector2(0, 54)
 text = "CONTINUE"
 unique_name_in_owner = true
 
-[node name="Bribe" type="Button" parent="Safe/Root/Content/PoliceScreen"]
+theme_type_variation = &"PrimaryButton"
+
+[node name="Bribe" type="Button" parent="Safe/Root/Content/PoliceScreen/Card/Scroll/Body"]
 layout_mode = 2
 custom_minimum_size = Vector2(0, 54)
 text = "ACT_PROTECTION"
 unique_name_in_owner = true
 
-[node name="Escape" type="Button" parent="Safe/Root/Content/PoliceScreen"]
+[node name="Escape" type="Button" parent="Safe/Root/Content/PoliceScreen/Card/Scroll/Body"]
 layout_mode = 2
 custom_minimum_size = Vector2(0, 54)
 text = "FLEE"
 unique_name_in_owner = true
 
-[node name="Court" type="Button" parent="Safe/Root/Content/PoliceScreen"]
+[node name="Court" type="Button" parent="Safe/Root/Content/PoliceScreen/Card/Scroll/Body"]
 layout_mode = 2
 custom_minimum_size = Vector2(0, 54)
 text = "COURT"
 unique_name_in_owner = true
 
-[node name="SafeScreen" type="VBoxContainer" parent="Safe/Root/Content"]
+theme_type_variation = &"PrimaryButton"
+
+[node name="SafeScreen" type="CenterContainer" parent="Safe/Root/Content"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -581,36 +750,53 @@ grow_horizontal = 2
 grow_vertical = 2
 unique_name_in_owner = true
 
-[node name="SafeTitle" type="Label" parent="Safe/Root/Content/SafeScreen"]
+[node name="Card" type="PanelContainer" parent="Safe/Root/Content/SafeScreen"]
+layout_mode = 2
+custom_minimum_size = Vector2(500, 440)
+
+[node name="Scroll" type="ScrollContainer" parent="Safe/Root/Content/SafeScreen/Card"]
+layout_mode = 2
+horizontal_scroll_mode = 0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Body" type="VBoxContainer" parent="Safe/Root/Content/SafeScreen/Card/Scroll"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 10
+
+[node name="SafeTitle" type="Label" parent="Safe/Root/Content/SafeScreen/Card/Scroll/Body"]
 layout_mode = 2
 text = ""
 unique_name_in_owner = true
 
-[node name="Wheels" type="Label" parent="Safe/Root/Content/SafeScreen"]
+[node name="Wheels" type="Label" parent="Safe/Root/Content/SafeScreen/Card/Scroll/Body"]
 layout_mode = 2
 text = "0 0 0"
 unique_name_in_owner = true
 theme_override_font_sizes/font_size = 48
 horizontal_alignment = 1
 
-[node name="SafeFeedback" type="Label" parent="Safe/Root/Content/SafeScreen"]
+[node name="SafeFeedback" type="Label" parent="Safe/Root/Content/SafeScreen/Card/Scroll/Body"]
 layout_mode = 2
 text = "SAFE_HELP"
 unique_name_in_owner = true
 autowrap_mode = 2
 
-[node name="SafeDPad" parent="Safe/Root/Content/SafeScreen" instance=ExtResource("dpad")]
+[node name="SafeDPad" parent="Safe/Root/Content/SafeScreen/Card/Scroll/Body" instance=ExtResource("dpad")]
 layout_mode = 2
 unique_name_in_owner = true
 size_flags_horizontal = 4
 
-[node name="SafeCancel" type="Button" parent="Safe/Root/Content/SafeScreen"]
+[node name="SafeCancel" type="Button" parent="Safe/Root/Content/SafeScreen/Card/Scroll/Body"]
 layout_mode = 2
 custom_minimum_size = Vector2(0, 54)
 text = "BACK"
 unique_name_in_owner = true
 
-[node name="EndingScreen" type="VBoxContainer" parent="Safe/Root/Content"]
+theme_type_variation = &"DangerButton"
+
+[node name="EndingScreen" type="CenterContainer" parent="Safe/Root/Content"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -619,25 +805,40 @@ grow_horizontal = 2
 grow_vertical = 2
 unique_name_in_owner = true
 
-[node name="EndingTitle" type="Label" parent="Safe/Root/Content/EndingScreen"]
+[node name="Card" type="PanelContainer" parent="Safe/Root/Content/EndingScreen"]
+layout_mode = 2
+custom_minimum_size = Vector2(740, 440)
+
+[node name="Scroll" type="ScrollContainer" parent="Safe/Root/Content/EndingScreen/Card"]
+layout_mode = 2
+horizontal_scroll_mode = 0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Body" type="VBoxContainer" parent="Safe/Root/Content/EndingScreen/Card/Scroll"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 10
+
+[node name="EndingTitle" type="Label" parent="Safe/Root/Content/EndingScreen/Card/Scroll/Body"]
 layout_mode = 2
 text = "VICTORY"
 unique_name_in_owner = true
 theme_override_font_sizes/font_size = 36
 
-[node name="EndingText" type="Label" parent="Safe/Root/Content/EndingScreen"]
+[node name="EndingText" type="Label" parent="Safe/Root/Content/EndingScreen/Card/Scroll/Body"]
 layout_mode = 2
 text = ""
 unique_name_in_owner = true
 autowrap_mode = 2
 
-[node name="EndingSummary" type="Label" parent="Safe/Root/Content/EndingScreen"]
+[node name="EndingSummary" type="Label" parent="Safe/Root/Content/EndingScreen/Card/Scroll/Body"]
 layout_mode = 2
 text = ""
 unique_name_in_owner = true
 autowrap_mode = 2
 
-[node name="CreditsScreen" type="VBoxContainer" parent="Safe/Root/Content"]
+[node name="CreditsScreen" type="CenterContainer" parent="Safe/Root/Content"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -646,12 +847,27 @@ grow_horizontal = 2
 grow_vertical = 2
 unique_name_in_owner = true
 
-[node name="CreditsLabel" type="Label" parent="Safe/Root/Content/CreditsScreen"]
+[node name="Card" type="PanelContainer" parent="Safe/Root/Content/CreditsScreen"]
+layout_mode = 2
+custom_minimum_size = Vector2(640, 420)
+
+[node name="Scroll" type="ScrollContainer" parent="Safe/Root/Content/CreditsScreen/Card"]
+layout_mode = 2
+horizontal_scroll_mode = 0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Body" type="VBoxContainer" parent="Safe/Root/Content/CreditsScreen/Card/Scroll"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 10
+
+[node name="CreditsLabel" type="Label" parent="Safe/Root/Content/CreditsScreen/Card/Scroll/Body"]
 layout_mode = 2
 text = "CREDITS_TEXT"
 autowrap_mode = 2
 
-[node name="DebugScreen" type="VBoxContainer" parent="Safe/Root/Content"]
+[node name="DebugScreen" type="CenterContainer" parent="Safe/Root/Content"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -660,41 +876,56 @@ grow_horizontal = 2
 grow_vertical = 2
 unique_name_in_owner = true
 
-[node name="DebugLabel" type="Label" parent="Safe/Root/Content/DebugScreen"]
+[node name="Card" type="PanelContainer" parent="Safe/Root/Content/DebugScreen"]
+layout_mode = 2
+custom_minimum_size = Vector2(600, 480)
+
+[node name="Scroll" type="ScrollContainer" parent="Safe/Root/Content/DebugScreen/Card"]
+layout_mode = 2
+horizontal_scroll_mode = 0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Body" type="VBoxContainer" parent="Safe/Root/Content/DebugScreen/Card/Scroll"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 10
+
+[node name="DebugLabel" type="Label" parent="Safe/Root/Content/DebugScreen/Card/Scroll/Body"]
 layout_mode = 2
 text = "Development tools (F9)"
 
-[node name="DebugMoney" type="Button" parent="Safe/Root/Content/DebugScreen"]
+[node name="DebugMoney" type="Button" parent="Safe/Root/Content/DebugScreen/Card/Scroll/Body"]
 layout_mode = 2
 custom_minimum_size = Vector2(0, 54)
 text = "Add $10000"
 unique_name_in_owner = true
 
-[node name="DebugRank" type="Button" parent="Safe/Root/Content/DebugScreen"]
+[node name="DebugRank" type="Button" parent="Safe/Root/Content/DebugScreen/Card/Scroll/Body"]
 layout_mode = 2
 custom_minimum_size = Vector2(0, 54)
 text = "Rank 5"
 unique_name_in_owner = true
 
-[node name="DebugGear" type="Button" parent="Safe/Root/Content/DebugScreen"]
+[node name="DebugGear" type="Button" parent="Safe/Root/Content/DebugScreen/Card/Scroll/Body"]
 layout_mode = 2
 custom_minimum_size = Vector2(0, 54)
 text = "Train and equip gang"
 unique_name_in_owner = true
 
-[node name="DebugPolice" type="Button" parent="Safe/Root/Content/DebugScreen"]
+[node name="DebugPolice" type="Button" parent="Safe/Root/Content/DebugScreen/Card/Scroll/Body"]
 layout_mode = 2
 custom_minimum_size = Vector2(0, 54)
 text = "Police checkpoint"
 unique_name_in_owner = true
 
-[node name="DebugMayor" type="Button" parent="Safe/Root/Content/DebugScreen"]
+[node name="DebugMayor" type="Button" parent="Safe/Root/Content/DebugScreen/Card/Scroll/Body"]
 layout_mode = 2
 custom_minimum_size = Vector2(0, 54)
 text = "Mayor objective"
 unique_name_in_owner = true
 
-[node name="DebugTransport" type="Button" parent="Safe/Root/Content/DebugScreen"]
+[node name="DebugTransport" type="Button" parent="Safe/Root/Content/DebugScreen/Card/Scroll/Body"]
 layout_mode = 2
 custom_minimum_size = Vector2(0, 54)
 text = "Transport objective"

@@ -68,6 +68,7 @@ func _show(screen: String) -> void:
 		%SafeDPad.stop()
 	%AiTimer.stop()
 	route = screen
+	%Background.show_screen(screen, GameState.campaign)
 	for identifier: String in SCREENS:
 		get_node("%" + identifier).visible = identifier == screen
 	%Back.visible = screen != "Menu"
@@ -121,8 +122,11 @@ func _game() -> void:
 		%Modes.show()
 		%Enter.hide()
 		%Wait.hide()
+		%TurnActions.show()
 		%Skip.show()
 		%GiveUp.show()
+		%MoveMode.set_pressed_no_signal(campaign.combat["mode"] == "move")
+		%AttackMode.set_pressed_no_signal(campaign.combat["mode"] == "attack")
 		%MoveMode.disabled = not player_turn
 		%AttackMode.disabled = not player_turn
 		%Skip.disabled = not player_turn
@@ -149,6 +153,7 @@ func _game() -> void:
 		%Modes.hide()
 		%Enter.show()
 		%Wait.show()
+		%TurnActions.hide()
 		%Skip.hide()
 		%GiveUp.hide()
 		%DPad.repeat_enabled = true
