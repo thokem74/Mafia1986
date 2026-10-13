@@ -153,12 +153,6 @@ BORROWED,"Schulden $%d, fällig in %d Monaten.","Debt $%d, due in %d months."
 REPAID,$%d zurückgezahlt.,Repaid $%d.
 BUSINESS_BOUGHT,Kreditgeschäft gekauft. Investiere bis $5000.,Bought credit business. Invest up to $5000.
 INVEST_REFUSED,Eigenes Kreditgeschäft nötig. Investition insgesamt höchstens $5000.,Requires owned credit business. Total investment cannot exceed $5000.
-CONFIRM,Diese Aktion ausführen?,Perform this action?
-CONFIRM_NEW,Eine neue Kampagne ersetzt den automatischen Spielstand. Fortfahren?,A new campaign replaces the autosave. Continue?
-CONFIRM_LOAD,Aktuellen Fortschritt durch diesen Spielstand ersetzen?,Replace current progress with this save?
-CONFIRM_SAVE,Diesen manuellen Spielstand überschreiben?,Overwrite this manual save?
-CONFIRM_WAIT,Den Monat beenden? Übrige Schritte verfallen.,End the month? Remaining steps are lost.
-CONFIRM_FLEE,Kampf aufgeben? Dies zählt als Niederlage.,Surrender the fight? This counts as a defeat.
 VICTORY,DER PATE VON CHICAGO,THE DON OF CHICAGO
 TIME_UP,DIE ZEIT IST UM,TIME HAS RUN OUT
 VICTORY_TEXT,"Rang, Bürgermeister und Geldtransporter: Du beherrschst die Unterwelt.","Rank, mayor and money transporter: you rule the underworld."

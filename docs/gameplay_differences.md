@@ -3,7 +3,7 @@
 ## Intentional modernizations
 
 - One human gang, AI opponents only; no multiplayer state or hot-seat turns.
-- German/English switching, large touch controls, explicit action buttons, confirmations, contextual explanations, autosave and three manual slots.
+- German/English switching, large touch controls, explicit action buttons, immediate actions, contextual explanations, autosave and three manual slots.
 - Save active encounters, combat turns and RNG state; offline play.
 - Scene-authored UI and original assets; no third-party reference assets redistributed.
 

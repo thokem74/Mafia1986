@@ -4,7 +4,6 @@ const SCREENS := ["Menu", "NewGame", "SettingsScreen", "Game", "Location", "Stat
 var route: String = "Menu"
 var return_route: String = "Menu"
 var saving: bool = false
-var confirmation: Callable
 var setting_up: bool = false
 @onready var music_player: AudioStreamPlayer = %MusicPlayer
 @onready var sound_player: AudioStreamPlayer = %SoundPlayer
@@ -23,7 +22,7 @@ func _ready() -> void:
 	%Quit.pressed.connect(_quit)
 	%Back.pressed.connect(_back)
 	%MenuButton.pressed.connect(func(): _show("Menu"))
-	%Start.pressed.connect(func(): _confirm(tr("CONFIRM_NEW"), _new_game))
+	%Start.pressed.connect(_new_game)
 	%Apply.pressed.connect(_apply_settings)
 	%StatusButton.pressed.connect(func(): _show("StatusScreen"); _status())
 	%SaveButton.pressed.connect(func(): _saves(true))
@@ -33,19 +32,17 @@ func _ready() -> void:
 	%SafeDPad.direction_pressed.connect(_safe_direction)
 	%SafeDPad.repeat_enabled = false
 	%Enter.pressed.connect(_enter)
-	%Wait.pressed.connect(func(): _confirm(tr("CONFIRM_WAIT"), GameState.advance_month))
+	%Wait.pressed.connect(GameState.advance_month)
 	%MoveMode.pressed.connect(func(): _mode("move"))
 	%AttackMode.pressed.connect(func(): _mode("attack"))
 	%Skip.pressed.connect(func(): _combat_action("skip"))
-	%GiveUp.pressed.connect(func(): _confirm(tr("CONFIRM_FLEE"), _give_up))
+	%GiveUp.pressed.connect(_give_up)
 	%SafeCancel.pressed.connect(func(): GameState.campaign.safe = {}; GameState.commit(); _game())
 	%LocationPanel.action_requested.connect(_location_action)
 	%Search.pressed.connect(func(): _police("search"))
 	%Bribe.pressed.connect(func(): _police("bribe"))
 	%Escape.pressed.connect(func(): _police("escape"))
 	%Court.pressed.connect(func(): _police("court"))
-	%ConfirmYes.pressed.connect(_confirmed)
-	%ConfirmNo.pressed.connect(_cancel_confirmation)
 	%AiTimer.timeout.connect(_ai_turn)
 	%MusicPlayer.finished.connect(func(): %MusicPlayer.play())
 	for index in range(4):
@@ -134,7 +131,7 @@ func _game() -> void:
 			if child is Button:
 				child.disabled = not player_turn
 		%Event.text = _message({"key": campaign.combat["log"], "values": campaign.combat["log_values"]})
-		if not player_turn and not %ConfirmOverlay.visible:
+		if not player_turn:
 			%AiTimer.start()
 	elif not campaign.location.is_empty():
 		_show("Location")
@@ -166,13 +163,7 @@ func _game() -> void:
 			%ActiveInfo.text = tr("PRISON_WAIT") % campaign.police.prison_months if campaign.police.prison_months > 0 else tr("JOB_PROGRESS") % campaign.job["months"]
 		%Event.text = _last_message()
 	%Hud.text = "%s · $%d   |   %s %d   |   %s %d/%d   |   %02d/%d" % [campaign.gang_name, campaign.economy.money, tr("STEPS"), campaign.steps, tr("POINTS"), campaign.points, campaign.goal, campaign.month % 12 + 1, 1925 + campaign.month / 12]
-	if Settings.hints and not %ConfirmOverlay.visible:
-		if not campaign.combat.is_empty():
-			_hint("combat", "COMBAT_HELP")
-		elif not campaign.location.is_empty() and route == "Location":
-			_hint("location", "LOCATION_HELP")
-		elif route == "Game":
-			_hint("city", "MAP_HELP")
+	%CombatHint.visible = Settings.hints and not campaign.combat.is_empty()
 
 
 func _new_game() -> void:
@@ -185,8 +176,6 @@ func _enter() -> void:
 		GameState.enter(nearby[0]["id"])
 
 func _direction(direction: Vector2i) -> void:
-	if %ConfirmOverlay.visible:
-		return
 	if GameState.campaign.combat.is_empty():
 		GameState.move(direction)
 	else:
@@ -205,7 +194,7 @@ func _combat_action(mode: String, direction := Vector2i.ZERO) -> void:
 		GameState.commit()
 
 func _ai_turn() -> void:
-	if route != "Game" or %ConfirmOverlay.visible or GameState.campaign.combat.is_empty():
+	if route != "Game" or GameState.campaign.combat.is_empty():
 		return
 	if CombatRules.active(GameState.campaign)["side"] == 1:
 		var decision := CombatAi.decide(GameState.campaign)
@@ -223,11 +212,9 @@ func _safe_direction(direction: Vector2i) -> void:
 	GameState.commit()
 
 func _location_action(action: String, amount: int, member: int, item: int) -> void:
-	var explanation := tr("HELP_" + action.to_upper())
-	_confirm(tr("CONFIRM") + "\n\n" + explanation, func():
-		LocationRules.perform(GameState.campaign, action, amount, member, item)
-		GameState.campaign.location = ""
-		GameState.commit())
+	LocationRules.perform(GameState.campaign, action, amount, member, item)
+	GameState.campaign.location = ""
+	GameState.commit()
 
 func _police(action: String) -> void:
 	PoliceRules.respond(GameState.campaign, action, int(%Lawyer.value))
@@ -284,14 +271,9 @@ func _saves(save_mode: bool) -> void:
 func _slot(index: int) -> void:
 	var slot: String = SaveManager.SLOTS[index]
 	if saving:
-		var perform := func():
-			%SaveMessage.text = tr("SAVE_OK" if SaveManager.save_campaign(GameState.campaign, slot) else "SAVE_FAILED")
-		if SaveManager.exists(slot):
-			_confirm(tr("CONFIRM_SAVE"), perform)
-		else:
-			perform.call()
+		%SaveMessage.text = tr("SAVE_OK" if SaveManager.save_campaign(GameState.campaign, slot) else "SAVE_FAILED")
 	else:
-		_confirm(tr("CONFIRM_LOAD"), _load.bind(slot))
+		_load(slot)
 
 func _load(slot: String) -> void:
 	if GameState.load_slot(slot):
@@ -343,37 +325,7 @@ func _sound(identifier: String) -> void:
 		%SoundPlayer.stream = load("res://assets/audio/%s.wav" % identifier)
 		%SoundPlayer.play()
 
-func _confirm(text: String, action: Callable) -> void:
-	%DPad.stop()
-	%AiTimer.stop()
-	confirmation = action
-	%ConfirmNo.show()
-	%ConfirmYes.text = tr("YES")
-	%ConfirmText.text = text
-	%ConfirmOverlay.show()
-	%ConfirmNo.grab_focus()
-
-func _confirmed() -> void:
-	var action := confirmation
-	confirmation = Callable()
-	%ConfirmOverlay.hide()
-	if action.is_valid():
-		action.call()
-
-func _cancel_confirmation() -> void:
-	# A tutorial has only Continue; Back dismisses and remembers it as well.
-	if not %ConfirmNo.visible:
-		_confirmed()
-		return
-	confirmation = Callable()
-	%ConfirmOverlay.hide()
-	if route == "Game":
-		_game()
-
 func _back() -> void:
-	if %ConfirmOverlay.visible:
-		_cancel_confirmation()
-		return
 	match route:
 		"Game", "PoliceScreen", "SafeScreen", "EndingScreen": _show("Menu")
 		"Location": GameState.leave(); _game()
@@ -409,10 +361,6 @@ func _notification(what: int) -> void:
 
 func _unhandled_key_input(event: InputEvent) -> void:
 	if not event is InputEventKey or not event.pressed or event.echo:
-		return
-	if %ConfirmOverlay.visible:
-		if event.keycode == KEY_ESCAPE:
-			_cancel_confirmation()
 		return
 	if event.keycode == KEY_F9 and OS.is_debug_build() and GameState.campaign != null:
 		_show("DebugScreen")
@@ -461,12 +409,3 @@ func _exit_tree() -> void:
 		music_player.stop()
 	if is_instance_valid(sound_player):
 		sound_player.stop()
-
-func _hint(identifier: String, key: String) -> void:
-	if identifier in GameState.campaign.tutorials:
-		return
-	_confirm(tr(key), func():
-		GameState.campaign.tutorials.append(identifier)
-		GameState.commit())
-	%ConfirmYes.text = tr("CONTINUE")
-	%ConfirmNo.hide()

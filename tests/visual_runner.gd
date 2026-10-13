@@ -14,7 +14,7 @@ func _run() -> void:
 	viewport.size = Vector2i(1152, 648)
 	viewport.render_target_update_mode = SubViewport.UPDATE_ALWAYS
 	root.add_child(viewport)
-	root.get_node("Settings").hints = false
+	root.get_node("Settings").hints = true
 	viewport.add_child(shell)
 	state.new_game("Charlie", "South Side", false, 0, 400)
 	DirAccess.make_dir_recursive_absolute("res://builds/screens")

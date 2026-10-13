@@ -1,6 +1,6 @@
 """Exercise a saved debug fight through real Android touch controls, not state edits.
 
-Requires the game in combat at 2340x1080, with tutorial dismissed. Preserves RNG;
+Requires the game in combat at 2340x1080, with inline hints enabled. Preserves RNG;
 uses the same simple shot/path strategy as the opponent. Logs only game state.
 """
 import collections

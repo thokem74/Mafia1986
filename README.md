@@ -8,11 +8,11 @@ set in 1920s Chicago. This is an in-development playable campaign; see
 ## Play
 
 Open `project.godot` with Godot 4.7 and run the main scene. German is the default;
-Settings offers English, tutorial hints and independent music/effect volumes.
+Settings offers English, inline hints and independent music/effect volumes.
 
 - Touch the four direction buttons to move; hold for repeated city movement.
 - Stand beside a marked building and press **Enter**. Choose an action, person,
-  item and amount, then confirm. Each visit costs five monthly steps.
+  item and amount, then press **Execute** to act immediately. Each visit costs five monthly steps.
 - **Wait** advances a month, recovering health and resolving jobs, rent and debts.
 - In combat choose **Move** or **Attack**, then a direction. Each gangster gets
   one action. Shots travel cardinally, stop at walls and pass through allies.
@@ -66,6 +66,6 @@ Read [docs/architecture.md](docs/architecture.md) for the code structure,
 
 For targeted device combat checks, preserve your campaign in a manual slot, open
 F9 in a debug build, equip the test gang and start a mission. At 2340×1080 with
-tutorial dismissed, `python3 tools/android_combat_smoke.py` drives actual touch
+inline hints enabled, `python3 tools/android_combat_smoke.py` drives actual touch
 buttons until the fight ends. It reads only this game's autosave and never edits
 combat state; coordinates are specific to the tested Samsung layout.

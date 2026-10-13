@@ -278,20 +278,54 @@ func _test_scenes() -> void:
 	await process_frame
 	check(shell.route == "Menu", "Main menu boots")
 	check(not quit_on_go_back, "Android Back handled by the game")
-	fresh()
 	root.get_node("Settings").hints = true
-	shell._game()
+	shell.get_node("%New").pressed.emit()
+	shell.get_node("%Start").pressed.emit()
 	await process_frame
-	check(shell.route == "Game", "New campaign opens map")
-	check(shell.get_node("%ConfirmOverlay").visible, "First campaign tutorial shown")
-	shell._back()
-	check("city" in state.campaign.tutorials and not shell.get_node("%ConfirmOverlay").visible, "Back dismisses tutorial and remembers it")
+	check(shell.route == "Game" and state.campaign != null, "Start opens campaign in one press")
+	check(not shell.has_node("ConfirmOverlay"), "No confirmation or tutorial overlay")
+	check(not shell.get_node("%ActiveInfo").text.is_empty(), "City hints remain inline")
+	var starting_steps: int = state.campaign.steps
+	shell.get_node("%DPad/Right").button_down.emit()
+	shell.get_node("%DPad/Right").button_up.emit()
+	check(state.campaign.steps == starting_steps - 1, "Hints do not block movement")
+	shell.get_node("%Wait").pressed.emit()
+	check(state.campaign.month == 1, "Wait advances month in one press")
+	shell.get_node("%Back").pressed.emit()
+	check(shell.route == "Menu", "Back navigates immediately with hints enabled")
+	shell._game()
 	state.campaign.position = Vector2i(5, 3)
-	shell._enter()
+	shell.get_node("%Enter").pressed.emit()
 	await process_frame
 	check(shell.route == "Location", "Scene-based location opens")
+	check(shell.get_node("%LocationPanel/LocationHint").visible, "Location hints are inline")
 	shell.get_node("%LocationPanel")._select("recruit")
 	check(shell.get_node("%LocationPanel/Parameters/Item").item_count == 30, "Recruit offers shown")
+	state.campaign.rank = 5
+	state.campaign.economy.has_hideout = true
+	var cash_before: int = state.campaign.economy.money
+	shell.get_node("%LocationPanel/Parameters/Execute").pressed.emit()
+	check(state.campaign.gang.size() == 2 and state.campaign.economy.money < cash_before and state.campaign.location.is_empty(), "Execute recruits immediately with selected parameters")
+	shell._saves(true)
+	shell.get_node("%Slot1").pressed.emit()
+	state.campaign.gang_name = "Immediate overwrite"
+	state.campaign.tutorials.append("city")
+	shell.get_node("%Slot1").pressed.emit()
+	check(saves.load_campaign("slot1").gang_name == "Immediate overwrite", "Occupied save overwrites in one press")
+	check(shell.get_node("%SaveMessage").text == TranslationServer.translate("SAVE_OK"), "Save success remains visible")
+	state.campaign.gang_name = "Unsaved change"
+	shell._saves(false)
+	shell.get_node("%Slot1").pressed.emit()
+	check(state.campaign.gang_name == "Immediate overwrite" and shell.route == "Game", "Load replaces campaign in one press")
+	check("city" in state.campaign.tutorials, "Legacy tutorial field survives save and load")
+	# Invalid campaign data exercises the existing save-error message without changing files.
+	shell._saves(true)
+	state.campaign.gang[0].weapon = 100
+	shell.get_node("%Slot1").pressed.emit()
+	check(shell.get_node("%SaveMessage").text == TranslationServer.translate("SAVE_FAILED"), "Save failure remains visible")
+	state.campaign.gang[0].weapon = 0
+	shell._load("missing")
+	check(shell.route == "SaveScreen" and shell.get_node("%SaveMessage").text == TranslationServer.translate("SAVE_INVALID"), "Load failure remains visible")
 	shell._open_settings()
 	shell.get_node("%Language").select(1)
 	shell._apply_settings()
@@ -300,6 +334,26 @@ func _test_scenes() -> void:
 	shell._game()
 	await process_frame
 	check(shell.get_node("%CombatImage").visible and not shell.get_node("%CityImage").visible, "Combat viewport displayed")
+	check(shell.get_node("%CombatHint").visible, "Combat hints are inline")
+	state.campaign.combat["active"] = state.campaign.combat["units"].size() - 1
+	shell._game()
+	check(not shell.get_node("%AiTimer").is_stopped(), "Hints do not pause enemy turns")
+	var round_before: int = state.campaign.combat["round"]
+	shell._ai_turn()
+	check(state.campaign.combat["round"] > round_before, "Enemy turn executes with hints enabled")
+	shell.get_node("%GiveUp").pressed.emit()
+	check(state.campaign.combat.is_empty() and state.campaign.messages.back()["key"] == "COMBAT_LOST", "Give Up resolves defeat in one press")
+	root.get_node("Settings").hints = false
+	CombatRules.start(state.campaign, "job", 1, 0, 20)
+	shell._game()
+	check(not shell.get_node("%CombatHint").visible, "Combat hint follows setting")
+	state.campaign.combat = {}
+	state.campaign.location = "arms"
+	shell._game()
+	check(not shell.get_node("%LocationPanel/LocationHint").visible, "Location hint follows setting")
+	state.campaign.location = ""
+	shell._game()
+	check(shell.get_node("%ActiveInfo").text.is_empty(), "City hint follows setting")
 	state.campaign.combat = {}
 	state.campaign.objectives.ending = "VICTORY"
 	shell._game()

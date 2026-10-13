@@ -21,34 +21,25 @@ Settings="*res://scripts/core/settings.gd"
 SaveManager="*res://scripts/core/save_manager.gd"
 GameState="*res://scripts/core/game_state.gd"
 
+[display]
+
+window/size/window_width_override=1152
+window/size/window_height_override=648
+window/stretch/mode="canvas_items"
+window/stretch/aspect="expand"
+
 [internationalization]
 
 locale/translations=PackedStringArray("res://localization/strings.de.translation", "res://localization/strings.en.translation")
 locale/fallback="de"
 
-[display]
-
-window/size/viewport_width=1152
-window/size/viewport_height=648
-window/size/window_width_override=1152
-window/size/window_height_override=648
-window/handheld/orientation=0
-window/stretch/mode="canvas_items"
-window/stretch/aspect="expand"
-
 [physics]
 
 3d/physics_engine="Jolt Physics"
 
-[input_devices]
-
-pointing/emulate_mouse_from_touch=true
-
 [rendering]
 
-textures/default_filters/use_nearest_mipmap_filter=false
 textures/canvas_textures/default_texture_filter=0
-
 rendering_device/driver.windows="d3d12"
 renderer/rendering_method="mobile"
 textures/vram_compression/import_etc2_astc=true

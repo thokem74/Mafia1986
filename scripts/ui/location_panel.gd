@@ -17,6 +17,7 @@ func _ready() -> void:
 
 func refresh(value: Campaign) -> void:
 	campaign = value
+	$LocationHint.visible = Settings.hints
 	var location := Catalog.location(campaign.location)
 	$Title.text = tr(location["name_key"])
 	$Illustration.texture = load("res://assets/sprites/panel_%s.png" % location["kind"])

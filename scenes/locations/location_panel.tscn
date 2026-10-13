@@ -10,6 +10,12 @@ layout_mode = 2
 text = "LOC_PUB"
 theme_override_font_sizes/font_size = 24
 
+[node name="LocationHint" type="Label" parent="."]
+layout_mode = 2
+text = "LOCATION_HELP"
+autowrap_mode = 2
+mouse_filter = 2
+
 [node name="Illustration" type="TextureRect" parent="."]
 layout_mode = 2
 custom_minimum_size = Vector2(0, 90)

@@ -302,6 +302,14 @@ expand_mode = 1
 stretch_mode = 5
 size_flags_vertical = 3
 
+[node name="CombatHint" type="Label" parent="Safe/Root/Content/Game/Body/Board"]
+layout_mode = 2
+text = "COMBAT_HELP"
+unique_name_in_owner = true
+autowrap_mode = 2
+mouse_filter = 2
+visible = false
+
 [node name="CityViewport" type="SubViewport" parent="Safe/Root/Content/Game/Body/Board"]
 size = Vector2i(320, 240)
 disable_3d = true
@@ -691,56 +699,6 @@ layout_mode = 2
 custom_minimum_size = Vector2(0, 54)
 text = "Transport objective"
 unique_name_in_owner = true
-
-[node name="ConfirmOverlay" type="ColorRect" parent="."]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-unique_name_in_owner = true
-color = Color(0, 0, 0, 0.8)
-visible = false
-
-[node name="Center" type="CenterContainer" parent="ConfirmOverlay"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="Panel" type="PanelContainer" parent="ConfirmOverlay/Center"]
-layout_mode = 2
-custom_minimum_size = Vector2(640, 0)
-
-[node name="Box" type="VBoxContainer" parent="ConfirmOverlay/Center/Panel"]
-layout_mode = 2
-
-[node name="ConfirmText" type="Label" parent="ConfirmOverlay/Center/Panel/Box"]
-layout_mode = 2
-text = "CONFIRM"
-unique_name_in_owner = true
-autowrap_mode = 2
-custom_minimum_size = Vector2(600, 0)
-
-[node name="Choices" type="HBoxContainer" parent="ConfirmOverlay/Center/Panel/Box"]
-layout_mode = 2
-
-[node name="ConfirmYes" type="Button" parent="ConfirmOverlay/Center/Panel/Box/Choices"]
-layout_mode = 2
-custom_minimum_size = Vector2(0, 54)
-text = "YES"
-unique_name_in_owner = true
-size_flags_horizontal = 3
-
-[node name="ConfirmNo" type="Button" parent="ConfirmOverlay/Center/Panel/Box/Choices"]
-layout_mode = 2
-custom_minimum_size = Vector2(0, 54)
-text = "NO"
-unique_name_in_owner = true
-size_flags_horizontal = 3
 
 [node name="AiTimer" type="Timer" parent="."]
 unique_name_in_owner = true

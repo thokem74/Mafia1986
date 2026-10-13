@@ -937,11 +937,11 @@ Required QoL improvements include:
 * readable HUD
 * readable status screens
 * contextual help
-* clear confirmation for destructive/irreversible actions
+* immediate button actions without confirmation dialogs
 * combat range/movement feedback
 * clear police/arrest explanations
 * clear objective tracking
-* tutorial hints for new players
+* inline hints for new players
 
 Do not radically rebalance the game initially.
 
@@ -989,7 +989,7 @@ Instead improve the experience through:
 * fast UI
 * clear objectives
 * minimal loading
-* tutorial hints
+* inline hints
 * understandable location choices
 * clear progression indicators
 
@@ -1185,7 +1185,7 @@ Settings should include at least:
 * music volume
 * sound volume
 * vibration/haptics if implemented
-* tutorial hints on/off
+* inline hints on/off
 * optional touch-control sizing if useful
 
 Persist settings separately from savegames.
@@ -1194,7 +1194,7 @@ Persist settings separately from savegames.
 
 # 44. TUTORIAL
 
-Provide a lightweight first-game tutorial.
+Provide lightweight, non-blocking inline help.
 
 It should teach:
 
@@ -1210,7 +1210,7 @@ It should teach:
 
 Do not interrupt experienced players constantly.
 
-Tutorial hints should be dismissible and disableable.
+Inline hints should be disableable in Settings and require no dismissal.
 
 ---
 
