@@ -744,6 +744,11 @@ max_value = 10000.0
 step = 500.0
 custom_minimum_size = Vector2(0, 56)
 
+[node name="PoliceRequirements" type="Label" parent="Safe/Root/Content/PoliceScreen/Card/Scroll/Body"]
+layout_mode = 2
+unique_name_in_owner = true
+autowrap_mode = 2
+
 [node name="Search" type="Button" parent="Safe/Root/Content/PoliceScreen/Card/Scroll/Body"]
 layout_mode = 2
 custom_minimum_size = Vector2(0, 54)

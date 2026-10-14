@@ -31,6 +31,8 @@ func _run() -> void:
 		capture_directory = "res://builds/screens/city_readability"
 	elif "--weapons" in OS.get_cmdline_user_args():
 		capture_directory = "res://builds/screens/weapon_requirements"
+	elif "--transactions" in OS.get_cmdline_user_args():
+		capture_directory = "res://builds/screens/transaction_requirements"
 	DirAccess.make_dir_recursive_absolute(capture_directory)
 	var locales: Array[String] = ["de", "en"]
 	var widths: Array[int] = [1152, 1296, 1404, 1440]
@@ -45,6 +47,9 @@ func _run() -> void:
 			state.new_game("Charlie", "South Side", false, 0, 400)
 			await process_frame
 			var prefix := "%s_%d_" % [locale, width]
+			if "--transactions" in OS.get_cmdline_user_args():
+				await _transaction_cases(prefix)
+				continue
 			if "--weapons" in OS.get_cmdline_user_args():
 				await _weapon_cases(prefix)
 				continue
@@ -126,6 +131,52 @@ func _run() -> void:
 	await process_frame
 	print("VISUAL CAPTURES COMPLETE: %d layout failures" % layout_failures)
 	quit(0 if layout_failures == 0 else 1)
+
+
+func _transaction_cases(prefix: String) -> void:
+	var panel: Variant = shell.get_node("%LocationPanel")
+	var visited: Dictionary = {}
+	for location: Dictionary in Catalog.locations():
+		if visited.has(location["kind"]):
+			continue
+		visited[location["kind"]] = true
+		for unlocked: bool in [false, true]:
+			state.new_game("Charlie", "South Side", false, 0, 400)
+			var campaign: Campaign = state.campaign
+			campaign.location = location["id"]
+			campaign.economy.money = 20000 if unlocked else 0
+			campaign.rank = 5 if unlocked else 0
+			campaign.economy.has_hideout = unlocked
+			campaign.economy.owns_business = unlocked
+			campaign.economy.investment = 1000 if unlocked else 0
+			campaign.economy.cargo = 10 if unlocked else 0
+			campaign.economy.debt = 100 if location["kind"] == "loan" and not unlocked else 0
+			campaign.objectives.tips = 21 if unlocked else 0
+			campaign.gang[0].strength = 99 if unlocked else 20
+			campaign.gang[0].intelligence = 99 if unlocked else 20
+			campaign.gang[0].brutality = 99 if unlocked else 20
+			campaign.gang[0].weapon = 7 if unlocked else 0
+			if unlocked:
+				campaign.gang.append(Gangster.new())
+				campaign.gang.append(Gangster.new())
+			shell._game()
+			for action: String in LocationRules.actions(location["kind"]):
+				panel._select(action)
+				if action == "weapon":
+					panel.get_node("Parameters/Item").select(6)
+				elif action == "car":
+					panel.get_node("Parameters/Item").select(4)
+				panel.get_node("Parameters/Quantity/Amount").value = 12 if action == "protection" else (2 if action in ["rent", "buy_alcohol", "sell_alcohol"] else 1000)
+				panel._update_details()
+				await capture(prefix + action + ("_unlocked" if unlocked else "_blocked"))
+	for encounter: String in ["WANTED", "COURT"]:
+		state.campaign.location = ""
+		state.campaign.police.encounter = encounter
+		for cash: int in [0, 10000]:
+			state.campaign.economy.money = cash
+			shell.get_node("%Lawyer").value = 1000
+			shell._game()
+			await capture(prefix + encounter + "_cash_%d" % cash)
 
 
 func _weapon_cases(prefix: String) -> void:

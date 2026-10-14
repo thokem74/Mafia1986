@@ -2,6 +2,12 @@ extends Control
 
 const SCREENS := ["Menu", "NewGame", "SettingsScreen", "Game", "Location", "StatusScreen", "SaveScreen", "PoliceScreen", "SafeScreen", "EndingScreen", "CreditsScreen", "DebugScreen"]
 const BACK_REQUEST_DUPLICATE_MS := 50
+const PREREQUISITE_MESSAGES := [
+	"WEAPON_REQUIREMENTS", "TRAINED_ALREADY", "NEED_RANK", "NO_MONEY",
+	"NO_CAPACITY", "NO_CARGO", "RECRUIT_REQUIREMENTS", "GANG_FULL",
+	"RECRUIT_ALREADY", "FORGE_ALREADY", "LOAN_REFUSED", "INVEST_REFUSED",
+	"SAFE_REQUIREMENTS", "STORE_REQUIREMENTS", "NEED_GANG", "NEED_TIP",
+]
 var last_platform_back_ms: int = -BACK_REQUEST_DUPLICATE_MS
 var route: String = "Menu"
 var return_route: String = "Menu"
@@ -42,6 +48,7 @@ func _ready() -> void:
 	%GiveUp.pressed.connect(_give_up)
 	%SafeCancel.pressed.connect(func(): GameState.campaign.safe = {}; GameState.commit(); _game())
 	%LocationPanel.action_requested.connect(_location_action)
+	%Lawyer.value_changed.connect(func(_value: float): _update_police_requirements())
 	%Search.pressed.connect(func(): _police("search"))
 	%Bribe.pressed.connect(func(): _police("bribe"))
 	%Escape.pressed.connect(func(): _police("escape"))
@@ -101,9 +108,10 @@ func _game() -> void:
 		%Lawyer.visible = encounter == "COURT" and campaign.rank > 4
 		%Search.visible = encounter == "SEARCH"
 		%Bribe.visible = encounter not in ["SEARCH", "COURT"]
-		%Bribe.text = "%s · $%d" % [tr("ACT_PROTECTION"), 500 + 500 * campaign.rank]
+		%Bribe.text = tr("ACT_PROTECTION")
 		%Escape.visible = %Bribe.visible
 		%Court.visible = encounter != "SEARCH"
+		_update_police_requirements()
 	elif not campaign.safe.is_empty():
 		_show("SafeScreen")
 		%SafeTitle.text = tr("SAFE_TURNS") % campaign.safe["attempts"]
@@ -141,7 +149,7 @@ func _game() -> void:
 		_show("Location")
 		%LocationPanel.refresh(campaign)
 		%LocationHud.text = _summary()
-		%LocationEvent.text = _last_message()
+		%LocationEvent.text = _location_message()
 	else:
 		_show("Game")
 		%MapWorld.refresh(campaign)
@@ -229,8 +237,28 @@ func _location_action(action: String, amount: int, member: int, item: int) -> vo
 	GameState.commit()
 
 func _police(action: String) -> void:
+	var requirement_action := ""
+	if GameState.campaign.police.encounter == "COURT":
+		requirement_action = "court"
+	elif action == "bribe":
+		requirement_action = "bribe"
+	var requirements := ActionRequirements.evaluate(
+		GameState.campaign, requirement_action, int(%Lawyer.value), 0, 0)
+	if not requirements.available:
+		return
 	PoliceRules.respond(GameState.campaign, action, int(%Lawyer.value))
 	GameState.commit()
+
+func _update_police_requirements() -> void:
+	if GameState.campaign == null:
+		return
+	var campaign: Campaign = GameState.campaign
+	var action := "court" if campaign.police.encounter == "COURT" else "bribe"
+	var requirements := ActionRequirements.evaluate(campaign, action, int(%Lawyer.value), 0, 0)
+	%PoliceRequirements.visible = campaign.police.encounter != "SEARCH" and not requirements.lines.is_empty()
+	%PoliceRequirements.text = "\n".join(requirements.lines)
+	%Bribe.disabled = action == "bribe" and not requirements.available
+	%Court.disabled = action == "court" and not requirements.available
 
 func _campaign_changed() -> void:
 	if route in ["Game", "Location", "PoliceScreen", "SafeScreen", "EndingScreen"]:
@@ -266,6 +294,14 @@ func _message(message: Dictionary) -> String:
 
 func _last_message() -> String:
 	return "" if GameState.campaign.messages.is_empty() else _message(GameState.campaign.messages.back())
+
+func _location_message() -> String:
+	# Older saves can end with a refused action. The form now shows current
+	# requirements, so keep old prerequisite messages only in the status log.
+	var messages: Array[Dictionary] = GameState.campaign.messages
+	if not messages.is_empty() and messages.back()["key"] in PREREQUISITE_MESSAGES:
+		return ""
+	return _last_message()
 
 func _saves(save_mode: bool) -> void:
 	return_route = "StatusScreen" if route == "StatusScreen" else "Menu"

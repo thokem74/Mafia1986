@@ -78,7 +78,7 @@ NO_BUYER,Heute möchte der Wirt keinen Alkohol kaufen.,The bartender does not wa
 CARGO_BOUGHT,%d Flaschen zu je $%d gekauft.,Bought %d bottles at $%d each.
 CARGO_SOLD,%d Flaschen zu je $%d verkauft.,Sold %d bottles at $%d each.
 RECRUIT_REQUIREMENTS,Du brauchst Rang 5 und eine gemietete Unterkunft.,You need rank 5 and a rented hideout.
-GANG_FULL,Deine Gang hat bereits acht Mitglieder.,Your gang already has eight members.
+GANG_FULL,Deine Gang hat bereits zehn Mitglieder.,Your gang already has ten members.
 RECRUIT_ALREADY,Dieser Gangster gehört bereits zu deiner Gang.,This gangster already belongs to your gang.
 RECRUITED,%s ist deiner Gang beigetreten.,%s joined your gang.
 RENTED,Miete für %d Monate bezahlt.,Paid rent for %d months.
@@ -167,8 +167,8 @@ CREDITS_TEXT,"Igelsofts Mafia (1986) als Vorbild. Verhaltensreferenz: drunkeneye
 Entwicklungsfassung: C64-Regelvergleich und Android-Abnahme noch offen.","Inspired by Igelsoft’s Mafia (1986). Behavioral reference: drunkeneye/MAFIA.A8. New graphics and sounds for this remake. No reference assets copied.
 Development build: C64 rule comparison and Android acceptance pending."
 PARAM_HELP,Auswahl,Selection
-DETAIL_WEAPON,$%d · Reichweite %d · Präzision %d · Wirkung %d, $%d · Range %d · Precision %d · Effect %d
-DETAIL_CAR,$%d · Kapazität %d · Schritte %d,$%d · Capacity %d · Steps %d
+DETAIL_WEAPON,Reichweite %d · Präzision %d · Wirkung %d,Range %d · Precision %d · Effect %d
+DETAIL_CAR,Kapazität %d · Schritte %d,Capacity %d · Steps %d
 LOC_PUB,Kneipe,Pub
 LOC_ARMS,Waffenladen,Gun shop
 LOC_CARS,Autohändler,Car dealer
@@ -210,7 +210,7 @@ RANK_8,Gangsterboss,Gangster boss
 RANK_9,Rechte Hand,Right hand
 RANK_10,Der Pate,The Don
 ACT_JOB,Auftrag annehmen,Accept odd job
-HELP_JOB,"Rang 0–3. 1–3 Monate, $1000–3000. Kann Kämpfe auslösen.","Rank 0–3. 1–3 months, $1000–3000. May involve combat."
+HELP_JOB,1–3 Monate Arbeit. Kann Kämpfe auslösen.,1–3 months of work. May involve combat.
 ACT_WEAPON,Waffe kaufen / tauschen,Buy / trade weapon
 HELP_WEAPON,Gewählte Waffe für den gewählten Gangster kaufen. Alte Waffe wird in Zahlung genommen.,Buy selected weapon for selected gangster. Old weapon is traded in.
 ACT_CAR,Auto kaufen / tauschen,Buy / trade car
@@ -218,71 +218,71 @@ HELP_CAR,Gewähltes Auto kaufen; alte Karre in Zahlung. Schritte steigen nächst
 ACT_STEAL,Auto stehlen,Steal car
 HELP_STEAL,Kraft und Intelligenz helfen. Bei Fehlschlag bewaffneter Gegner.,Strength and intelligence help. Armed opponent on failure.
 ACT_BUY_ALCOHOL,Alkohol kaufen,Buy alcohol
-HELP_BUY_ALCOHOL,"Menge einstellen. $5–14 pro Flasche, nur freie Kapazität.","Set quantity. $5–14 per bottle, limited by free capacity."
+HELP_BUY_ALCOHOL,Menge einstellen. Alkohol zum Weiterverkauf kaufen.,Set quantity. Buy alcohol for resale.
 ACT_SELL_ALCOHOL,Alkohol verkaufen,Sell alcohol
 HELP_SELL_ALCOHOL,"Menge einstellen. $10–29 pro Flasche, Käufer nur manchmal interessiert.","Set quantity. $10–29 per bottle, buyers only sometimes interested."
 ACT_RECRUIT,Gangster anwerben,Recruit gangster
-HELP_RECRUIT,"Rang 5, Unterkunft, maximal acht Mitglieder. Angebot auswählen.","Rank 5, hideout, maximum eight members. Select offer."
+HELP_RECRUIT,Angebot auswählen und Gangster anwerben.,Select an offer and recruit the gangster.
 ACT_RENT,Unterkunft mieten,Rent hideout
-HELP_RENT,"Menge = Monate. $100 pro Monat, höchstens 36 im Voraus.","Quantity = months. $100 per month, up to 36 in advance."
+HELP_RENT,Menge = Monate. Unterkunft für deine Gang mieten.,Quantity = months. Rent a hideout for your gang.
 ACT_DISMISS,Gangster entlassen,Dismiss gangster
-HELP_DISMISS,Gewählten Gangster ohne Rückzahlung entlassen. Chef kann nicht entlassen werden.,Dismiss selected gangster without refund. Leader cannot be dismissed.
+HELP_DISMISS,Gewählten Gangster ohne Rückzahlung entlassen.,Dismiss selected gangster without refund.
 ACT_RIVAL,Rivalen herausfordern,Challenge rivals
 HELP_RIVAL,Drei bewaffnete Rivalen. Taktischer Kampf.,Three armed rivals. Tactical combat.
 ACT_ROB_BANK,Bank überfallen,Rob bank
-HELP_ROB_BANK,"Rang 1, zwei Mitglieder. Möglicher Kampf gegen Wachen.","Rank 1, two members. Possible fight against guards."
+HELP_ROB_BANK,Möglicher Kampf gegen Wachen.,Possible fight against guards.
 ACT_SAFE,Tresor knacken,Crack safe
-HELP_SAFE,"Rang 2. Chef braucht Kraft 25, Intelligenz 40, Brutalität 25. Kombination abhören.","Rank 2. Leader needs strength 25, intelligence 40, brutality 25. Listen to combination."
+HELP_SAFE,Kombination abhören und Tresor öffnen.,Listen to the combination and open the safe.
 ACT_ROB,Überfallen,Rob
-HELP_ROB,"Rang 2, Waffe, Brutalität 30. Wiederholung lockt Polizei.","Rank 2, weapon, brutality 30. Repeating attracts police."
+HELP_ROB,Bewaffneter Überfall. Wiederholung lockt Polizei.,Armed robbery. Repeating attracts police.
 ACT_DECEIVE,Täuschen,Deceive
-HELP_DECEIVE,"Rang 2. Größere Beute, Wiederholung lockt Polizei.","Rank 2. More loot, repeating attracts police."
+HELP_DECEIVE,Größere Beute. Wiederholung lockt Polizei.,More loot. Repeating attracts police.
 ACT_BURGLE,Einbrechen,Burgle
-HELP_BURGLE,Rang 2. Bewaffnete Gegner möglich.,Rank 2. Armed opponents possible.
+HELP_BURGLE,Bewaffnete Gegner möglich.,Armed opponents possible.
 ACT_FRAUD,Betrügen,Commit fraud
-HELP_FRAUD,"Rang 2, Intelligenz 30. Wiederholung lockt Polizei.","Rank 2, intelligence 30. Repeating attracts police."
+HELP_FRAUD,Wiederholung lockt Polizei.,Repeating attracts police.
 ACT_PICKPOCKET,Taschendiebstahl,Pickpocket
 HELP_PICKPOCKET,Gewählten Gangster einsetzen. Intelligenz hilft; Festnahme möglich.,Use selected gangster. Intelligence helps; arrest possible.
 ACT_RIDE,U-Bahn fahren,Ride subway
-HELP_RIDE,"$50, Wechsel zur anderen Haltestelle.","$50, travel to the other stop."
+HELP_RIDE,Wechsel zur anderen Haltestelle.,Travel to the other stop.
 ACT_PROTECTION,Polizeichef bestechen,Bribe commissioner
-HELP_PROTECTION,Menge = 1–12 Monate zu je $1000. Schutz nicht garantiert.,Quantity = 1–12 months at $1000 each. Protection not guaranteed.
+HELP_PROTECTION,Menge = Monate. Schutz nicht garantiert.,Quantity = months. Protection not guaranteed.
 ACT_SURRENDER,Vor Gericht gehen,Go to court
 HELP_SURRENDER,Strafe und Verlust von Tipps/Aufträgen möglich.,Sentence and loss of tips/jobs possible.
 ACT_ID,Pässe fälschen lassen,Forge IDs
-HELP_ID,$1000 je Gangmitglied. Monatliche Gefahr: Pässe unbrauchbar.,$1000 per member. Monthly risk of papers expiring.
+HELP_ID,Monatliche Gefahr: Pässe unbrauchbar.,Monthly risk of papers expiring.
 ACT_FAKE,Falschgeld kaufen,Buy counterfeit money
-HELP_FAKE,"Einsatz bis $5000. Tauscht Geld gegen Falschgeld, Polizei kann es erkennen.",Stake up to $5000. Exchanges cash for counterfeits; police may detect it.
+HELP_FAKE,Tauscht Geld gegen Falschgeld. Polizei kann es erkennen.,Exchanges cash for counterfeits. Police may detect it.
 ACT_BORROW,Kredit aufnehmen,Borrow
-HELP_BORROW,"Menge = bis $5000. 6,25% Aufschlag; nach 6–9 Monaten kommen Eintreiber.",Quantity = up to $5000. 6.25% surcharge; collectors arrive after 6–9 months.
+HELP_BORROW,"6,25% Aufschlag; nach 6–9 Monaten kommen Eintreiber.",6.25% surcharge; collectors arrive after 6–9 months.
 ACT_REPAY,Kredit zurückzahlen,Repay loan
 HELP_REPAY,Menge = Rückzahlung in Dollar.,Quantity = repayment in dollars.
 ACT_BUSINESS,Kreditgeschäft kaufen / verkaufen,Buy / sell credit business
-HELP_BUSINESS,"$5000–6000 Kauf, $4500–5500 Verkauf. Verkauf verliert Investition.","$5000–6000 to buy, $4500–5500 to sell. Selling loses investment."
+HELP_BUSINESS,$4500–5500 Verkauf. Verkauf verliert Investition.,$4500–5500 to sell. Selling loses investment.
 ACT_INVEST,Investieren,Invest
-HELP_INVEST,"Menge = Dollar. Eigenes Geschäft nötig, Gesamtgrenze $5000.","Quantity = dollars. Owned business required, total limit $5000."
+HELP_INVEST,Menge = zu investierende Dollar.,Quantity = dollars to invest.
 ACT_WITHDRAW,Investition abheben,Withdraw investment
 HELP_WITHDRAW,Menge = abzuhebende Dollar.,Quantity = dollars to withdraw.
 ACT_COLLECT,Schulden eintreiben,Collect debts
-HELP_COLLECT,Eigenes Kreditgeschäft und Investition nötig. Bewaffneter Schuldner.,Requires owned business and investment. Armed debtor.
+HELP_COLLECT,Bewaffneter Schuldner.,Armed debtor.
 ACT_MAYOR,Bürgermeister angreifen,Attack mayor
-HELP_MAYOR,"Tipp nötig. Erst fünf Leibwachen, dann der Bürgermeister.","Tip required. Five bodyguards, then the mayor."
+HELP_MAYOR,"Erst fünf Leibwachen, dann der Bürgermeister.","Five bodyguards, then the mayor."
 ACT_TRANSPORT,Geldtransporter überfallen,Rob money transporter
-HELP_TRANSPORT,Tipp und drei Gangster nötig. Zehn schwer bewaffnete Wachen.,Tip and three gangsters required. Ten heavily armed guards.
+HELP_TRANSPORT,Zehn schwer bewaffnete Wachen.,Ten heavily armed guards.
 ACT_TIP,Information kaufen,Buy information
-HELP_TIP,Rang 4. $1000–2500. Zufälliger Tipp; Waffenschmuggel kostet zusätzlich $5000.,Rank 4. $1000–2500. Random tip; gun running costs another $5000.
+HELP_TIP,Zufälliger Tipp; Waffenschmuggel kostet zusätzlich $5000.,Random tip; gun running costs another $5000.
 ACT_TRAIN_ROB,Postzug überfallen,Rob mail train
-HELP_TRAIN_ROB,Passender Tipp und drei Gangster nötig. Drei bewaffnete Wachen.,Matching tip and three gangsters required. Three armed guards.
+HELP_TRAIN_ROB,Drei bewaffnete Wachen.,Three armed guards.
 ACT_TRAIN,Schießstand,Shooting range
-HELP_TRAIN,"$800 + $200 × Rang. +5 Kraft, +3 Intelligenz, +2 Brutalität. Ein Training pro Monat.","$800 + $200 × rank. +5 strength, +3 intelligence, +2 brutality. One training per month."
+HELP_TRAIN,"+5 Kraft, +3 Intelligenz, +2 Brutalität.","+5 strength, +3 intelligence, +2 brutality."
 ACT_CAMP,Trainingslager,Training camp
-HELP_CAMP,Rang 5. $2500 + $500 × Rang. +8–15 in jedem Attribut.,Rank 5. $2500 + $500 × rank. +8–15 to each attribute.
+HELP_CAMP,+8–15 in jedem Attribut.,+8–15 to each attribute.
 ACT_GAMBLE1,Glücksspiel 1,Gambling 1
-HELP_GAMBLE1,Einsatz bis $10000. Gewinnchance 1/2; Auszahlung 1.5 × Einsatz.,Stake up to $10000. Win chance 1/2; payout 1.5 × stake.
+HELP_GAMBLE1,"Gewinnchance 1/2; Auszahlung 1,5 × Einsatz.",Win chance 1/2; payout 1.5 × stake.
 ACT_GAMBLE2,Glücksspiel 2,Gambling 2
-HELP_GAMBLE2,Einsatz bis $10000. Gewinnchance 1/3; Auszahlung 2.5 × Einsatz.,Stake up to $10000. Win chance 1/3; payout 2.5 × stake.
+HELP_GAMBLE2,"Gewinnchance 1/3; Auszahlung 2,5 × Einsatz.",Win chance 1/3; payout 2.5 × stake.
 ACT_GAMBLE3,Glücksspiel 3,Gambling 3
-HELP_GAMBLE3,Einsatz bis $10000. Gewinnchance 1/4; Auszahlung 3.5 × Einsatz.,Stake up to $10000. Win chance 1/4; payout 3.5 × stake.
+HELP_GAMBLE3,"Gewinnchance 1/4; Auszahlung 3,5 × Einsatz.",Win chance 1/4; payout 3.5 × stake.
 ENEMY_JOB,Gegner,Opponent
 ENEMY_DEBT,Gegner,Opponent
 ENEMY_MAYOR_GUARDS,Gegner,Opponent
@@ -318,3 +318,29 @@ MAP_LOC_MAYOR,Rathaus,Mayor
 MAP_LOC_TRANSPORT,Fracht,Cargo
 WEAPON_STATS,Werte / benötigt: %s,Stats / required: %s
 WEAPON_TRAIN_FIRST,Erst diesen Gangster trainieren.,Train this gangster first.
+REQ_MONEY,Kosten $%d · Geld $%d,Cost $%d · Cash $%d
+REQ_RANK,Rang: %d / benötigt %d,Rank: %d / required %d
+REQ_TRAINING,Training diesen Monat: %d / maximal %d,Training this month: %d / maximum %d
+REQ_HIDEOUT,Gemietete Unterkunft: %s,Rented hideout: %s
+REQ_GANG_SPACE,Gang: %d / maximal %d Mitglieder,Gang: %d / maximum %d members
+REQ_CAPACITY,Flaschen: %d / freier Platz %d,Bottles: %d / free space %d
+REQ_BOTTLE_PRICE,$%d pro Flasche,$%d per bottle
+REQ_CARGO,Verkaufen: %d / Vorrat %d Flaschen,Sell: %d / stock %d bottles
+REQ_RENT,Miete: %d + %d / maximal %d Monate,Rent: %d + %d / maximum %d months
+REQ_QUANTITY,Menge: %d / erlaubt 1–%d,Quantity: %d / allowed 1–%d
+REQ_NEW_ID,Neue Pässe nötig: %s,New IDs needed: %s
+REQ_NEW_COUNTERFEIT,Neues Falschgeld nötig: %s,New counterfeits needed: %s
+REQ_NO_DEBT,Schulden: $%d / erlaubt $0,Debt: $%d / allowed $0
+REQ_NO_BUSINESS,Kein eigenes Kreditgeschäft: %s,No owned credit business: %s
+REQ_DEBT,Offene Schulden: $%d,Outstanding debt: $%d
+REQ_SELL_BUSINESS,Eigenes Geschäft verkaufen,Sell owned business
+REQ_BUSINESS,Eigenes Kreditgeschäft: %s,Owned credit business: %s
+REQ_INVESTMENT,Investition: $%d + $%d / maximal $%d,Investment: $%d + $%d / maximum $%d
+REQ_WITHDRAW,Abheben: $%d / investiert $%d,Withdraw: $%d / invested $%d
+REQ_INVESTED,Investiert: $%d / benötigt mehr als $0,Invested: $%d / required more than $0
+REQ_JOB_RANK,Rang: %d / erlaubt 0–3,Rank: %d / allowed 0–3
+REQ_NOT_LEADER,Entlassbares Gangmitglied: %s,Dismissible gang member: %s
+REQ_REPEAT_CRIME,Wiederholung: Polizei erwartet dich.,Repeat visit: police are waiting.
+REQ_WEAPON,Chef bewaffnet: %s,Leader armed: %s
+REQ_TIP,Passender Tipp: %s,Matching tip: %s
+REQ_GANG,Mitglieder: %d / benötigt %d,Members: %d / required %d

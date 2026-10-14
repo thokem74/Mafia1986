@@ -24,12 +24,140 @@ func _run() -> void:
 	_test_data()
 	_test_campaign()
 	_test_economy()
+	_test_action_requirements()
 	_test_crime()
 	_test_combat()
 	_test_saves()
 	await _test_scenes()
 	print("RESULT: %d checks, %d failures" % [checks, failures])
 	quit(0 if failures == 0 else 1)
+
+func available(campaign: Campaign, action: String, quantity: int = 1, member: int = 0, item: int = 0) -> bool:
+	return ActionRequirements.evaluate(campaign, action, quantity, member, item).available
+
+func _test_action_requirements() -> void:
+	var c := fresh()
+	c.economy.money = 0
+	for action: String in ["car", "train", "camp", "rent", "protection", "id", "fake", "ride", "gamble1", "gamble2", "gamble3", "business", "tip"]:
+		check(not available(c, action, 1, 0, 1), "Unavailable transaction with no cash: " + action)
+	c.economy.money = 100000
+	c.rank = 5
+	check(not available(c, "recruit"), "Recruitment needs hideout even with rank and cash")
+	c.economy.has_hideout = true
+	check(available(c, "recruit"), "Recruitment available with all prerequisites")
+	EconomyRules.recruit(c, 0)
+	check(not available(c, "recruit"), "Already recruited offer disabled")
+	for index in range(2, 10):
+		c.gang.append(Gangster.new())
+	check(not available(c, "recruit", 1, 0, 1), "Recruitment disabled for full ten-member gang")
+	check(available(c, "train") and available(c, "camp"), "Both training options initially available")
+	EconomyRules.train(c, 0, false)
+	check(not available(c, "train") and not available(c, "camp"), "Monthly training limit shared by both forms")
+	c.month += 1
+	check(available(c, "train"), "Training available next month")
+	c.rank = 4
+	check(not available(c, "camp"), "Camp needs rank five")
+	c.economy.rent_months = 35
+	check(available(c, "rent", 1) and not available(c, "rent", 2), "Rent respects combined prepaid limit")
+	check(not available(c, "sell_alcohol", 1), "Alcohol sale requires stock")
+	c.economy.cargo = 50
+	check(available(c, "sell_alcohol", 50) and not available(c, "sell_alcohol", 51), "Alcohol sale uses selected quantity")
+	check(not available(c, "buy_alcohol", 1), "Alcohol purchase requires free cargo space")
+	c.economy.cargo = 49
+	check(available(c, "buy_alcohol", 1) and not available(c, "buy_alcohol", 2), "Alcohol purchase respects remaining capacity")
+	c.police.forged_id = true
+	c.police.counterfeit = true
+	check(not available(c, "id") and not available(c, "fake"), "Existing forgeries block duplicate purchases")
+	c.police.counterfeit = false
+	check(available(c, "fake", 5000) and not available(c, "fake", 5001), "Counterfeit stake limit")
+	check(available(c, "borrow", 5000) and not available(c, "borrow", 5001), "Loan amount limit")
+	check(not available(c, "repay"), "No debt to repay")
+	c.economy.debt = 100
+	check(not available(c, "borrow") and not available(c, "business"), "Outstanding debt blocks loan and business transactions")
+	c.economy.money = 100
+	check(available(c, "repay", 10000), "Repayment checks actual debt-clamped payment")
+	c.economy.money = 99
+	check(not available(c, "repay", 10000), "Repayment requires cash for clamped payment")
+	c.economy.debt = 0
+	c.economy.money = 100000
+	for action: String in ["invest", "withdraw", "collect"]:
+		check(not available(c, action), "Owned business prerequisite: " + action)
+	c.economy.owns_business = true
+	check(not available(c, "borrow"), "Business ownership blocks borrowing")
+	check(available(c, "business"), "Owned business can be sold")
+	check(not available(c, "withdraw") and not available(c, "collect"), "Withdrawal and collection require investment")
+	c.economy.investment = 4900
+	check(available(c, "invest", 100) and not available(c, "invest", 101), "Investment respects combined cap")
+	check(available(c, "withdraw", 10000) and available(c, "collect"), "Investment permits withdrawal and collection")
+	check(not available(c, "dismiss", 1, 0) and available(c, "dismiss", 1, 1), "Leader cannot be dismissed")
+	c.location = "bank"
+	c.rank = 0
+	check(not available(c, "rob_bank") and not available(c, "safe"), "Bank actions need rank")
+	c.rank = 2
+	c.gang.resize(1)
+	check(not available(c, "rob_bank"), "Bank robbery needs two members")
+	c.gang[0].strength = 25
+	c.gang[0].intelligence = 40
+	c.gang[0].brutality = 25
+	check(available(c, "safe"), "Safe available at exact stat thresholds")
+	c.gang[0].strength = 24
+	check(not available(c, "safe"), "Safe blocked below stat threshold")
+	check(not available(c, "rob"), "Store robbery needs weapon and brutality")
+	c.gang[0].brutality = 30
+	c.gang[0].weapon = 1
+	check(available(c, "rob") and available(c, "fraud"), "Store methods available with leader prerequisites")
+	c.gang[0].intelligence = 29
+	check(not available(c, "fraud"), "Fraud needs intelligence thirty")
+	c.last_crime = c.location
+	check(available(c, "safe") and available(c, "rob_bank"), "Repeat crimes remain available for their police encounter")
+	for action: String in ["train_rob", "transport", "mayor"]:
+		check(not available(c, action), "Mission needs matching tip: " + action)
+	c.objectives.tips = 21
+	check(available(c, "mayor") and not available(c, "transport"), "Mayor needs tip; transporter also needs three members")
+	c.gang.append(Gangster.new())
+	c.gang.append(Gangster.new())
+	check(available(c, "transport") and available(c, "train_rob"), "Three-member missions available with matching tips")
+	c.rank = 4
+	check(not available(c, "job"), "Odd jobs end after rank three")
+	c.economy.money = 2499
+	check(not available(c, "bribe"), "Police bribe disabled without full payment")
+	c.economy.money = 2500
+	check(available(c, "bribe"), "Police bribe available with exact payment")
+	c.rank = 5
+	check(not available(c, "court", 3000) and available(c, "court", 0), "Unaffordable lawyer disabled; unpaid court action available")
+	# Browsing must never change saves or advance random outcomes. Quotes must
+	# match the actual variable-price transaction, including exact-cash edges.
+	for seed_value: int in range(10, 20):
+		c = fresh(seed_value)
+		c.rank = 4
+		var snapshot := c.to_dict()
+		for action: String in ["buy_alcohol", "business", "tip"]:
+			ActionRequirements.evaluate(c, action, 2, 0, 0)
+		check(c.to_dict() == snapshot, "Preview preserves campaign and RNG")
+		var price := ActionRequirements._preview_rng(c).randi_range(5, 14) * 2
+		c.economy.money = price - 1
+		check(not available(c, "buy_alcohol", 2), "Alcohol quote blocks one dollar short")
+		c.economy.money = price
+		check(available(c, "buy_alcohol", 2), "Alcohol quote permits exact cash")
+		EconomyRules.smuggle(c, true, 2)
+		check(c.economy.money == 0 and c.economy.cargo == 2, "Alcohol quote matches actual payment")
+		price = 5000 + ActionRequirements._preview_rng(c).randi_range(0, 10) * 100
+		c.economy.money = price
+		check(available(c, "business"), "Business quote permits exact cash")
+		LocationRules.perform(c, "business", 1, 0, 0)
+		check(c.economy.owns_business and c.economy.money == 0, "Business quote matches actual payment")
+	for seed_value: int in range(1, 41):
+		c = fresh(seed_value)
+		c.rank = 4
+		c.economy.money = 50000
+		var resolved := Campaign.from_dict(c.to_dict())
+		CrimeRules.tip(resolved)
+		var spent := c.economy.money - resolved.economy.money
+		if spent > 0:
+			c.economy.money = spent
+			check(available(c, "tip"), "Information quote permits actual charge")
+			c.economy.money = spent - 1
+			check(not available(c, "tip"), "Information quote includes any gun-running surcharge")
 
 func _test_data() -> void:
 	check(Catalog.all() == saves._normalize_numbers(JSON.parse_string(FileAccess.get_file_as_string("res://data/game.json"))), "Resource and source definitions match")
@@ -317,6 +445,12 @@ func _test_scenes() -> void:
 	await process_frame
 	check(shell.route == "Location", "Scene-based location opens")
 	check(shell.get_node("%LocationPanel/LocationHint").visible, "Location hints are inline")
+	state.campaign.note("WEAPON_REQUIREMENTS")
+	shell._game()
+	check(shell.get_node("%LocationEvent").text.is_empty(), "Old refusal text is not repeated beside current requirements")
+	state.campaign.note("NO_BUYER")
+	shell._game()
+	check(not shell.get_node("%LocationEvent").text.is_empty(), "Random transaction outcome remains visible")
 	var panel: Variant = shell.get_node("%LocationPanel")
 	var shop_test_cash: int = state.campaign.economy.money
 	state.campaign.location = "arms"
@@ -328,7 +462,7 @@ func _test_scenes() -> void:
 	panel.get_node("Parameters/Item").select(6)
 	panel.get_node("Parameters/Item").item_selected.emit(6)
 	var requirements_label: Label = panel.get_node("Parameters/Requirements")
-	check(requirements_label.text.contains("/40") and requirements_label.text.contains(TranslationServer.translate("WEAPON_TRAIN_FIRST")), "Shop explains SMG requirements before purchase")
+	check(requirements_label.text.contains("20/40") and requirements_label.text.contains("$8000"), "Shop explains SMG requirements before purchase")
 	var purchase_button: Button = panel.get_node("Parameters/Execute")
 	check(purchase_button.disabled, "Weapon purchase disabled when selected gangster lacks required stats")
 	panel._select("train")
@@ -343,11 +477,11 @@ func _test_scenes() -> void:
 	panel.refresh(state.campaign)
 	panel.get_node("Parameters/Member").select(1)
 	panel.get_node("Parameters/Member").item_selected.emit(1)
-	check(not requirements_label.text.contains(TranslationServer.translate("WEAPON_TRAIN_FIRST")), "Shop requirements update for selected gangster")
+	check(requirements_label.text.contains("40/40"), "Shop requirements update for selected gangster")
 	check(not purchase_button.disabled, "Weapon purchase enabled for eligible selected gangster")
 	state.campaign.economy.money = 7999
 	panel.refresh(state.campaign)
-	check(purchase_button.disabled and requirements_label.text.contains(TranslationServer.translate("NO_MONEY")), "Weapon purchase disabled and explained when money is insufficient")
+	check(purchase_button.disabled and requirements_label.text.contains("$7999") and requirements_label.text.contains("$8000"), "Weapon purchase disabled and explained when money is insufficient")
 	panel.get_node("Parameters/Item").select(0)
 	panel.get_node("Parameters/Item").item_selected.emit(0)
 	check(not purchase_button.disabled, "Choosing an affordable weapon enables purchase again")
@@ -362,6 +496,30 @@ func _test_scenes() -> void:
 	panel.get_node("Parameters/Execute").pressed.emit()
 	check(eligible.weapon == 7 and state.campaign.economy.money == 500 and state.campaign.gang[0].weapon == 0, "Shop Execute buys SMG for selected gangster with $8500")
 	state.campaign.gang.pop_back()
+	state.campaign.location = "police"
+	state.campaign.economy.money = 11999
+	panel.refresh(state.campaign)
+	panel._select("protection")
+	var quantity_input: SpinBox = panel.get_node("Parameters/Quantity/Amount")
+	quantity_input.value = 12
+	check(purchase_button.disabled and requirements_label.text.contains("$12000"), "Quantity change updates total cost and disables unaffordable action")
+	var before_disabled_action: Dictionary = state.campaign.to_dict()
+	purchase_button.pressed.emit()
+	check(state.campaign.to_dict() == before_disabled_action, "Disabled action does not emit a transaction or leave the location")
+	quantity_input.value = 11
+	check(not purchase_button.disabled and requirements_label.text.contains("$11000"), "Reducing quantity enables affordable transaction immediately")
+	state.campaign.police.encounter = "WANTED"
+	state.campaign.economy.money = 0
+	shell._game()
+	check(shell.get_node("%Bribe").disabled and not shell.get_node("%Court").disabled, "Unaffordable police bribe disabled while court navigation remains available")
+	state.campaign.rank = 5
+	state.campaign.police.encounter = "COURT"
+	shell._game()
+	shell.get_node("%Lawyer").value = 1000
+	check(shell.get_node("%Court").disabled, "Unaffordable lawyer payment disables court action")
+	shell.get_node("%Lawyer").value = 0
+	check(not shell.get_node("%Court").disabled, "Zero lawyer payment enables court action")
+	state.campaign.police.encounter = ""
 	state.campaign.economy.money = shop_test_cash
 	state.campaign.location = "pub"
 	shell._game()
