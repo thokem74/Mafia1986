@@ -4,65 +4,155 @@
   "assets": [
     {
       "name": "city",
-      "prompt": "Use case: stylized-concept. Asset type: top-down playable terrain for a 1925 Chicago Android game. Chunky charming 16-bit pixel art, strict overhead orthographic view, midnight navy, warm amber lights, muted gold. Bold readable pixels, no perspective, no typography, no characters, no HUD, no grid lines. Use the supplied image as an EXACT layout reference, not a style reference. Preserve all gray street cells exactly; streets are ONE cell wide. Replace gray with wet asphalt, narrow amber gutter lights inside the existing street boundaries. Replace dark squares with contiguous city building roofs, brick courtyards and rooftop details ONLY in the dark regions. Keep all seven vertical streets and all four horizontal streets at their exact coordinates. No cars or obstructions on streets. Keep the outer dark border. Output 4:3 complete map, no frame.",
-      "source": "/home/thokem/.codex/generated_images/01a13671-764c-7d22-a64e-f667c2673e1b/exec-d78178b7-82b6-44d5-a1c4-e8856fb21e26.png",
+      "prompt": "Use case: precise-object-edit\nAsset type: exact-layout top-down city terrain.\nImage 1 is the EDIT TARGET and mandatory exact layout. Image 2 is STYLE REFERENCE ONLY, the generated daylight rooftop map.\nReplace dark building areas in image 1 with the cobalt/ivory/orange top-down Chicago rooftops of image 2. Keep the entire light gray road network from image 1 at EXACTLY its original pixel coordinates, widths and intersections. Keep image 1's dimensions and 4:3 proportions. Do not redraw, shift, widen, narrow or re-space its roads. Preserve its outer one-cell dark border. The roads must remain one cell wide in a 32-column by 24-row grid. Vertical roads start at 9.375%,21.875%,34.375%,46.875%,59.375%,71.875%,84.375% of image width and each spans 3.125% of width. Horizontal roads start at 12.5%,37.5%,62.5%,87.5% of image height and each spans 4.166667% of height. Roads end inside the outer border. Plain gray-blue roads with no lane markings or crosswalks. Artwork ONLY inside dark building regions. Remove individual grid-cell divisions inside blocks and replace with continuous flat roof/courtyard artwork. Bright daylight, chunky retro pixel art, no perspective, characters, cars, letters, numbers, logos, frames, UI, watermark or street obstructions. Preserve the exact geometry of IMAGE 1, not image 2.",
+      "source": "/home/thokem/.codex/generated_images/01a139cc-a11e-77c0-8504-372b02d65354/exec-97fb93b4-3c3d-48fd-aa24-c8be8f2b5fa1.png",
       "size": [
         320,
         240
+      ],
+      "preparation": "Nearest-neighbor fitting of generated rooftop blocks to the exact CityRules cells; generated road sample tiled only into walkable cells. This corrects generator layout drift without changing gameplay.",
+      "generation_prompt": "Use case: stylized-concept\nAsset type: playable terrain for Mafia1986 Android game.\nImage 1: approved daylight menu, STYLE AND COLOR REFERENCE ONLY. Ignore all its objects and perspective.\nStyle: chunky coarse retro pixel art, crisp square pixels and restrained dithering, limited cobalt blue, cyan, orange, bright yellow and pale ivory palette, black outlines and graphic shadows. Bright daylight or clear well-lit interior. No smooth gradients or detailed photographic texture.\nView: STRICT overhead orthographic 2D plan, no perspective, horizon or visible vertical facades. Terrain texture only, no humans, fighters, vehicles, cover objects, letters, numbers, labels, HUD, grids, borders or watermark. Opaque.\nGameplay constraints for battlefields: central 90 percent must be entirely flat visibly walkable floor, no furniture, crates, props, obstacles, stairs, partitions or raised objects. Decorative objects restricted to outermost 5 percent rim. No baked-in shadows that resemble obstacles in interior. Detail restrained so red and blue live characters remain visible.\nScene: A strict top-down Chicago city map, 4:3 landscape. Image 2 is an EXACT GEOMETRY reference: keep every light gray street pixel at its original position and width. Seven vertical roads at grid columns 3,7,11,15,19,23,27 and four horizontal roads at rows 3,9,15,21, with 32 columns by 24 rows. Each road one cell wide. Turn gray streets into clear pale blue-gray asphalt with subtle pixel wear. Fill dark building regions with flat cobalt and ivory rooftops, orange brick parapets, enclosed courtyards, warm yellow skylights. Continuous blocks, no individual cell squares or visible grid lines. Keep dark outer border. Streets unobstructed, no cars or props on streets. Exact original road layout and proportions are mandatory.",
+      "geometry_reference": "res://assets/maps/layout_reference.png",
+      "layout_preparation": {
+        "source_columns": [
+          [
+            41,
+            119
+          ],
+          [
+            174,
+            273
+          ],
+          [
+            328,
+            473
+          ],
+          [
+            521,
+            648
+          ],
+          [
+            694,
+            825
+          ],
+          [
+            874,
+            1007
+          ],
+          [
+            1059,
+            1200
+          ],
+          [
+            1251,
+            1406
+          ]
+        ],
+        "source_rows": [
+          [
+            40,
+            123
+          ],
+          [
+            172,
+            389
+          ],
+          [
+            441,
+            655
+          ],
+          [
+            708,
+            923
+          ],
+          [
+            978,
+            1046
+          ]
+        ],
+        "road_sample": [
+          129,
+          400,
+          34,
+          30
+        ]
+      },
+      "generation_source": "/home/thokem/.codex/generated_images/01a139cc-a11e-77c0-8504-372b02d65354/exec-c1d50f85-c329-4deb-9523-ce335cb81bd9.png",
+      "reference_images": [
+        "res://assets/maps/layout_reference.png",
+        "/home/thokem/.codex/generated_images/01a139cc-a11e-77c0-8504-372b02d65354/exec-c1d50f85-c329-4deb-9523-ce335cb81bd9.png"
       ]
     },
     {
       "name": "street",
-      "prompt": "Use case: stylized-concept. Asset type: top-down playable terrain for a 1925 Chicago Android game. Chunky charming 16-bit pixel art, strict overhead orthographic view, midnight navy, warm amber lights, muted gold. Bold readable pixels, no perspective, no typography, no characters, no HUD, no grid lines. Wide 2:1 overhead street battlefield. Entire central interior is flat walkable wet asphalt with subtle cobblestone pattern. Peripheral sidewalks and brick building edges ONLY along the outermost 5% rim. Amber street lights around rim. NO cover, crates, parked cars, furniture, obstacles or raised objects anywhere inside. Large clear area for live fighters and three separate cover objects.",
-      "source": "/home/thokem/.codex/generated_images/01a13671-764c-7d22-a64e-f667c2673e1b/exec-e9690648-59fd-40b6-999f-c42367ec4ad8.png",
+      "prompt": "Use case: stylized-concept\nAsset type: playable terrain for Mafia1986 Android game.\nImage 1: approved daylight menu, STYLE AND COLOR REFERENCE ONLY. Ignore all its objects and perspective.\nStyle: chunky coarse retro pixel art, crisp square pixels and restrained dithering, limited cobalt blue, cyan, orange, bright yellow and pale ivory palette, black outlines and graphic shadows. Bright daylight or clear well-lit interior. No smooth gradients or detailed photographic texture.\nView: STRICT overhead orthographic 2D plan, no perspective, horizon or visible vertical facades. Terrain texture only, no humans, fighters, vehicles, cover objects, letters, numbers, labels, HUD, grids, borders or watermark. Opaque.\nGameplay constraints for battlefields: central 90 percent must be entirely flat visibly walkable floor, no furniture, crates, props, obstacles, stairs, partitions or raised objects. Decorative objects restricted to outermost 5 percent rim. No baked-in shadows that resemble obstacles in interior. Detail restrained so red and blue live characters remain visible.\nScene: Wide 2:1 strictly overhead Chicago street battlefield, flat pale blue-gray asphalt and subtle cobblestones across entire interior. Thin orange brick building edges, sidewalks and occasional lights ONLY in outermost 5 percent rim.",
+      "source": "/home/thokem/.codex/generated_images/01a139cc-a11e-77c0-8504-372b02d65354/exec-1e4ab0ab-3ad4-48b3-8bc2-feb565c5af85.png",
       "size": [
         400,
         200
+      ],
+      "reference_images": [
+        "/home/thokem/.codex/generated_images/01a139cc-a11e-77c0-8504-372b02d65354/exec-de29ba08-4043-453c-a700-ac5d503e4cb8.png"
       ]
     },
     {
       "name": "shop",
-      "prompt": "Use case: stylized-concept. Asset type: top-down playable terrain for a 1925 Chicago Android game. Chunky charming 16-bit pixel art, strict overhead orthographic view, midnight navy, warm amber lights, muted gold. Bold readable pixels, no perspective, no typography, no characters, no HUD, no grid lines. Wide 2:1 overhead shop-floor battlefield. Entire central interior is flat walkable dark wooden planks with subtle wear. Counters, shelves and amber lamps ONLY along outermost 5% rim. No furniture, obstacles, raised objects or cover anywhere inside. Large clear floor for live fighters and three separate cover objects.",
-      "source": "/home/thokem/.codex/generated_images/01a13671-764c-7d22-a64e-f667c2673e1b/exec-f6b83d9a-c616-46d7-affa-54858d0ab394.png",
+      "prompt": "Use case: stylized-concept\nAsset type: playable terrain for Mafia1986 Android game.\nImage 1: approved daylight menu, STYLE AND COLOR REFERENCE ONLY. Ignore all its objects and perspective.\nStyle: chunky coarse retro pixel art, crisp square pixels and restrained dithering, limited cobalt blue, cyan, orange, bright yellow and pale ivory palette, black outlines and graphic shadows. Bright daylight or clear well-lit interior. No smooth gradients or detailed photographic texture.\nView: STRICT overhead orthographic 2D plan, no perspective, horizon or visible vertical facades. Terrain texture only, no humans, fighters, vehicles, cover objects, letters, numbers, labels, HUD, grids, borders or watermark. Opaque.\nGameplay constraints for battlefields: central 90 percent must be entirely flat visibly walkable floor, no furniture, crates, props, obstacles, stairs, partitions or raised objects. Decorative objects restricted to outermost 5 percent rim. No baked-in shadows that resemble obstacles in interior. Detail restrained so red and blue live characters remain visible.\nScene: Wide 2:1 strictly overhead shop floor battlefield, flat warm orange and tan wooden planks across entire interior. Thin shelves, counters and bright ivory wall trim ONLY in outermost 5 percent rim.",
+      "source": "/home/thokem/.codex/generated_images/01a139cc-a11e-77c0-8504-372b02d65354/exec-7955c5bb-f996-48de-978c-c16cf167a441.png",
       "size": [
         400,
         200
+      ],
+      "reference_images": [
+        "/home/thokem/.codex/generated_images/01a139cc-a11e-77c0-8504-372b02d65354/exec-de29ba08-4043-453c-a700-ac5d503e4cb8.png"
       ]
     },
     {
       "name": "bank",
-      "prompt": "Use case: stylized-concept. Asset type: top-down playable terrain for a 1925 Chicago Android game. Chunky charming 16-bit pixel art, strict overhead orthographic view, midnight navy, warm amber lights, muted gold. Bold readable pixels, no perspective, no typography, no characters, no HUD, no grid lines. Wide 2:1 overhead bank-hall battlefield. Entire central interior is flat walkable midnight blue marble tiles with subdued gold inlay. Brass teller desks and stone wall edges ONLY along outermost 5% rim. No furniture, obstacles, raised objects or cover anywhere inside. Large clear floor for live fighters and three separate cover objects.",
-      "source": "/home/thokem/.codex/generated_images/01a13671-764c-7d22-a64e-f667c2673e1b/exec-06fb5065-37f7-4c8f-906d-5534d53a3a30.png",
+      "prompt": "Use case: stylized-concept\nAsset type: playable terrain for Mafia1986 Android game.\nImage 1: approved daylight menu, STYLE AND COLOR REFERENCE ONLY. Ignore all its objects and perspective.\nStyle: chunky coarse retro pixel art, crisp square pixels and restrained dithering, limited cobalt blue, cyan, orange, bright yellow and pale ivory palette, black outlines and graphic shadows. Bright daylight or clear well-lit interior. No smooth gradients or detailed photographic texture.\nView: STRICT overhead orthographic 2D plan, no perspective, horizon or visible vertical facades. Terrain texture only, no humans, fighters, vehicles, cover objects, letters, numbers, labels, HUD, grids, borders or watermark. Opaque.\nGameplay constraints for battlefields: central 90 percent must be entirely flat visibly walkable floor, no furniture, crates, props, obstacles, stairs, partitions or raised objects. Decorative objects restricted to outermost 5 percent rim. No baked-in shadows that resemble obstacles in interior. Detail restrained so red and blue live characters remain visible.\nScene: Wide 2:1 strictly overhead bank hall battlefield, flat cobalt and pale ivory marble tile floor with modest gold inlay across entire interior. Thin marble wall trim, teller desks ONLY in outermost 5 percent rim.",
+      "source": "/home/thokem/.codex/generated_images/01a139cc-a11e-77c0-8504-372b02d65354/exec-06154723-417f-4100-97aa-746b3798a882.png",
       "size": [
         400,
         200
+      ],
+      "reference_images": [
+        "/home/thokem/.codex/generated_images/01a139cc-a11e-77c0-8504-372b02d65354/exec-de29ba08-4043-453c-a700-ac5d503e4cb8.png"
       ]
     },
     {
       "name": "train",
-      "prompt": "Use case: stylized-concept. Asset type: top-down playable terrain for a 1925 Chicago Android game. Chunky charming 16-bit pixel art, strict overhead orthographic view, midnight navy, warm amber lights, muted gold. Bold readable pixels, no perspective, no typography, no characters, no HUD, no grid lines. Wide 2:1 overhead railway-platform battlefield. Entire central interior is flat walkable worn platform paving. Railway rails and sleepers, station trim and amber lamps ONLY along outermost 5% rim. No tracks crossing the interior, no train cars, no furniture, obstacles, raised objects or cover anywhere inside. Large clear floor for live fighters and three separate cover objects.",
-      "source": "/home/thokem/.codex/generated_images/01a13671-764c-7d22-a64e-f667c2673e1b/exec-d5acd5ba-221a-41cb-8793-2864b881daf0.png",
+      "prompt": "Use case: stylized-concept\nAsset type: playable terrain for Mafia1986 Android game.\nImage 1: approved daylight menu, STYLE AND COLOR REFERENCE ONLY. Ignore all its objects and perspective.\nStyle: chunky coarse retro pixel art, crisp square pixels and restrained dithering, limited cobalt blue, cyan, orange, bright yellow and pale ivory palette, black outlines and graphic shadows. Bright daylight or clear well-lit interior. No smooth gradients or detailed photographic texture.\nView: STRICT overhead orthographic 2D plan, no perspective, horizon or visible vertical facades. Terrain texture only, no humans, fighters, vehicles, cover objects, letters, numbers, labels, HUD, grids, borders or watermark. Opaque.\nGameplay constraints for battlefields: central 90 percent must be entirely flat visibly walkable floor, no furniture, crates, props, obstacles, stairs, partitions or raised objects. Decorative objects restricted to outermost 5 percent rim. No baked-in shadows that resemble obstacles in interior. Detail restrained so red and blue live characters remain visible.\nScene: Wide 2:1 strictly overhead railway platform battlefield, flat pale tan and blue-gray worn platform paving across entire interior. Rails, sleepers, platform trim and lamps ONLY in outermost 5 percent rim. No tracks crossing interior or train cars.",
+      "source": "/home/thokem/.codex/generated_images/01a139cc-a11e-77c0-8504-372b02d65354/exec-c4023641-125b-4f0e-b85a-d373c105fc2e.png",
       "size": [
         400,
         200
+      ],
+      "reference_images": [
+        "/home/thokem/.codex/generated_images/01a139cc-a11e-77c0-8504-372b02d65354/exec-de29ba08-4043-453c-a700-ac5d503e4cb8.png"
       ]
     },
     {
       "name": "warehouse",
-      "prompt": "Use case: stylized-concept. Asset type: top-down playable terrain for a 1925 Chicago Android game. Chunky charming 16-bit pixel art, strict overhead orthographic view, midnight navy, warm amber lights, muted gold. Bold readable pixels, no perspective, no typography, no characters, no HUD, no grid lines. Wide 2:1 overhead warehouse-loading-floor battlefield. Entire central interior is flat walkable dark concrete with subtle floor wear and faint yellow loading markings. Industrial brick edges, stacked cargo and amber lamps ONLY along outermost 5% rim. No crates, furniture, obstacles, raised objects or cover anywhere inside. Large clear floor for live fighters and three separate cover objects.",
-      "source": "/home/thokem/.codex/generated_images/01a13671-764c-7d22-a64e-f667c2673e1b/exec-59f5b25a-9770-46c3-87fd-9390f1c49a63.png",
+      "prompt": "Use case: stylized-concept\nAsset type: playable terrain for Mafia1986 Android game.\nImage 1: approved daylight menu, STYLE AND COLOR REFERENCE ONLY. Ignore all its objects and perspective.\nStyle: chunky coarse retro pixel art, crisp square pixels and restrained dithering, limited cobalt blue, cyan, orange, bright yellow and pale ivory palette, black outlines and graphic shadows. Bright daylight or clear well-lit interior. No smooth gradients or detailed photographic texture.\nView: STRICT overhead orthographic 2D plan, no perspective, horizon or visible vertical facades. Terrain texture only, no humans, fighters, vehicles, cover objects, letters, numbers, labels, HUD, grids, borders or watermark. Opaque.\nGameplay constraints for battlefields: central 90 percent must be entirely flat visibly walkable floor, no furniture, crates, props, obstacles, stairs, partitions or raised objects. Decorative objects restricted to outermost 5 percent rim. No baked-in shadows that resemble obstacles in interior. Detail restrained so red and blue live characters remain visible.\nScene: Wide 2:1 strictly overhead warehouse loading floor battlefield, flat pale blue-gray concrete with subtle wear and faint yellow loading marks across entire interior. Orange industrial brick edges and cargo ONLY in outermost 5 percent rim.",
+      "source": "/home/thokem/.codex/generated_images/01a139cc-a11e-77c0-8504-372b02d65354/exec-1d8179fd-deb0-4dd5-8c6d-3395d01f5c8e.png",
       "size": [
         400,
         200
+      ],
+      "reference_images": [
+        "/home/thokem/.codex/generated_images/01a139cc-a11e-77c0-8504-372b02d65354/exec-de29ba08-4043-453c-a700-ac5d503e4cb8.png"
       ]
     },
     {
       "name": "mayor",
-      "prompt": "Use case: stylized-concept. Asset type: top-down playable terrain for a 1925 Chicago Android game. Chunky charming 16-bit pixel art, strict overhead orthographic view, midnight navy, warm amber lights, muted gold. Bold readable pixels, no perspective, no typography, no characters, no HUD, no grid lines. Wide 2:1 overhead mayor mansion-hall battlefield. Entire central interior is flat walkable midnight blue parquet with a broad flat red and gold carpet flush with floor. Ornate wall trim and amber sconces ONLY along outermost 5% rim. No desks, furniture, obstacles, raised objects or cover anywhere inside. Large clear floor for live fighters and three separate cover objects.",
-      "source": "/home/thokem/.codex/generated_images/01a13671-764c-7d22-a64e-f667c2673e1b/exec-647ce6ed-54f8-401f-90a3-003daa8a97a8.png",
+      "prompt": "Use case: stylized-concept\nAsset type: playable terrain for Mafia1986 Android game.\nImage 1: approved daylight menu, STYLE AND COLOR REFERENCE ONLY. Ignore all its objects and perspective.\nStyle: chunky coarse retro pixel art, crisp square pixels and restrained dithering, limited cobalt blue, cyan, orange, bright yellow and pale ivory palette, black outlines and graphic shadows. Bright daylight or clear well-lit interior. No smooth gradients or detailed photographic texture.\nView: STRICT overhead orthographic 2D plan, no perspective, horizon or visible vertical facades. Terrain texture only, no humans, fighters, vehicles, cover objects, letters, numbers, labels, HUD, grids, borders or watermark. Opaque.\nGameplay constraints for battlefields: central 90 percent must be entirely flat visibly walkable floor, no furniture, crates, props, obstacles, stairs, partitions or raised objects. Decorative objects restricted to outermost 5 percent rim. No baked-in shadows that resemble obstacles in interior. Detail restrained so red and blue live characters remain visible.\nScene: Wide 2:1 strictly overhead mayor mansion hall battlefield, flat warm orange parquet and broad flat red and gold carpet flush with floor across entire interior. Ivory wall trim and sconces ONLY in outermost 5 percent rim.",
+      "source": "/home/thokem/.codex/generated_images/01a139cc-a11e-77c0-8504-372b02d65354/exec-0a79ff67-99f4-439a-9fa4-5dd97be1921a.png",
       "size": [
         400,
         200
+      ],
+      "reference_images": [
+        "/home/thokem/.codex/generated_images/01a139cc-a11e-77c0-8504-372b02d65354/exec-de29ba08-4043-453c-a700-ac5d503e4cb8.png"
       ]
     },
     {
@@ -103,12 +193,19 @@
     },
     {
       "name": "surroundings",
-      "prompt": "Use case: stylized-concept. Asset type: full-screen decorative terrain surrounding a playable city map. Strict overhead top-down 1925 Chicago rooftops and enclosed courtyards, chunky charming 16-bit pixel art, midnight navy roofs with amber skylights, brick parapets, water tanks and small autumn trees. Wide 20:9 composition. Continuous tightly packed rooftops extending to all edges; NO streets, no roads, no characters, no markers, no typography, no UI or borders. Match the supplied city map's rooftop materials, palette and lighting; the reference is style only. This is non-walkable surrounding scenery.",
-      "source": "/home/thokem/.codex/generated_images/01a13671-764c-7d22-a64e-f667c2673e1b/exec-bf833929-e305-433e-b492-8faacef65eb9.png",
+      "prompt": "Use case: stylized-concept\nAsset type: full-screen decorative rooftop surroundings for a playable city map, wide 20:9.\nInput image: daylight city map is STYLE REFERENCE ONLY. Generate a new continuous dense rooftop texture using its cobalt flat roofs, orange brick parapets, ivory roof sections, yellow skylights and occasional small water towers or green enclosed roof gardens.\nStrict overhead orthographic view, chunky coarse retro pixel art and graphic black outlines. Bright sunny daytime palette. Fill THE ENTIRE IMAGE, including the center, with closely packed buildings and rooftop details. Many small buildings in a continuous neighborhood, roofs touching and extending to every edge. NO LARGE EMPTY CENTER, no battlefield, no open plaza, no large empty court, no road or street or pavement or floor. Small enclosed courtyards may be tiny accents only. No horizon, visible facades, perspective, characters, cars, typography, numbers, logos, UI, frames, watermark. Opaque image.",
+      "source": "/home/thokem/.codex/generated_images/01a139cc-a11e-77c0-8504-372b02d65354/exec-7b0e02fc-7363-46ce-a861-d836384da92c.png",
       "size": [
         640,
         288
+      ],
+      "generation_prompt": "Use case: stylized-concept\nAsset type: playable terrain for Mafia1986 Android game.\nImage 1: approved daylight menu, STYLE AND COLOR REFERENCE ONLY. Ignore all its objects and perspective.\nStyle: chunky coarse retro pixel art, crisp square pixels and restrained dithering, limited cobalt blue, cyan, orange, bright yellow and pale ivory palette, black outlines and graphic shadows. Bright daylight or clear well-lit interior. No smooth gradients or detailed photographic texture.\nView: STRICT overhead orthographic 2D plan, no perspective, horizon or visible vertical facades. Terrain texture only, no humans, fighters, vehicles, cover objects, letters, numbers, labels, HUD, grids, borders or watermark. Opaque.\nGameplay constraints for battlefields: central 90 percent must be entirely flat visibly walkable floor, no furniture, crates, props, obstacles, stairs, partitions or raised objects. Decorative objects restricted to outermost 5 percent rim. No baked-in shadows that resemble obstacles in interior. Detail restrained so red and blue live characters remain visible.\nScene: Wide 20:9 strictly overhead continuous Chicago rooftop district, tightly packed flat cobalt and ivory roofs, orange brick parapets, enclosed courtyards, warm yellow skylights and water tanks. Bright daytime. No streets, no roads anywhere; this is decorative non-walkable surrounding scenery.",
+      "generation_source": "/home/thokem/.codex/generated_images/01a139cc-a11e-77c0-8504-372b02d65354/exec-fadd7c8e-d5f4-4777-8545-a1ea34d6ebe6.png",
+      "reference_images": [
+        "/home/thokem/.codex/generated_images/01a139cc-a11e-77c0-8504-372b02d65354/exec-97fb93b4-3c3d-48fd-aa24-c8be8f2b5fa1.png"
       ]
     }
-  ]
+  ],
+  "style_reference": "../backgrounds/menu.png",
+  "terrain_style_direction": "Approved bright daylight retro pixel art, 2026-10-14"
 }

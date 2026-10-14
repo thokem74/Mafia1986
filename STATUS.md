@@ -1,6 +1,6 @@
 # Building status
 
-Last updated: 2026-10-13
+Last updated: 2026-10-14
 Current phase: 11 — polish and acceptance validation.
 Overall build status: **In progress**. A playable campaign, ending and ARM64 debug APK are implemented. This is not yet a fully validated faithful release.
 
@@ -74,6 +74,15 @@ Overall build status: **In progress**. A playable campaign, ending and ARM64 deb
 - Android verification also exposed two platform Back requests from a single press, 14 ms apart. The first acts immediately; only a duplicate within 50 ms is ignored. Button actions remain immediate. Regression checks cover location → map → menu navigation.
 - Final ARM64 debug APK exported, signed and installed on the Samsung. Touch checks verified two single-cell moves, correct pub highlighting/entry, a hold advancing five cells, and native Back returning location → map → menu without skipping screens. The 26-pixel character and translated location badges were inspected on-device.
 - The five original phone save/settings files were backed up to `/tmp/mafia1986-city-readability-device-backup`, restored and byte-verified after reopening the final menu. Existing artwork, campaign format and `project.godot` were preserved.
+
+## Bright daylight background recreation (2026-10-14)
+
+- Recreated **27 images** with built-in ImageGen using the user's reference and approved daylight waterfront menu: 19 screen backgrounds in `assets/backgrounds/`, plus city terrain, rooftop surroundings and six combat environments in `assets/maps/`. Saturated cobalt/cyan, orange brickwork, yellow/ivory highlights and coarse pixel dithering replace the darker noir treatment. Location interiors use daylight or clear interior illumination.
+- Existing filenames, screen composition, UI layout, character sprites, cover sprites, location icons, gameplay and save formats are preserved. The pre-existing user modification to `project.godot` is unchanged. Exact generation/edit prompts and original generated source paths are recorded in both artwork manifests; generated originals remain in Codex's generated-images directory.
+- Generated city roads drifted from the reference even after a correction pass. `tools/prepare_map_art.gd` now fits its 40 generated roof regions to the actual `CityRules` cells with nearest-neighbor sampling and fills only walkable cells with generated road texture. `--terrain-only` skips existing characters and marker extraction. City remains **320×240**, surroundings **640×288**, and all six combat floors **400×200** with clear interiors and decorative perimeter objects.
+- Godot editor import and **2,495 deterministic checks pass**, with no script errors. Additional artwork checks verify 19 landscape backgrounds, all eight terrain dimensions and **24,600 street pixels** aligned to the gameplay grid. The full visual suite refreshed **424 screen captures** and **488 city entrance/boundary captures**, covering German/English, hints on/off and 16:9, 18:9, 19.5:9 and 20:9; both runs report **zero layout failures**. Eight UI contact sheets, two entrance contact sheets and the terrain overview were inspected in `builds/art-preview/`.
+- ARM64 debug APK exported, signed, verified and installed on Samsung SM-A176B. On-device captures verify menu, city, store, shared hideout/save background and a 20-fighter warehouse battle. One real touch moved actor 0 from x4 to x5 and advanced the active actor to 1; characters, energy labels and live cover remain visible. The sampled game-process Godot log contains no script/rendering errors. This was targeted artwork verification, not another full campaign or performance soak.
+- Five original phone campaign/settings files were backed up to `/tmp/mafia1986-daylight-device-backup`, restored and byte-verified after reopening the final menu. The combat fixture was loaded through a temporary manual slot, and its save changes were removed by restoration.
 
 ## Known limitations and blockers
 
