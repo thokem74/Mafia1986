@@ -14,15 +14,18 @@ func _ready() -> void:
 	$Parameters/Quantity/Plus.pressed.connect(func(): amount.value += amount.step)
 	$Parameters/Execute.pressed.connect(func(): action_requested.emit(current_action, int(amount.value), member.selected, item.get_selected_id()))
 	item.item_selected.connect(func(_index: int): _update_details())
+	member.item_selected.connect(func(_index: int): _update_details())
 
 func refresh(value: Campaign) -> void:
 	campaign = value
 	$LocationHint.visible = Settings.hints
 	var location := Catalog.location(campaign.location)
 	$Title.text = tr(location["name_key"])
+	var selected_member := member.selected
 	member.clear()
 	for person in campaign.gang:
 		member.add_item("%s · %s %d" % [person.gangster_name, tr("ENERGY"), person.energy])
+	member.select(clampi(selected_member, 0, member.item_count - 1))
 	for child in actions.get_children():
 		child.free()
 	var available := LocationRules.actions(location["kind"])
@@ -68,12 +71,36 @@ func _select(action: String) -> void:
 
 func _update_details() -> void:
 	$Parameters/Details.text = ""
+	$Parameters/Requirements.text = ""
+	$Parameters/Execute.disabled = false
 	if item.item_count == 0:
 		return
 	var index := item.get_selected_id()
 	if current_action == "weapon":
 		var data := Catalog.weapon(index)
 		$Parameters/Details.text = tr("DETAIL_WEAPON") % [data["price"], data["range"], data["precision"], data["damage"]]
+		var person := campaign.gang[member.selected]
+		var requirements := EconomyRules.weapon_requirements(index)
+		var stat_details: PackedStringArray = []
+		var needs_training := false
+		for stat: String in requirements:
+			var minimum := int(requirements[stat])
+			if minimum == 0:
+				continue
+			var current := int(person.get(stat))
+			stat_details.append("%s %d/%d" % [tr(stat.to_upper()), current, minimum])
+			needs_training = needs_training or current < minimum
+		if not stat_details.is_empty():
+			$Parameters/Requirements.text = tr("WEAPON_STATS") % " · ".join(stat_details)
+			if needs_training:
+				$Parameters/Requirements.text += "\n" + tr("WEAPON_TRAIN_FIRST")
+		# The purchase rules charge the full price before crediting a trade-in.
+		var needs_money := campaign.economy.money < int(data["price"])
+		$Parameters/Execute.disabled = needs_training or needs_money
+		if needs_money:
+			if not $Parameters/Requirements.text.is_empty():
+				$Parameters/Requirements.text += "\n"
+			$Parameters/Requirements.text += tr("NO_MONEY")
 	elif current_action == "car":
 		var data := Catalog.car(index)
 		$Parameters/Details.text = tr("DETAIL_CAR") % [data["price"], data["capacity"], data["movement"]]

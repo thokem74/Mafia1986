@@ -316,3 +316,5 @@ MAP_LOC_SUBWAY,U-Bahn,Subway
 MAP_LOC_STATION,Bahnhof,Station
 MAP_LOC_MAYOR,Rathaus,Mayor
 MAP_LOC_TRANSPORT,Fracht,Cargo
+WEAPON_STATS,Werte / benötigt: %s,Stats / required: %s
+WEAPON_TRAIN_FIRST,Erst diesen Gangster trainieren. Kauf abgelehnt; Geld bleibt unverändert.,Train this gangster first. Purchase refused; money stays unchanged.

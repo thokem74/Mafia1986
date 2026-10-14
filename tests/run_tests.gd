@@ -112,6 +112,21 @@ func _test_economy() -> void:
 	var initial := c.economy.money
 	check(not c.economy.pay(-100) and c.economy.money == initial, "Negative transaction rejected")
 	check(not c.economy.pay(initial + 1) and c.economy.money == initial, "Insufficient money does not mutate")
+	c.economy.money = 8500
+	LocationRules.perform(c, "weapon", 1, 0, 7)
+	check(c.gang[0].weapon == 0 and c.economy.money == 8500 and c.messages.back()["key"] == "WEAPON_REQUIREMENTS", "SMG with $8500 refused for untrained gangster with explanation")
+	c.gang[0].intelligence = 40
+	c.gang[0].brutality = 39
+	LocationRules.perform(c, "weapon", 1, 0, 7)
+	check(c.gang[0].weapon == 0 and c.economy.money == 8500, "SMG still requires 40 brutality")
+	c.gang[0].brutality = 40
+	c.gang[0].intelligence = 39
+	LocationRules.perform(c, "weapon", 1, 0, 7)
+	check(c.gang[0].weapon == 0 and c.economy.money == 8500, "SMG still requires 40 intelligence")
+	c.gang[0].intelligence = 40
+	LocationRules.perform(c, "weapon", 1, 0, 7)
+	check(c.gang[0].weapon == 7 and c.economy.money == 500, "SMG with $8500 equips gun and leaves $500 at exact requirements")
+	c = fresh()
 	EconomyRules.buy_weapon(c, 0, 7)
 	check(c.gang[0].weapon == 0 and c.economy.money == initial, "Weapon requirements enforced")
 	c.gang[0].strength = 99
@@ -302,6 +317,54 @@ func _test_scenes() -> void:
 	await process_frame
 	check(shell.route == "Location", "Scene-based location opens")
 	check(shell.get_node("%LocationPanel/LocationHint").visible, "Location hints are inline")
+	var panel: Variant = shell.get_node("%LocationPanel")
+	var shop_test_cash: int = state.campaign.economy.money
+	state.campaign.location = "arms"
+	state.campaign.economy.money = 8500
+	state.campaign.gang[0].intelligence = 20
+	state.campaign.gang[0].brutality = 20
+	panel.refresh(state.campaign)
+	panel._select("weapon")
+	panel.get_node("Parameters/Item").select(6)
+	panel.get_node("Parameters/Item").item_selected.emit(6)
+	var requirements_label: Label = panel.get_node("Parameters/Requirements")
+	check(requirements_label.text.contains("/40") and requirements_label.text.contains(TranslationServer.translate("WEAPON_TRAIN_FIRST")), "Shop explains SMG requirements before purchase")
+	var purchase_button: Button = panel.get_node("Parameters/Execute")
+	check(purchase_button.disabled, "Weapon purchase disabled when selected gangster lacks required stats")
+	panel._select("train")
+	check(not purchase_button.disabled, "Switching away from weapon purchase clears disabled state")
+	panel._select("weapon")
+	panel.get_node("Parameters/Item").select(6)
+	panel.get_node("Parameters/Item").item_selected.emit(6)
+	var eligible := Gangster.new()
+	eligible.intelligence = 40
+	eligible.brutality = 40
+	state.campaign.gang.append(eligible)
+	panel.refresh(state.campaign)
+	panel.get_node("Parameters/Member").select(1)
+	panel.get_node("Parameters/Member").item_selected.emit(1)
+	check(not requirements_label.text.contains(TranslationServer.translate("WEAPON_TRAIN_FIRST")), "Shop requirements update for selected gangster")
+	check(not purchase_button.disabled, "Weapon purchase enabled for eligible selected gangster")
+	state.campaign.economy.money = 7999
+	panel.refresh(state.campaign)
+	check(purchase_button.disabled and requirements_label.text.contains(TranslationServer.translate("NO_MONEY")), "Weapon purchase disabled and explained when money is insufficient")
+	panel.get_node("Parameters/Item").select(0)
+	panel.get_node("Parameters/Item").item_selected.emit(0)
+	check(not purchase_button.disabled, "Choosing an affordable weapon enables purchase again")
+	panel.get_node("Parameters/Item").select(6)
+	panel.get_node("Parameters/Item").item_selected.emit(6)
+	state.campaign.economy.money = 8000
+	panel.refresh(state.campaign)
+	check(not purchase_button.disabled, "Weapon purchase enabled with exactly the required money")
+	state.campaign.economy.money = 8500
+	panel.refresh(state.campaign)
+	check(panel.get_node("Parameters/Member").selected == 1, "Shop refresh preserves selected gangster")
+	panel.get_node("Parameters/Execute").pressed.emit()
+	check(eligible.weapon == 7 and state.campaign.economy.money == 500 and state.campaign.gang[0].weapon == 0, "Shop Execute buys SMG for selected gangster with $8500")
+	state.campaign.gang.pop_back()
+	state.campaign.economy.money = shop_test_cash
+	state.campaign.location = "pub"
+	shell._game()
 	shell._platform_back(1000, true)
 	check(shell.route == "Game", "Android Back leaves a location in one step")
 	shell._platform_back(1014, true)

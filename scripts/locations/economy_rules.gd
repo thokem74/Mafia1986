@@ -1,14 +1,24 @@
 class_name EconomyRules
 extends RefCounted
 
+static func weapon_requirements(weapon_index: int) -> Dictionary:
+	# Keep the shop display and purchase checks tied to the same original rules.
+	return {
+		"strength": 20 if weapon_index in [2, 3] else 0,
+		"intelligence": 40 if weapon_index > 5 else 0,
+		"brutality": 40 if weapon_index == 3 or weapon_index > 6 else 0,
+	}
+
 static func buy_weapon(campaign: Campaign, member_index: int, weapon_index: int) -> void:
 	if member_index < 0 or member_index >= campaign.gang.size() or weapon_index < 1 or weapon_index > 8:
 		return
 	var member := campaign.gang[member_index]
 	var item := Catalog.weapon(weapon_index)
-	if (weapon_index in [2, 3] and member.strength < 20) or (weapon_index > 5 and member.intelligence < 40) or ((weapon_index == 3 or weapon_index > 6) and member.brutality < 40):
-		campaign.note("WEAPON_REQUIREMENTS")
-		return
+	var requirements := weapon_requirements(weapon_index)
+	for stat: String in requirements:
+		if int(member.get(stat)) < int(requirements[stat]):
+			campaign.note("WEAPON_REQUIREMENTS")
+			return
 	if not campaign.economy.pay(int(item["price"])):
 		campaign.note("NO_MONEY")
 		return

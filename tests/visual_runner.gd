@@ -29,6 +29,8 @@ func _run() -> void:
 	shell.set_process_unhandled_key_input(false)
 	if "--city" in OS.get_cmdline_user_args():
 		capture_directory = "res://builds/screens/city_readability"
+	elif "--weapons" in OS.get_cmdline_user_args():
+		capture_directory = "res://builds/screens/weapon_requirements"
 	DirAccess.make_dir_recursive_absolute(capture_directory)
 	var locales: Array[String] = ["de", "en"]
 	var widths: Array[int] = [1152, 1296, 1404, 1440]
@@ -43,6 +45,9 @@ func _run() -> void:
 			state.new_game("Charlie", "South Side", false, 0, 400)
 			await process_frame
 			var prefix := "%s_%d_" % [locale, width]
+			if "--weapons" in OS.get_cmdline_user_args():
+				await _weapon_cases(prefix)
+				continue
 			shell._show("Menu")
 			await capture(prefix + "menu")
 			shell._show("NewGame")
@@ -121,6 +126,23 @@ func _run() -> void:
 	await process_frame
 	print("VISUAL CAPTURES COMPLETE: %d layout failures" % layout_failures)
 	quit(0 if layout_failures == 0 else 1)
+
+
+func _weapon_cases(prefix: String) -> void:
+	state.campaign.location = "arms"
+	state.campaign.economy.money = 8500
+	var panel: Variant = shell.get_node("%LocationPanel")
+	for hints: bool in [true, false]:
+		root.get_node("Settings").hints = hints
+		for eligible: bool in [false, true]:
+			state.campaign.gang[0].intelligence = 40 if eligible else 20
+			state.campaign.gang[0].brutality = 40 if eligible else 20
+			shell._game()
+			panel._select("weapon")
+			panel.get_node("Parameters/Item").select(6)
+			panel._update_details()
+			await capture(prefix + "smg_%s_%s" % ["eligible" if eligible else "training", "hints" if hints else "no_hints"])
+	root.get_node("Settings").hints = true
 
 
 func _city_cases(prefix: String) -> void:
